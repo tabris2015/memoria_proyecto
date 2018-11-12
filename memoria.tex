@@ -1,0 +1,66 @@
+\documentclass[12pt,letterpaper]{book}
+
+%%%%% CAMBIAR LA PRIMERA LINEA POR LA SIGUIENTE PARA LA MEMORIA DE PROYECTO %%%%%
+%\documentclass[12pt,letterpaper,oneside]{book}
+
+% Paquetes basicos ...
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc} % OJO!!!  => MANTENER ESTA LINEA PARA FACIL CONVERSION A WORD EN EL FUTURO ...
+\usepackage{float,xcolor}
+\usepackage{graphicx} 
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{amssymb, amsmath}
+
+% Paquetes extras ... 
+\usepackage{subfigure}
+% \usepackage{color}
+\usepackage{anysize} 
+\usepackage{breakcites}
+\usepackage{enumitem}
+\usepackage{blindtext}
+\usepackage{hyperref}
+
+\begin{document}
+\marginsize{2.5cm}{2cm}{2cm}{2cm} 
+
+% Para que no aparezca la numeracion en el pie de pagina de todo el documento ...
+%\pagestyle{empty}
+
+
+%%%%%% ******  INICIO CARATULA ***** %%%%%%%%%
+% Especificaciones de la caratula PPG
+
+\include{formato/caratula}
+
+\include{formato/dedicatoria}
+
+\include{formato/agradecimientos}
+
+\include{contenido/resumen}
+
+% Generacion del indice
+\include{formato/indices}
+
+% Contenido del PPG
+\include{contenido/introduccion}
+
+\include{contenido/marco_teorico}
+
+\include{contenido/marco_practico}
+
+\include{contenido/resultados}
+
+\include{contenido/conclusiones}
+
+\include{anexos/codigo}
+
+\include{bibliografia/biblio.tex}
+% \cleardoublepage
+% \chapter{Bibliografía}
+% % \addcontentsline{toc}{chapter}{Bibliografía}
+% \bibliographystyle{IEEEtran}
+% \bibliography{referencias}
+
+
+\end{document}
