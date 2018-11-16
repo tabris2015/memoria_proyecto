@@ -1,5 +1,5 @@
 \documentclass[12pt,letterpaper]{book}
-
+\setcounter{secnumdepth}{5}
 
 %%%%%%%%%%%%%%%% for dev
 % \includeonly{Chapter_1,Chapter_4}
@@ -25,6 +25,14 @@
 \usepackage{blindtext}
 \usepackage{hyperref}
 
+% %% para que aparezca Capitulo
+% \usepackage{tocloft}
+
+% \renewcommand{\cftchappresnum}{Capítulo }
+% \renewcommand{\cftchapaftersnum}{:}
+% \renewcommand{\cftchapnumwidth}{25mm}
+
+
 \begin{document}
 \marginsize{2.5cm}{2cm}{2cm}{2cm} 
 
@@ -44,14 +52,14 @@
 % \include{contenido/resumen}
 
 % Generacion del indice
-% \include{formato/indices}
+\include{formato/indices}
 
 % Contenido del PPG
-% \include{contenido/introduccion}
+\include{contenido/introduccion}
 
 \include{contenido/marco_teorico}
 
-\include{contenido/marco_practico}
+% \include{contenido/marco_practico}
 
 % \include{contenido/resultados}
 
@@ -60,11 +68,11 @@
 % \include{anexos/codigo}
 
 % \include{bibliografia/biblio.tex}
-% \cleardoublepage
+\cleardoublepage
 % \chapter{Bibliografía}
-% % \addcontentsline{toc}{chapter}{Bibliografía}
-% \bibliographystyle{IEEEtran}
-% \bibliography{referencias}
+\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliographystyle{IEEEtran}
+\bibliography{referencias}
 
 
 \end{document}
