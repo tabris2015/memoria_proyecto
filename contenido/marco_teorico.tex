@@ -68,7 +68,7 @@ que los términos autonomía y automatización se usan de manera intercambiable 
     \subsection{Arquitectura de un sistema de conducción autónoma}
     % \subsection{Aprendizaje Profundo}
 
-
+% TODO: 
 \section{Visión por computador}
 -
     \subsection{Procesamiento de imágenes}
@@ -177,8 +177,114 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         
         % TODO: insertar grafico de aprendizaje por refuerzo
 
+    % TODO: 
     \subsection{Aprendizaje Profundo}
-        \subsubsection{Redes neuronales profundas}
+    Dentro del campo de la inteligencia artificial y el aprendizaje automático se han implementado diversos tipos 
+    de algoritmos con éxito en los tipos de tareas de aprendizaje mencionados anteriormente. La base teórica y los detalles 
+    de implementación de estos algoritmos son muy variados, sin embargo, las redes neuronales artificiales han experimentado 
+    un incremento en el interés en la investigación y en las aplicaciones muy importante. Tal es el éxito de las mismas 
+    que se ha creado un subcampo exclusivo llamado aprendizaje profundo o \textit{deep learning}. El aprendizaje profundo 
+    es un campo de la inteligencia artificial que se encarga de estudiar exclusivamente a las redes neuronales artificiales, 
+    sus componentes, arquitectura y aplicaciones. El impresionante rendimiento de estos algoritmos reside principalmente en el 
+    concepto de la representación que generan a partir de los datos que se procesan. 
+
+    El aprendizaje profundo resuelve el problema del aprendizaje de representaciones al introducir representaciones que se 
+    expresan en términos de otras representaciones más simples. Además, permite a una computadora construir conceptos complejos 
+    a partir de conceptos más simples. Un ejemplo de la generación de estos conceptos o representaciones se puede apreciar en la 
+    Figura(\ref{fig:representacion}).
+    
+    
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/representacion}
+        \caption{Ilustración de un modelo de aprendizaje profundo. Las representaciones se generan en las capas ocultas y corresponden con características de distintos niveles de complejidad. Fuente: \cite{Goodfellow-et-al-2016} }
+        \label{fig:representacion}
+    \end{figure}
+
+    A continuación, se procede a definir los conceptos más importantes de redes neuronales artificiales con los cuales se podrá 
+    plantear la solución al problema de la conducción autónoma usando visión artificial.
+
+        \subsubsection{Redes neuronales feedforward}
+        Las redes neuronales feedforward o también llamadas perceptrón multicapa, son la base fundamental de los modelos 
+        de aprendizaje profundo. El objetivo de una red neuronal feedforward es el de aproximar una función $f^\ast$. Por 
+        ejemplo, para una tarea de clasificación, $y = f^\ast (\mathbf{x})$ mapea una entrada $\mathbf{x}$ a una categoría $y$.
+        Una red neuronal feedforward define un mapeo $\mathbf{y} = f(\mathbf{x},\mathbf{W})$ y aprende el valor de los parámetros 
+        $\mathbf{W}$ que resulten en la mejor aproximación\cite{Goodfellow-et-al-2016}.
+
+        Este tipo de modelos son denominados feedforward debido a que la información fluye a por la función siendo evaluada 
+        desde $\mathbf{x}$, a través de distintos cálculos intermedios definidos por $f$, hasta llegar a la salida $\mathbf{y}$.
+        No existen conexiones de retroalimentación en las que la salidas del modelo se inyecten de nuevo a sí mismo. Las redes 
+        neuronales que poseen este tipo de conexiones de retroalimentación son denominadas redes neuronales recurrentes.
+
+        Para definir una red neuronal feedforward se puede comenzar definiendo un modelo basado en una combinación 
+        lineal en conjunto con una función no lineal que toma la siguiente forma:
+
+        \begin{equation}\label{eq:modelobase}
+            y(\mathbf{x}, \textbf{W}) = f\left(\sum_{j=1}^M w_j  x_j\right)
+        \end{equation}
+
+        donde $f()$ es una función de activación no lineal. Esto lleva al modelo básico de una red neuronal que puede ser 
+        descrita como una serie de transformaciones. Primero, se construyen $M$ combinaciones lineales de las variables 
+        de entrada $x_1, \ldots , x_D$ donde $D$ es la dimensión del vector de entrada $\mathbf{x}$:
+        
+        \begin{equation}
+            a_j = \sum_{i=1}^D w_{ji}^{(1)} x_i + w_{j0}^{(1)}
+        \end{equation}
+
+        donde $j = 1, \ldots , M$, y el superíndice $(1)$ indican que los correspondientes parámetros se encuentran en la 
+        primera capa de la red. Los parámetros $w_{ji}^{(1)}$ se suelen conocer también con el nombre de \textit{pesos} y 
+        los parámetros $ w_{j0}^{(1)}$ con el nombre de \textit{sesgos} o \textit{biases}. Las cantidades $a_j$ se conocen 
+        como \textit{activaciones}, y cada una de ellas es luego transformada usando una función no lineal y derivable conocida 
+        como la \textit{función de activación} $h()$ para luego obtener:
+
+        \begin{equation}
+            z_j = h(a_j)
+        \end{equation}
+
+        Estas cantidades corresponden con la salida de la capa y también se suelen referir por el nombre de  \textit{unidades ocultas}.
+        Las funciones no lineales $h()$ pueden escogerse dependiendo a diversos criterios de rendimiento o de comportamiento. Siguiendo
+        a la Ecuación(\ref{eq:modelobase}), las unidades ocultas se pueden volver a procesar con una combinación lineal y función 
+        de activación en una segunda capa:
+
+        \begin{equation}
+            a_k = \sum_{j=1}^M w_{kj}^{(2)} z_j + w_{k0}^{(2)}
+        \end{equation}
+
+        donde $k = 1, \ldots, K$ y $K$ corresponden con el número de salidas de la segunda capa. Finalmente, si consideramos a 
+        esta capa como la capa de salida, podemos transformar las activaciones de la segunda capa con una función de activación. 
+        Normalmente, para una tarea de regresión, la función de activación es una función identidad, es decir $y_k = a_k$. Para 
+        una tarea de clasificación binaria, en cambio, la función de activación es una función sigmoide:
+
+        \begin{equation}
+            y_k = \sigma(a_k)
+        \end{equation}
+
+        donde
+        
+        \begin{equation}
+            \sigma(a) = \frac{1}{1 + e^{-a}}    
+        \end{equation}
+        
+        Finalmente, se pueden combinar las etapas en una función general de la red que, para una salida sigmoidal, toma la 
+        siguiente forma:
+
+        \begin{equation}\label{eq:reddoscapas}
+            y_k(\mathbf{x}, \mathbf{W}) = \sigma \left( \sum_{j=1}^M w_{kj}^{(2)} h \left( \sum_{i=1}^D w_{ji}^{(1)} x_i + w_{j0}^{(1)} \right) + w_{k0}^{(2)} \right)
+        \end{equation}
+
+        De esta manera, se define una red neuronal de dos capas a partir de la combinación lineal de las entradas y las unidades 
+        ocultas con los parámetros o pesos de la red transformados por funciones de activación no lineal. La arquitectura de la 
+        red definida en la Ecuación(\ref{eq:reddoscapas}) se puede visualizar en la Figura(\ref{fig:reddoscapas}) donde se observa claramente las relaciones que se 
+        han definido anteriormente en forma gráfica y la naturaleza del flujo en una sola dirección (feerforward) de los datos 
+        desde la entrada hasta la salida. En este caso, la red neuronal analizada es una red neuronal con una capa oculta.
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/reddoscapas}
+            \caption{Diagrama de la red neuronal de dos capas correspondiente a la Ecuación(\ref{eq:reddoscapas}). Fuente: \cite{Bishop2006} }
+            \label{fig:reddoscapas}
+        \end{figure}
+
         \subsubsection{Funciones de activación}
         \subsubsection{Funcion de costo}
         \subsubsection{Gradientes y retropropagación}
@@ -308,6 +414,7 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         la corteza visual de un gato. Puede decirse entonces que las redes convolucionales emulan, en cierto modo, 
         al proceso biológico de visión en animales.
 
+    % TODO: 
     \subsection{Sistemas de Aprendizaje Fin a Fin}
 
 \section{Modelo cinemático del vehículo}
