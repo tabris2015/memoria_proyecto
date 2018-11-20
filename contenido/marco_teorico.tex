@@ -250,7 +250,7 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             a_k = \sum_{j=1}^M w_{kj}^{(2)} z_j + w_{k0}^{(2)}
         \end{equation}
 
-        donde $k = 1, \ldots, K$ y $K$ corresponden con el número de salidas de la segunda capa. Finalmente, si consideramos a 
+        donde $k = 1, \ldots, K$ y $K$ corresponden con el número de salidas de la segunda capa. Finalmente, si se considera a 
         esta capa como la capa de salida, podemos transformar las activaciones de la segunda capa con una función de activación. 
         Normalmente, para una tarea de regresión, la función de activación es una función identidad, es decir $y_k = a_k$. Para 
         una tarea de clasificación binaria, en cambio, la función de activación es una función sigmoide:
@@ -261,7 +261,7 @@ que los términos autonomía y automatización se usan de manera intercambiable 
 
         donde
         
-        \begin{equation}
+        \begin{equation}\label{eq:sigmoide}
             \sigma(a) = \frac{1}{1 + e^{-a}}    
         \end{equation}
         
@@ -284,10 +284,197 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             \caption{Diagrama de la red neuronal de dos capas correspondiente a la Ecuación(\ref{eq:reddoscapas}). Fuente: \cite{Bishop2006} }
             \label{fig:reddoscapas}
         \end{figure}
+        
+        \subsubsection{Funcion de costo}
+        La función de costo es una función que permite definir el rendimiento de una red neuronal con respecto a las 
+        predicciones esperadas a la salida. Un aspecto importante en el diseño de una red neuronal es la elección adecuada 
+        de la función de costo. 
+
+        La función de costo o función de error, se define de manera similar al caso del ajuste de curvas. Es decir, se desea 
+        minimizar una suma de errores cuadráticos. Dado un conjunto de entrenamiento compuesto por un conjunto de vectores 
+        de entrada $\{\mathbf{x}_n \}$, donde $n = 1, \ldots , N$, junto con un conjunto de vectores objetivo $\{\mathbf{t}_n \}$
+        el objetivo es minimizar la función:
+
+        \begin{equation}\label{eq:error}
+            E(\mathbf{w}) = \frac{1}{2} \sum_{n=1}^N \{y(\mathbf{x}_n, \mathbf{w}) - t_n\}^2
+        \end{equation}
+
+        donde el valor de $\mathbf{w}$ que minimice la función de error $E(\mathbf{w})$ será considerado como el mejor conjunto 
+        de parámetros sobre el cual el modelo puede generalizar.
+
+        \subsubsection{Entrenamiento usando gradientes y retropropagación} \label{sec:gradientes}
+
+        Una vez definidos con claridad los componentes básicos de una red neuronal feedforward y cómo es el proceso del flujo 
+        de la información desde la entrada $\mathbf{x}$ hasta la salida $\mathbf{y}$, solamente queda especificar el procedimiento 
+        necesario para ajustar los parámetros o pesos de la red $\mathbf{W}$. Para este cometido, el método más usado es el 
+        de la retropropagación o \textit{backpropagation}, popularizado a partir del paper de Rumelhart \cite{rumelhart1986learning} 
+        y ampliamente usado en la actualidad en la mayoría de las redes neuronales. La retropropagación tiene el objetivo de 
+        encontrar los gradientes, en específico, se desea encontrar el gradiente de de la función de costo o error con respecto 
+        a los parámetros $\nabla_{\mathbf{W}}E(\mathbf{W})$. Si tomamos en cuenta que una red neuronal feedforward puede tener 
+        varias capas ocultas, la gradiente de la función de costo está en función de los parámetros y funciones de activación 
+        de cada capa, por tanto, se necesita usar la regla de la cadena para poder encontrar estos gradientes intermedios.
+
+        Sea $y = g(x)$ y $z = f(g(x)) = f(y)$ dos funciones reales con argumento real, la regla de la cadena define lo siguiente:
+
+        \begin{equation}
+            \frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}
+        \end{equation}
+
+        Se puede generalizar la anterior expresión para casos fuera de una variable escalar donde $x \in \mathbb{R}^m$, 
+        $y \in \mathbb{R}^n$, $g$ mapea de $\mathbb{R}^m$ a $\mathbb{R}^n$ y $f$ mapea de $\mathbb{R}^m$ a $\mathbb{R}$,
+        si $\mathbf{y} = g(\mathbf{x})$ y $\mathbf{z} = g(\mathbf{y})$, entonces:
+
+        \begin{equation}
+            \frac{dz}{dx_i} =\sum_j \frac{dz}{dy_j} \frac{dy_j}{dx_i}
+        \end{equation}
+
+        en notación vectorial, sería equivalente a lo siguiente:
+
+        \begin{equation}
+            \nabla_{\mathbf{x}}z = \left( \frac{\partial \mathbf{y}}{\partial \mathbf{x}} \right)^T \nabla_{\mathbf{y}} z
+        \end{equation}
+
+        donde $\frac{\partial \mathbf{y}}{\partial \mathbf{x}}$ es el jacobiano $n \times m$ de $g$. Lo importante aqui 
+        es recordar que en una función multivariable, el gradiente proporciona la dirección hacia donde la función crece 
+        más rapidamente, esta intuición es fundamental para poder actualizar los pesos de la red en una etapa posterior.
+
+        El concepto fundamental de la retropropagación es encontrar estos gradientes de manera secuencial, partiendo desde 
+        la capa de salida hasta llegar a la capa de entrada. 
+
+            \paragraph{Actualización de los parámetros de la red}
+            La importancia de hallar los gradientes de la red con respecto a los pesos reside en que son justamente 
+            los gradientes los que proporcionan la información de la evolución de los pesos con respecto de la función 
+            de error y en qué dirección se encuentra el mínimo. En la Figura(\ref{fig:gradsup}) se puede ver cómo, para 
+            una combinación arbitraria de pesos $\mathbf{w}_C$ el gradiente de la función de error $\nabla E$ indica 
+            la direccion de máximo crecimiento de la superficie
+
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.75\textwidth]{img/gradsup}
+                \caption{Visualización de la función de error $E(\mathbf{w})$ como una superficie. El punto $\mathbf{w}_A$ es un mínimo local y el punto $\mathbf{w}_B$ es el mínimo global. Fuente: \cite{Bishop2006} }
+                \label{fig:gradsup}
+            \end{figure}
+
+            La actualización de los parámetros dados los gradientes de la red se puede realizar de distintas formas, pero una 
+            de las más comunes es el algoritmo llamado \textit{Descenso de gradiente}, donde, de forma iterativa, se 
+            va actualizando los pesos restando una medida del gradiente de la siguiente manera:
+
+            Dicho de otro modo, en el descenso de gradiente, se avanza un pequeño paso en la dirección opuesta al gradiente 
+            para avanzar hacia el mínimo:
+
+            \begin{equation}
+                \mathbf{w}^{(\tau + 1)} = \mathbf{w}^{(\tau)} - \alpha \nabla E(\mathbf{w}^{(\tau)})
+            \end{equation}
+
+            donde el parametro $\alpha > 0$ se conoce como la razón de aprendizaje o \textit{learning rate}. Después de 
+            cada actualización, el gradiente es recalculado para poder encontrar los nuevos pesos y el proceso se repite 
+            hasta encontrar el punto donde $\nabla E = 0$, lo que quiere decir que se ha llegado al mínimo. Usualmente, por 
+            la naturaleza de la superficie de la función de error y diversos errores en el cálculo en una computadora, el número 
+            de iteraciones se limita en base a cierto parámetro de rendimiento.
 
         \subsubsection{Funciones de activación}
-        \subsubsection{Funcion de costo}
-        \subsubsection{Gradientes y retropropagación}
+        Se ha estudiado con mucho detalle la naturaleza de la función de activación $f()$, introducida en la 
+        Ecuación(\ref{eq:modelobase}), analizando fundamentalmente dos aspectos: su contribución a la generación 
+        de representaciones internas en las capas ocultas de la red neuronal, así como también su comportamiento 
+        de sus gradientes con relación a la etapa de aprendizaje, tal como se ha visto en la Sección(\ref{sec:gradientes}), 
+        donde se ha establecido claramente que el papel de la función de activación y sus gradientes es fundamental para 
+        el proceso de retropropagación y ajuste de los pesos de la red. Una guía con algunos criterios puede 
+        encontrarse en \cite{mhaskar1994choose}, de donde se rescatan los siguientes aspectos a la hora de escoger una 
+        función de activación:
+        \begin{itemize}
+            \item Que modele de forma no lineal la naturaleza de una representación interna fácil de interpretar.
+            \item Que sea derivable en todo el rango de trabajo.
+        \end{itemize}
+
+        Tomando en cuenta lo anterior, se han generado diversas tendencias en la aplicación de funciones de activación y a 
+        continuación se analizarán las más relevantes para este proyecto.
+            \paragraph{Función sigmoide}\label{sec:sigmoide}
+            Esta función ha sido introducida en la Ecuación(\ref{eq:sigmoide}) y representa, históricamente, la función 
+            más utilizada en las primeras redes neuronales artificiales porque modela de manera aproximada, una respuesta 
+            característica de las neuronas del cerebro \cite{narayan1997generalized}, pero sobre todo, porque posee las dos características mencionadas 
+            anteriormente: naturaleza no lineal y diferenciable. Otra característica llamativa, es que se puede interpretar 
+            a la salida como una función de probabilidad, pues sus valores van desde $0$ a $1$, como se puede apreciar 
+            en la Figura(\ref{fig:sigmoide}). Usualmente se incluye un parámetro adicional para controlar el \textit{radio de activación}
+            que hace que la función responda con más o menos sensibilidad a su entrada.
+
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.75\textwidth]{img/sigmoide}
+                \caption{Gráfico de la función sigmoide $\sigma(v) = 1 / (1 + e^{(-v)})$ (curva roja), y dos variaciones con un radio de activación de la forma $\sigma(sv)$ con valores $s=1/2$ (curva azul) y $s=10$ (curva púrpura) . Fuente: \cite{Goodfellow-et-al-2016} }
+                \label{fig:sigmoide}
+            \end{figure}
+            
+            Pese a las características anteriormente mencionadas, la función sigmoide tiene una gran desventaja: el llamado 
+            \textit{desvanecimiendo de gradientes} \cite{hochreiter1998vanishing}. Este fenómeno ocurre cuando la activación 
+            de una capa oculta tiene valores muy altos o muy negativos, se puede apreciar en la Figura(\ref{fig:sigmoide}), que 
+            para estos valores, la derivada tiene un valor muy pequeño, aproximándose a cero mientras más grandes sean los valores.
+            Este fenómeno ocasiona que, mientras se realiza la retropropagación de gradientes, dado que el gradiente tiene un valor 
+            muy bajo, el ajuste en los pesos sea mínimo, deteniendo así el aprendizaje de la neurona en la que ocurre el fenómeno.
+
+            Esta dificultad se presenta especialmente cuando la red neuronal se compone de varias capas ocultas y 
+            ha motivado el desarrollo de nuevas funciones de activación que no presenten esta limitación y puedan 
+            mantener valores de gradientes adecuados durante el entrenamiento.
+            
+            Cabe resaltar que, pese a las dificultades con la propagación de los gradientes de la función sigmoide, ésta se suele 
+            utilizar bastante en la capa de salida, cuando se trata de clasificación binaria, ya que representa de manera adecuada
+            la noción de probabilidad, lo cual es deseable en este tipo de modelos.
+
+            \paragraph{Función tangente hiperbólica} \label{sec:tanh}
+            La función tangente hiperbólica o $tanh()$ se define mediante la siguiente expresión:
+
+            \begin{equation}\label{eq:tanh}
+                tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+            \end{equation}
+
+            Esta función también cumple con los requisitos de no linealidad y de ser derivable, pero en este caso, el rango de 
+            salida de la función $tanh()$ es desde $-1$ a $1$. Considerando el concepto de función de probabilidad que ofrece 
+            la salida de la función sigmoide, la función tangente hiperbólica introduce el concepto de aceptación o negación 
+            de una premisa, donde una premisa aceptada se acerca a 1 y una premisa rechazada se acerca a -1, el valor de 0, 
+            indica indecisión. La función $tanh()$ se ha usado junto a su par sigmoide ampliamente en los inicios de las redes 
+            neuronales para las activaciones de las capas ocultas, pero, tal como se puede observar en la Figura(\ref{fig:tanh}), 
+            presenta la misma desventaja del desvanecimiendo de gradientes, dado que para valores muy grandes, la derivada se 
+            aproxima a cero.
+
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.75\textwidth]{img/tanh}
+                \caption{Gráfico de la función tangente hiperbólica $tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$. Fuente: \cite{wang_2016} }
+                \label{fig:tanh}
+            \end{figure}
+
+            En la actualidad, para implementaciones de redes neuronales profundas, el uso de las funciones sigmoide y tangente 
+            hiperbólica en las capas ocultas está ampliamente desaconsejado por los problemas anteriormente planteados. En su 
+            lugar se ha generado nuevos tipos de funciones de activación que presentan características bastante favorables 
+            para el aprendizaje y ajuste de pesos basados en gradientes.
+
+            \paragraph{Unidad Lineal Rectificada - ReLU}
+            Introducida por primera vez en el año 2010 por Nair y Hinton, las Unidades Lineales Rectificadas o ReLU, se 
+            propusieron para mejorar el rendimiento de un tipo especial de red neuronal: las máquinas restringidas de Boltzman 
+            (RMB, por sus siglas en inglés) \cite{nair2010rectified}, pero pronto, ganarían gran popularidad también en las 
+            redes neuronales feedforward y en redes neuronales convolucionales como se puede apreciar en \cite{krizhevsky2012imagenet}.
+            
+            La función ReLU se define de la siguiente manera:
+
+            \begin{equation}\label{eq:relu}
+                g(x) = max\{0,x\}
+            \end{equation}
+
+            Tal como se puede apreciar, la característica más importante de la función ReLU es su simplicidad pues es muy 
+            similar a una función identidad, la diferencia es que ReLU toma el valor de cero para todos los valores de $x$ que 
+            sean negativos. Esto resuelve el problema del desvanecimiendo de gradientes pues garantiza que el gradiente 
+            tenga un valor razonable si la entrada está activa y además sea consistente.
+
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.75\textwidth]{img/relu}
+                \caption{Gráfico de la ReLU. Fuente: \cite{wang_2016} }
+                \label{fig:relu}
+            \end{figure}
+
+            Sin embargo, dado que la función ReLU tiene una gradiente nula para valores negativos es de vital importancia 
+            que se garantice la existencia de gradientes positivos, aunque sea pequeños durante la inicialización y las capas 
+            previas.
+
         \subsubsection{Diseño de Arquitecturas}
 
     \subsection{Redes Neuronales Convolucionales}
