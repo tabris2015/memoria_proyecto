@@ -134,6 +134,14 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             ejemplo muy conocido es el de la tarea de la predicción del precio de una casa en base a sus características, el precio 
             de una casa no puede categorizarse porque representa un número que puede tener infinitos valores dentro de un rango definido.
         
+
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.75\textwidth]{img/regression}
+                \caption{Regresión lineal, una tarea de aprendizaje supervisado. Fuente: \cite{wikipedia_2018} }
+                \label{fig:regresion}
+            \end{figure}
+
         En las tareas del aprendizaje supervisado, se puede considerar cada ejemplo como una descripción de 
         una situación (características) en conjunto con una especificación (etiqueta), cada uno de los ejemplos 
         dentro el conjunto de datos son eventos independientes y se pueden analizar por separado. En este sentido
@@ -151,6 +159,13 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             Refiere a la tarea de separar y agrupar los datos en un número finito de conjuntos o \textit{clusters}. Los 
             \textit{clusters} normalmente denotan una estructura oculta dentro de los datos y proporcionan información acerca 
             de la similaridad entre ejemplos del conjunto de datos.
+
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.75\textwidth]{img/clustering}
+                \caption{Clustering, una tarea de aprendizaje no supervisado. Fuente: \cite{viswarupan_2017} }
+                \label{fig:clustering}
+            \end{figure}
 
             \paragraph{Reducción de dimensionalidad}
             Uno de los problemas con las bases de datos y conjuntos de datos disponibles es que poseen una dimensionalidad 
@@ -175,9 +190,14 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             \item \textbf{Recompensa.} Es la función que define la efectividad del agente de cumplir el objetivo deseado, normalmente, el aprendizaje se enfoca en maximizar la recompensa que el agente puede obtener. 
         \end{itemize}
         
-        % TODO: insertar grafico de aprendizaje por refuerzo
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/refuerzo}
+            \caption{Esquema de una tarea de aprendizaje por refuerzo. Fuente: \cite{bhatt_2018} }
+            \label{fig:refuerzo}
+        \end{figure}
 
-    % TODO: 
+        
     \subsection{Aprendizaje Profundo}
     Dentro del campo de la inteligencia artificial y el aprendizaje automático se han implementado diversos tipos 
     de algoritmos con éxito en los tipos de tareas de aprendizaje mencionados anteriormente. La base teórica y los detalles 
@@ -350,7 +370,7 @@ que los términos autonomía y automatización se usan de manera intercambiable 
 
             \begin{figure}[!h] 
                 \centering
-                \includegraphics[width=0.75\textwidth]{img/gradsup}
+                \includegraphics[width=0.55\textwidth]{img/gradsup}
                 \caption{Visualización de la función de error $E(\mathbf{w})$ como una superficie. El punto $\mathbf{w}_A$ es un mínimo local y el punto $\mathbf{w}_B$ es el mínimo global. Fuente: \cite{Bishop2006} }
                 \label{fig:gradsup}
             \end{figure}
@@ -371,6 +391,49 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             hasta encontrar el punto donde $\nabla E = 0$, lo que quiere decir que se ha llegado al mínimo. Usualmente, por 
             la naturaleza de la superficie de la función de error y diversos errores en el cálculo en una computadora, el número 
             de iteraciones se limita en base a cierto parámetro de rendimiento.
+
+            Tradicionalmente, el algoritmo de descenso de gradiente se evalúa sobre todo el conjunto de datos de entrenamiento, 
+            este tipo de descenso de gradiente es llamado \textit{batch gradient descent}, una \textit{pasada} por todo el conjunto 
+            de entrenamiento se denomina usualmente una \textit{época}. La principal desventaja es que la 
+            actualización de los pesos de la red neuronal solamente se actualiza una sola vez en cáda época; esto representa una 
+            dificultad en tiempo de procesamiento y memoria cuando se procesan conjuntos de datos muy grandes. Se han desarrollado 
+            versiones alternativas al \textit{batch gradient descent} que mejoran su desempeño y son más tratables con 
+            conjuntos de datos muy grandes:
+
+            \begin{itemize}
+                \item \textbf{\textit{Stochastic Gradient Descent.}} Refiere a que la actualización de los pesos en cada muestra procesada, es decir, que los pesos se actualizan $n$ veces en una época.
+                \item \textbf{\textit{Mini-batch Gradient Descent.}} Es una mezcla del descenso de gradiente tradicional y el descenso de gradiente estocástico, en este caso, las muestras se alimentan al algoritmo en \textit{mini-batches} o muestras de tamaño pequeño.
+            \end{itemize}
+        
+            \paragraph{Adam}
+            Adam, abreviación de \textit{Adaptive Moment Estimation}, es un algoritmo de optimización alternativo al descenso de 
+            gradiente que utiliza promedios tanto de los gradientes como los momentos de segundo orden de los gradientes \cite{kingma2014adam}. Dados 
+            los parámetros $\mathbf{w}^{(\tau)}$ y la función de error $E^{(\tau)}$, la actualización de parámetros de acuerdo 
+            a Adam se da mediante las siguientes expresiones:
+
+            \begin{align}
+                m_w^{(\tau + 1)} &= \beta_1 m_w^{(\tau)} + (1 - \beta_1) \nabla_w E^{(\tau)} \nonumber \\
+                v_w^{(\tau + 1)} &= \beta_2 m_w^{(\tau)} + (1 - \beta_2) (\nabla_w E^{(\tau)})^2 \nonumber \\
+                \hat{m}_w &= \frac{m_w^{(\tau + 1)}}{1 - (\beta_1)^{(\tau + 1)} } \nonumber \\
+                \hat{v}_w &= \frac{v_w^{(\tau + 1)}}{1 - (\beta_2)^{(\tau + 1)} } \nonumber \\
+                w^{(\tau + 1)} &= w^{(\tau)} - \alpha \frac{\hat{m}_w}{\sqrt{\hat{v}_w} + \epsilon} \label{eq:adam}
+            \end{align}
+
+            Donde $m_w$ representa a los momentos de primer orden y $v_w$ representa a los momentos de segundo orden. Adam 
+            tiene los siguientes hiperparámetros:
+
+            \begin{itemize}
+                \item $\alpha$ es la razón de aprendizaje, análogo al caso del descenso de gradiente tradicional.
+                \item $\beta_1$ es la razón de decaimiento exponencial para el estimado de los momentos de primer orden.
+                \item $\beta_2$ es la razón de decaimiento exponencial para el estimado de los momentos de segundo orden.
+                \item $\epsilon$ es un escalar pequeño usado para prevenir una posible división entre cero.
+            \end{itemize}
+
+            La introducción de los estimados de los momentos de primer y segundo orden de los gradientes permiten que 
+            se tome en cuenta el \textit{ímpetu} con el que los gradientes cambian en el proceso de entrenamiento lo cual 
+            evita que pueda sobrepasar el mínimo y garantiza su convergencia a mayor velocidad que la de una actualización 
+            con un descenso de gradiente tradicional.
+            
 
         \subsubsection{Funciones de activación}
         Se ha estudiado con mucho detalle la naturaleza de la función de activación $f()$, introducida en la 
@@ -475,7 +538,45 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             que se garantice la existencia de gradientes positivos, aunque sea pequeños durante la inicialización y las capas 
             previas.
 
-        \subsubsection{Diseño de Arquitecturas}
+        \subsubsection{Diseño de Arquitectura e hiperparámetros de una red neuronal}
+        Como se ha podido ver en las secciones anteriores, la característica más importante de una red neuronal es que es capaz
+        de generar representaciones internas a partir de los datos y la retropropagación de los gradientes, lo que ha finalizado la era 
+        de la ``ingeniería de características'' donde se necesitaba conocimiento experto para elegir las representaciones adecuadas y cómo calcularlas, sin embargo, esto 
+        ha llevado a que el diseño de las redes se enfoque en otros aspectos como la arquitectura y otros parámetros externos 
+        que definen el modelo de la red. Por arquitectura de la red, se entiende a la estructura general de la red neuronal, 
+        el número de capas, el número de unidades o neuronas por cada capa y cómo las unidades y capas se conectan entre sí.
+
+        La gran parte de las redes neuronales estan organizadas en grupos de unidades llamadas capas, asimismo, las capas se 
+        ordenan de manera encadenada siendo cada capa una función de la capa que la precede, esto se ha establecido para una red de 
+        dos capas en la Ecuación(\ref{eq:reddoscapas}) en su forma general, pero, se puede expresar el modelo de forma vectorial
+        de la siguiente manera:
+
+        \begin{align}
+            \mathbf{h}^{(1)} &= g^{(1)} \left( \mathbf{W}^{(1)T}\mathbf{x} + \mathbf{b}^{(1)} \right) \\
+            \mathbf{h}^{(2)} &= g^{(2)} \left( \mathbf{W}^{(2)T}\mathbf{h}^{(1)} + \mathbf{b}^{(2)} \right)
+        \end{align}
+
+        En términos de redesn neuronales, la cantidad de unidades en cada capa se denomina el ancho o \textit{width} 
+        y la cantidad de capas se denomina profundidad o \textit{depth}.
+
+            \paragraph{Hiperparámetros}
+            Tanto la profundidad como el ancho de la red, son parámetros que se deben escoger en base a ciertos criterios, 
+            éstos parámetros son externos a los parámetros o pesos $\mathbf{W}$ de la red neuronal, por lo que se demoninan
+            hiperparámetros. Aparte del ancho y profundidad, en el diseño de una red neuronal se consideran las siguientes 
+            variables:
+
+            \begin{itemize}
+                \item Razón de aprendizaje $\alpha$.
+                \item Funciones de activación.
+                \item Tamaño del \textit{mini-batch}.
+                \item Número de épocas de entrenamiento.
+                \item Algoritmo optimizador (Ejemplo: Descenso de gradiente).
+                \item Función de costo.
+            \end{itemize}
+
+            Los hiperparámetros deberán ser escogidos de manera cuidadosa, pero debido a la gran complejidad y poca predictibilidad
+            del comportamiento de una red neuronal profunda normalmente se eligen en conjunto con un proceso de prueba y error, 
+            analizando las curvas de aprendizaje y rendimiento en conjuntos de datos de validación y prueba.
 
     \subsection{Redes Neuronales Convolucionales}
     Las redes neuronales convolucionales son un tipo especializado de red neuronal que 
@@ -534,10 +635,6 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         multidimensional de parámetros que se adaptan en el proceso de aprendizaje. 
 
         \subsubsection{Procesamiento de imágenes con redes neuronales convolucionales}
-
-        % TODO: poner un grafico de la convolucion en 2d de una imagen 
-
-
         La operación de convolución se usa frecuentemente sobre datos con más de una dimensión. Las imágenes digitales 
         son un perfecto ejemplo de un arreglo multidimensional de datos. Una imagen digital se representa mediante una
         matriz con filas y columnas, donde cada elemento se denomina pixel y contiene información acerca de la intensidad
@@ -558,6 +655,8 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         Frecuentemente, la última fórmula es la más utilizada en librerías de aprendizaje profundo 
         por su sencillez en la implementación en un sistema computacional, esto, dado que existe menos 
         variación en el rango de valores válidos de $m$ y $n$.
+
+        
 
         \subsubsection{Aprendizaje de representaciones internas}
         Una de las preguntas clave en la visión por computador es el cómo generar una buena y significativa
