@@ -13,7 +13,48 @@ de frenos o prevención de impactos. Este tipo de sistemas se ha ido desarrollan
 de manera paulatina pero todavía no existe un vehículo completamente autónomo circulando por las calles o carreteras. Notese
 que los términos autonomía y automatización se usan de manera intercambiable en este contexto.
 
-    \subsection{Niveles de Autonomía}
+Se han desarrollado tres enfoques concernientes al desarrollo de vehículos inteligentes de acuerdo al nivel de autonomía 
+que presentan estos sistemas:
+
+\begin{enumerate}
+    \item \textbf{Enfoques centrados en el conductor.} Se diseñan en base a la idea de tener a un humano en el lazo de control 
+    supervisando las funciones del vehículo
+    \item \textbf{Enfoques centrados en una red.} Se diseñan con la idea de que los vehículos inteligentes puedan compartir información entre sí en una infraestructura de red.
+    \item \textbf{Enfoques centrados en el vehículo.} Tienen el objetivo de desarrollar vehículos inteligentes completamente autónomos, sin la necesidad de la intervenión de un humano en el lazo de control.
+\end{enumerate}
+
+El interés en el desarrollo de vehículos completamente autónomos ha despertado el interés tanto de investigadores en todo 
+el mundo así como también de instituciones privadas y gubernamentales que han invertido esfuerzos en fomentar éste desarrollo.
+Una de las primeras instituciones en materializar una iniciativa en el desarrollo de vehículos autónomos fue la Agencia de Proyectos 
+de Investigación Avanzados (DARPA, por sus siglas en inglés) con el lanzamiento del concurso \textit{Grand Challenge} en el 
+año 2003 que era una carrera de vehículos autónomos que debían viajar por más de 200 Km en terrenos escabrosos. Este concurso sin 
+sin precedentes atrajo la atención de un número de instituciones de investigación de alto nivel, lo que permitió que el desarrollo 
+de este tipo de vehículos diera un gran paso adelante. 
+
+En 2005, una nueva versión del DARPA \textit{Grand Challenge} requirió que los vehículos condujeran por una carretera en un 
+desierto. En esta oportunidad, cinco vehículos completaron el trayecto de 211 Km en el desierto, con el vehículo de la Universidad 
+de Stanford \textit{Stanley} como ganador, habiendo recorrido todo el trayecto en 6 horas con 54 minutos. En la Figura(\ref{fig:darpa}),
+se pueden apreciar fotografías de los vehículos con mejor desempeño en la competencia.
+
+El siguiente hito en el desarrollo de vehículos autónomos, fue el desarrollo del concurso organizado por DARPA 
+\textit{Urban Challenge} en el año 2007, en el cual, los vehículos debían cumplir con ciertas tareas de 
+navegación pero esta vez en un entorno urbano simulado, con avenidas, intersecciones, señalización y 
+otros vehículos circulando simultáneamente. El recorrido comprendía aproximadamente 90 Km y representaba un reto por las 
+complejas tareas de decisiones y comportamientos en un entorno de tráfico similar al que se puede encontrar cualquier conductor 
+humano conduciendo en una ciudad. En esta ocasión, el ganador de la competencia fue el equipo Tartan Racing, un esfuerzo conjunto entre 
+la Carnegie Mellon University y General Motors Corporation con el vehículo Boss, una versión modificada de un Chevrolet Tahoe.
+
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/darpa}
+    \caption{Vehículos del \textit{Grand Challenge} de 2005: (a) Stanley (1er lugar), (b) Sandstorm (2do lugar). Vehículos del \textit{Urban Challenge} de 2007: (c) Boss (1er lugar) (d) Junior (2do lugar). Fuente: \cite{wikipedia_2018} }
+    \label{fig:darpa}
+\end{figure}
+
+
+
+    \subsection{Niveles de Autonomía SAE}
     Debido al creciente interés e inversión en el desarrolo de sistemas de conducción autónoma se ha establecido 
     una manera de categorizar los niveles de automatización de la conducción por parte de  la Sociedad de Ingenieros en Automoción
     (SAE, por sus siglas en inglés) en la que se definen seis niveles de automatización en vehículos terrestres, acuáticos y aéreos.
@@ -21,24 +62,29 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         \subsubsection{Nivel 0: Sin automatización}
         El conductor está en completo control de todas las funciones del vehículo en todo momento, no existe intervención 
         de ningún sistema automatizado en el control. Sistemas de alerta de colisión o pérdida de carril entran en esta categoría.
+        
         \subsubsection{Nivel 1: Conducción asistida}
         El conductor tiene el control del vehículo, pero el sistema puede modificar la aceleración o dirección del mismo. Los 
         sistemas de control de velocidad de crucero caen en esta categoría.
+        
         \subsubsection{Nivel 2: Automatización parcial}
         El conductor debe poder ser capaz de tomar el control del vehículo si ciertas se necesitan ciertas correcciones, pero  
         ya no está en control de la aceleración y dirección del vehículo directamente. Es importante resaltar que desde los
         niveles 0 al 2 el conductor no puede estar distraido en ningún momento de la conducción. Los sistemas de parqueo 
         automático representan un buen ejemplo de sistemas de Nivel 2.
+        
         \subsubsection{Nivel 3: Automatización condicional}
         El sistema automatizado tiene el control del vehículo, tanto de la aceleración, dirección así como también del monitoreo 
         del entorno bajo condiciones específicas. El conductor debe estar preparado para intervenir cuando el sistema así lo 
         requiera, por tanto, se permiten distracciones ocasionales. Uno de los sistemas recientemente implementados que cae en esta 
         categoría es el sistema \textit{autopilot} de los vehículos de Tesla Motors. % agregar referencia
+        
         \subsubsection{Nivel 4: Automatización elevada}
         El sistema está en completo control del vehículo y la presencia humana ya no es necesaria, sin embargo, la operación autónoma 
         del vehículo está limitada a condiciones específicas. Si las actuales condiciones del entorno sobrepasan las fronteras 
         de rendimiento definidas, el vehículo puede desplegar un protocolo o secuencia de emergencia. Actualmente el desarrollo 
         de vehículos autónomos o \textit{self driving cars} se enfoca en este nivel. 
+        
         \subsubsection{Nivel 5: Automatización completa}
         El sistema está en completo control del vehículo y la presencia humana no es necesaria en absoluto. El sistema es capaz 
         de proveer las mismas características que en el Nivel 4, pero en esta ocasión puede operar al vehículo en todas las condiciones.
@@ -65,16 +111,147 @@ que los términos autonomía y automatización se usan de manera intercambiable 
             \label{tbl:niveles}
             \end{table}
 
+    
+    \subsection{Tecnologías requeridas}
+    Las tecnologías básicas para sensado y actuación para vehículos autónomos ya existen en el mercado. El reto clave es el 
+    de integrar dichas tecnologías con nuevos desarrollos en un sistema estable. Para poder desarrollar sistemas de conducción 
+    autónoma confiables y seguros se necesita lo siguiente:
+
+    \begin{itemize}
+        \item Una forma de medir o estimar el estado del vehículo.
+        \item Una forma de medir o estimar el estado del entorno en el que el vehículo circula.
+        \item Acceso a mapas e información satelital.
+        \item Una infraestructura de comunicación distribuida con otros vehículos.
+    \end{itemize}
+
+        \subsubsection{Estado del vehículo}
+        La localización del vehículo es fundamental para tareas de conducción autónoma y debe ser conocida si se desea que siga 
+        una trayectoria definida. Para controlar un vehículo de forma que sea capaz de evadir obstáculos o mantener un carril, se 
+        necesita conocimiento del estado cinemático y dinámico del mismo. Diversas fuentes de información y datos sobre el estado
+        del vehículo pueden ser incorporados como encoders, o unidades inerciales en combinación con medidas de navegación absolutas 
+        como GPS. Adicionalmente, la posición del vehículo puede ser conocida con referencia a marcadores locales. Aparte de la 
+        localización del vehículo, sistemas de medición de parámetros internos y control de funciones como aceleración, dirección 
+        estado del motor, y otros, pueden ser incorporados.
+
+        El desarrollo de modelos adecuados para el control del vehículo también representa una tarea importante pues es en 
+        base a estos modelos sobre los cuales se desarrollarán los algoritmos que lo controlen. 
+
+        \subsubsection{Estado del entorno}
+        Otro aspecto crítico en el desarrollo de un sistema autónomo es el sensado del estado del entorno y cómo el mismo 
+        evoluciona en el tiempo. La tarea más difícil para un vehículo es poder generar un entendimiento de lo que pasa en 
+        la carretera, esto incluye poder detectar marcadores clave, otros vehículos, peatones, la carretera o avenida por la que 
+        esta circulando actualmente y otros obstáculos como árboles. 
+        
+        La información se obtiene de diversos tipos de sensores 
+        montados en el mismo vehículo, de los cuales los más comunes son los sensores visuales o cámaras que pueden ser posicionadas 
+        en distintas orientaciones para poder observar todo lo que ocurre alrededor del vehículo. Los datos de las cámaras 
+        son procesados con el objetivo de extraer información valiosa como la ubicación del carril, detección de peatones y otros 
+        obstáculos. Otro tipo de sensores utilizados comunmente son sensores de proximidad, que permiten obtener medidas de distancia 
+        a los obstáculos más cercanos ofreciendo así información al vehículo sobre su posición relativa a los mismos. 
+        
+        Un tipo especial de sensores muy comunes en vehículos autónomos son los LIDAR, que generan una nube de puntos 
+        con información acerca de la distancia a los obstáculos más cercanos en dos y tres dimensiones.
+        % imagen de lidar 
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/lidar}
+            \caption{Visualización de los datos provenientes de un LIDAR para tareas de conducción autónoma. Fuente: \cite{cameron_2017} }
+            \label{fig:lidar}
+        \end{figure}
+        
+
     \subsection{Arquitectura de un sistema de conducción autónoma}
-    % \subsection{Aprendizaje Profundo}
+    En base a los distintos aspectos detallados anteriormente (Figura(\ref{fig:esquema})), en el marco de los objetivos del presente 
+    proyecto, se puede describir a la tarea de conducción autónoma usando una arquitectura compuesta 
+    por tres elementos o subsistemas fundamentales: el subsistema de control y actuación del vehículo, el 
+    subsistema de adquisición de datos y entrenamiento y el subsistema de inferencia y control.
 
-% TODO: 
-\section{Visión por computador}
--
-    \subsection{Procesamiento de imágenes}
-    \subsection{Filtrado}
+        \subsubsection{Subsistema de control y actuación.}
+        Este subsistema representa la parte física y de bajo nivel del vehículo, el vehículo en sí, 
+        sumado a los sistemas de control y sensado incorporados. Este subsistema cuenta con las interfaces necesarias 
+        para controlar el vehículo mediante comandos de control de aceleración y dirección y con los medios 
+        para extraer información del estado interno del vehículo, así como también del entorno con cámaras o sensores 
+        de proximidad. Por sí solo, este subsistema no es capaz de realizar ninguna tarea de conducción autónoma.
 
-\section{Redes Neuronales Artificiales}
+        % TODO: grafico del subsistema
+        \subsubsection{Subsistema de adquisición de datos y entrenamiento.}
+        Este subsistema se compone de un conjunto de herramientas y utilidades para la 
+        adquisición de conjuntos de datos de entrenamiento y validación, así como
+        también un módulo de entrenamiento de la red neuronal convolucional para la tarea de
+        la generación de comandos de control. En la parte de adquisición de datos, provee de las herramientas necesarias 
+        para poder extraer información relevante de sesiones de conducción controlada por un operador humano de forma 
+        que se tengan los datos necesarios para que el vehículo pueda aprender la forma de conducir en base a una referencia 
+        de conducción humana.
+
+        \subsubsection{Subsistema de inferencia y conducción autónoma.}
+        El subsistema de inferencia y conducción autónoma tiene la tarea de obtener y ejecutar
+        las predicciones del modelo predictivo entrenado en el Subsistema de Adquisición de Datos y Entrenamiento.
+        Este subsistema tomará como entradas los datos de los 
+        sensores a bordo del vehículo para generar comandos de control acordes con el entorno
+        percibido. Este subsistema usualmente está implementado en forma de un programa de ``piloto automático''
+        capaz de conducir el prototipo de manera autónoma de acuerdo a las limitaciones definidas en el diseño.
+
+\section{Visión Artificial}
+La visión es un sentido fundamental en el desarrollo de cualquier persona y, entender el entorno basados en la información que 
+un humano puede ver es relativamente sencillo. Tareas como reconocer la forma y color de un objeto cercano o contar las personas 
+presentes en una fotografía de grupo son tareas triviales para un ser humano. La visión artificial es un campo de 
+las ciencias de la computación que intenta reproducir las capacidades de una persona para entender imágenes. Este campo
+aglutina técnicas matemáticas para recuperar la forma y apariencia en tres dimensiones de objetos en una imagen. Se trata 
+del desarrollo de distintas técnicas y algoritmos que intentan recuperar la información más importante de una imagen digital, 
+en otras palabras, que una computadora pueda entender una imagen. En la actualidad, las técnicas de visión artificial son 
+usadas en diversas aplicaciones de la vida real de las cuales podemos citar algunas:
+
+\begin{itemize}
+    \item \textbf{Reconocimiento optico de caracteres (OCR):} Lectura de dígitos manuscritos de códigos postales (Figura(\ref{fig:cvision}a)) y reconocimiento automático de placas de vehíchulos.
+    \item \textbf{Inspección automática:} Inspección de partes para el control de calidad en líneas de producción industriales(Figura(\ref{fig:cvision}b)).
+    \item \textbf{Ventas:} Reconocimiento de objetos para pagos en cajas automatizadas(Figura(\ref{fig:cvision}c)).
+    \item \textbf{Reconstrucción de modelos en 3D (fotogrametría):} Reconstrucción automática de modelos en tres dimensiones a partir de fotografías aéreas.
+    \item \textbf{Imagenología médica:}  Registro de imágenes pre y post operatorias para estudios y diagnósticos especializados(Figura(\ref{fig:cvision}d)).
+    \item \textbf{Seguridad automotriz:} Detección de obstáculos inesperados como peatones o ciclistas en situaciones donde métodos convencionales de detección de obstáculos no pueden aplicarse (Figura(\ref{fig:cvision}e)).
+    \item \textbf{Seguridad y vigilancia:} Monitoreo de actividad sospechosa y análisis de tráfico en carreteras (Figura(\ref{fig:cvision}f)).
+\end{itemize}
+
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/cvision}
+    \caption{Algunas aplicaciones de la visión artificial. Fuente: \cite{Szeliski2011} }
+    \label{fig:cvision}
+\end{figure}
+
+    \subsection{Caracterización de una imagen digital}
+    Luego de surgir de una o más fuentes de luz, reflejarse de una o más superficies y pasar a través del lente de una cámara, 
+    la luz finalmente llega al sensor óptico. Los fotones incidentes en el sensor son convertidos en valores de intensidad de 
+    color rojo, verde y azul (RGB) en un arreglo matricial que es lo que se conoce como una imagen digital. Todas las etapas 
+    envueltas en la obtención de una imagen digital se pueden apreciar en la Figura(\ref{fig:digitalcam}) donde se diferencian 
+    dos subproductos del proceso de conversión: la imagen \textit{raw} y la imagen compresa. Esta diferenciación nace de la 
+    necesidad de representar imágenes digitales sin ocupar mucho espacio en la memoria y para poder comprimir una imagen 
+    \textit{raw} se realizan varios procesos complementarios.
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/digitalcam}
+        \caption{Proceso de la obtención de una imagen con una cámara digital. Fuente: \cite{Szeliski2011} }
+        \label{fig:digitalcam}
+    \end{figure}
+
+    El sensor óptico se compone de un arreglo bidimensional de pixeles sensibles a la luz y a ciertos rangos de longitud de onda de 
+    la luz, lo que significa que pueden detectar ciertos colores o características de la luz que incide en ellos. Este arreglo 
+    se transforma en una matriz con valores de intensidad para cada color en cada pixel, es así como se puede entender 
+    a una imagen digital como un arreglo multidimensional de valores. 
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/digitalimg}
+        \caption{Representación de una imagen digital como un arreglo de pixeles. Fuente: \cite{Szeliski2011} }
+        \label{fig:digitalimg}
+    \end{figure}
+
+    La tarea de la visión artificial es especialmente complicada pues se intenta dar sentido o significado a un arreglo bidimensional 
+    de pixeles. Existen distintos métodos y algoritmos que intentan convertir esta inmensa cantidad de datos (los pixeles) en 
+    información útil (objetos).
+
+\section{Redes Neuronales Artificiales}         %done
 
     \subsection{Aprendizaje Automático}
     El aprendizaje automático es un subcampo de la inteligencia artificial que intenta extraer 
@@ -330,7 +507,7 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         de la retropropagación o \textit{backpropagation}, popularizado a partir del paper de Rumelhart \cite{rumelhart1986learning} 
         y ampliamente usado en la actualidad en la mayoría de las redes neuronales. La retropropagación tiene el objetivo de 
         encontrar los gradientes, en específico, se desea encontrar el gradiente de de la función de costo o error con respecto 
-        a los parámetros $\nabla_{\mathbf{W}}E(\mathbf{W})$. Si tomamos en cuenta que una red neuronal feedforward puede tener 
+        a los parámetros $\nabla_{\mathbf{W}}E(\mathbf{W})$. Si se toma en cuenta que una red neuronal feedforward puede tener 
         varias capas ocultas, la gradiente de la función de costo está en función de los parámetros y funciones de activación 
         de cada capa, por tanto, se necesita usar la regla de la cadena para poder encontrar estos gradientes intermedios.
 
@@ -654,7 +831,17 @@ que los términos autonomía y automatización se usan de manera intercambiable 
 
         Frecuentemente, la última fórmula es la más utilizada en librerías de aprendizaje profundo 
         por su sencillez en la implementación en un sistema computacional, esto, dado que existe menos 
-        variación en el rango de valores válidos de $m$ y $n$.
+        variación en el rango de valores válidos de $m$ y $n$. En la Figura(\ref{fig:convolucion}), se 
+        puede apreciar una visualización de la operación de convolución aplicada a una imagen. 
+
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/convolucion}
+            \caption{Visualización de la operación de convolución sobre una imagen digital. Fuente: \cite{cornelisse_2018} }
+            \label{fig:convolucion}
+        \end{figure}
+
 
         
 
@@ -700,11 +887,134 @@ que los términos autonomía y automatización se usan de manera intercambiable 
         la corteza visual de un gato. Puede decirse entonces que las redes convolucionales emulan, en cierto modo, 
         al proceso biológico de visión en animales.
 
-    % TODO: 
+ 
     \subsection{Sistemas de Aprendizaje Fin a Fin}
+    Los sistemas de aprendizaje fin a fin refieren a sistemas complejos que se conciben, modelan y entrenan 
+    como un conjunto para resolver cierto problema en vez de tratarse de forma separada por módulos. En términos
+    de redes neuronales, los sistemas de aprendizaje fin a fin refieren a redes neuronales complejas, compuestas 
+    por distintos componetes y tipos de unidades que usualmente tratan un problema de aprendizaje en su totalidad.
+    
+    En contraste con el desarrollo de los sistemas de aprendizaje tradicionales, tal como se pudo apreciar 
+    en la Sección(\ref{sec:problema}) donde cada etapa del proceso debía ser cuidadosamente diseñada y evaluada por alguien 
+    con la experiencia suficiente en el área, los sistemas fin a fin, dejan la responsabilidad de encontrar 
+    las representaciones internas adecuadas al proceso de entrenamiento de la red neuronal en sí. Las representaciones
+    adecuadas son generadas a partir del proceso de aprendizaje y ajuste de pesos en las distintas capas ocultas de la red 
+    neuronal. Usualmente, las redes neuronales para aplicaciones de aprendizaje fin a fin se componen de varias etapas 
+    de distinta naturaleza, de acuerdo al problema que se intenta resolver. 
 
-\section{Modelo cinemático del vehículo}
--
-    \subsection{Ecuaciones de movimiento}
+    Los sistemas de aprendizaje fin a fin han demostrado ser una alternativa bastante llamativa debido a que presentan 
+    las siguientes ventajas:
+
+    \begin{itemize}
+        \item \textbf{Diseño simplificado.} El diseño de un 
+        sistema fin a fin es mucho menos demandante en cuestión de tiempo y conocimiento experto, la extracción de características
+        no necesita ser una etapa elaborada por un experto pues se generará automáticamente.
+        \item \textbf{Entrenamiento centralizado.} Dado que se trata de una sola red neuronal profunda que se incorporará en 
+        el flujo de trabajo, el entrenamiento de la misma se realiza de forma única para todo el sistema.
+        \item \textbf{Flexibilidad.} Debido a que el proceso de diseño solamente introduce criterios generales para la tarea 
+        deseada, los sistemas fin a fin pueden ser fácilmente adaptados para realizar otras tareas en el futuro. Las iteraciones 
+        en el diseño y entrenamiento no requieren de mucho tiempo ni esfuerzo. 
+        \item \textbf{Modularidad.} La naturaleza de las representaciones internas generadas en las redes neuronales profundas 
+        permite que las mismas se puedan reutilizar en otras tareas o arquitecturas.
+    \end{itemize}
+
+    Gracias a las ventajas anteriormente descritas, los avances en el desarrollo de sistemas 
+    fin a fin han tenido particular éxito en las siguientes áreas:
+
+    \begin{itemize}
+        \item Reconocimiento de voz \cite{graves2014towards}.
+        \item Control de brazos robóticos \cite{levine2016end}.
+        \item Conduccion autónoma. \cite{bojarski2016end}.
+    \end{itemize}
+
+    En el presente proyecto, se utilizarán los conceptos de aprendizaje profundo, redes convolucionales y aprendizaje 
+    fin a fin para diseñar un sistema de conducción autónoma.
+
+\section{Robots móviles y locomoción con ruedas}
+Un robot móvil es una máquina electromecánica con ciertos niveles de autonomía definida que son capaces de moverse 
+y navegar por un entorno. Las ruedas aprovechan la fricción y el contacto con el suelo para hacer que el robot pueda moverse. 
+Si se considera un vehículo ideal, donde las ruedas no se deslizan hacia los costados y mantienen contacto con el suelo en 
+todo momento, para que exista un movimiento debe existir un punto alrededor del cual cada rueda sigue una trayectoria circular.
+Este punto es conocido como el Centro Instantáneo de Rotación o Curvatura (ICC). En la práctica, el ICC se puede identificar de manera 
+sencilla porque es el punto que yace en una linea coincidente con el eje de rotación de cada rueda. El ICC define la curvatura 
+de la trayectoria que sigue el robot en cada momento. En la Figura(\ref{fig:icc}), se puede apreciar una configuración compatible 
+con el movimiento sin deslizamiento de las ruedas y una configuración incompatible.
+
+\begin{figure}[!h] 
+    \centering
+    \includegraphics[width=0.75\textwidth]{img/icc}
+    \caption{Centro instantáneo de curvatura o ICC. (a) Arreglo compatible con el movimiento, (b) arreglo incompatible con el movimiento. Fuente: \cite{krizhevsky2012imagenet} }
+    \label{fig:icc}
+\end{figure}
 
 
+La existencia del ICC es una condición necesaria pero no suficiente para el movimiento de un robot con ruedas, también las 
+velocidades de cada rueda deben ser consistentes con la rotación rígida del vehículo en su conjunto. Un robot localizado en 
+un plano tiene tres grados de libertad: una posición $(x,y)$ y una orientación $\theta$. Este conjunto de parámetros $(x,y,\theta)$ 
+es comúnmente denominado la pose del robot en el plano.
+
+Los robots móviles usualmente no poseen un control absoluto sobre los tres parámetros de su pose y deben realizar diversas 
+maniobras para poder alcanzar una pose en particular. Estas restricciones en el control de su movimiento se conocen como 
+restricciones no holonómicas. 
+
+    \subsection{Modelo de locomoción de Ackerman}
+    Es el tipo de locomoción encontrada en la mayoría de los automóviles domésticos. En este modelo, las ruedas frontales estan 
+    direccionadas y pueden rotar distintos ángulos de tal manera que sus ejes de rotación se intersectan en el ICC. La rueda 
+    direccionada interna debe rotar un ángulo un poco mayor que la externa para que la condición se cumpla Figura(\ref{fig:ackerman}).
+
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/ackerman}
+        \caption{Modelo cinemático de Ackerman. Fuente: \cite{GregoryMcGillUniversity2010} }
+        \label{fig:ackerman}
+    \end{figure}
+
+    La locomoción de Ackerman es la preferida en vehículos de gran tamaño, los cuales están diseñados para operar en carreteras
+    existentes y soportar una carga considerable. Normalmente, el tamaño del vehículo permite incorporar una gran cantidad 
+    de sensores y sistemas de control. 
+        \subsubsection{Cinemática directa}
+        El vehículo rota alrededor de un punto que yace en la linea que pasa por el eje trasero una distancia $R$ del centro 
+        del vehículo donde
+
+        \begin{equation*}
+            R - l/2 = d \tan{(\pi / 2 - \alpha_l)}
+        \end{equation*}
+
+        Para que las ruedas puedan rodar la segunda rueda de dirección debe ser rotada un ángulo $\alpha_r$, donde 
+
+        \begin{equation*}
+            R + l/2 = d \tan{(\pi / 2 - \alpha_r)}
+        \end{equation*}
+
+        En general, las cuatro ruedas viajan por el suelo a velocidades diferentes y al especificar la velocudad de una sola rueda
+        se puede obtener las velocidades de las restantes. El modelo de locomoción de Ackerman es muy sofisticado y ha sido 
+        estudiado ampliamente. Para los objetivos del presente proyecto, se puede simplificar el modelo sin perder ninguna 
+        propiedad importante.
+
+    \subsection{Modelo de la bicicleta o triciclo} \label{sec:triciclo}
+    Los modelos de la bicicleta y el triciclo tienen modelos cinemáticos muy similares. Un triciclo típico tiene tres ruedas: 
+    dos ruedas de tracción traseras y una rueda de dirección delantera. El movimiento del robot es controlado por la dirección 
+    $\alpha$ y la velocidad $v$.
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/triciclo}
+        \caption{Modelo cinemático del triciclo. Fuente: \cite{GregoryMcGillUniversity2010} }
+        \label{fig:triciclo}
+    \end{figure}    
+
+        \subsubsection{Cinemática directa}
+        Si la rueda de dirección se orienta en un ángulo $\alpha$ de la dirección hacia adelante, el triciclo rotará con una 
+        velocidad angular $\omega$ con respecto al punto que yace a una distancia $R$ de la línea perpendicular que pasa 
+        por el eje trasero donde $R$ y $\omega$ están dados por las siguientes expresiones:
+
+        \begin{align}
+            R       &= d \tan(\frac{\pi}{2} - \alpha) \\
+            \omega  &= \sqrt{\frac{v}{d^2 + R^2}}
+        \end{align}
+
+        donde $d$ es la distancia desde la rueda frontal al eje trasero, como se observa en la Figura(\ref{fig:triciclo}).
+
+    
+    En el presente proyecto, se considerará el uso del modelo del triciclo definido en la Sección(\ref{sec:triciclo}) 
+    por razones de simplicidad.
