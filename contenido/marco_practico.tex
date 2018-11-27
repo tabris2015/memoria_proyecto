@@ -1,17 +1,256 @@
 \chapter{Marco Práctico} \label{ch:m_practico}
 \section{Arquitectura del sistema}
--
+
     \subsection{Entorno de trabajo}
 
-\section{Subsistema de Adquisición de Datos y Entrenamiento}
--
-    \subsection{Descripción general del subsistema}
+\section{Herramientas de software}
+    \subsection{Robot Operating System - ROS}
+    ROS o Sistema Operativo Robótico es un \textit{framework} flexible para desarrollar software para robots. Se compone 
+    de una colección de herramientas, librerías y convenciones que tienen el objetivo de simplificar la tarea de crear 
+    comportamientos complejos y robustos en plataformas de robótica en general \cite{ros}.
 
-    \subsection{Módulo de adquisición de datos y operación manual}
+    ROS ha sido construido con el objetivo de hacer accesible el desarrollo de sistemas robóticos mediante el trabajo 
+    colaborativo de paquetes y utilidades, su naturaleza modular hace posible que se puedan implementar sistemas pieza 
+    por pieza de acuerdo a las necesidades específicas de cada proyecto. Dentro de las facilidades que ROS ofrece, podemos 
+    encontrar diversas utilidades que permiten el desarrollo de sistemas con una complejidad elevada.
 
-    \subsection{Módulo de aumentación de datos y almacenamiento}
+        \subsubsection{Infraestructura de comunicación}
+        En su núcleo, ROS ofrece una interfaz de intercambio de mensajes que provee comunicación inter-procesos y es 
+        comunmente referida como el \textit{middleware}. El \textit{middleware} de ROS ofrece las siguientes facilidades:
 
-    \subsection{Módulo de Entrenamiento}
+        \begin{itemize}
+            \item Intercambio de mensajes mediante publicación/subscripción y tópicos.
+            \item Registro y reproducción de mensajes.
+            \item Llamadas a procedimientos del tipo request/response.
+            \item Sistema de administración distribuido de parámetros.
+        \end{itemize}
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/rqtgraph}
+            \caption{Diagrama de comunicación de nodos usando mensajes. Fuente: \cite{roswiki} }
+            \label{fig:rqtgraph}
+        \end{figure}
+
+        La naturaleza distribuida de ROS y las facilidades que ofrece el \textit{middleware}, hacen que el desarrollo de sistemas 
+        robóticos modulares sea una tarea trivial. Aparte de la infraestructura de comunicación, ROS ofrece otras características
+        especialmente diseñadas para el desarrollo de robots.
+        
+        \subsubsection{Características específicas para robótica}
+        Adicionalmente a los componentes del \textit{middleware}, ROS tiene a disposición librerías y herramientas específicas 
+        para el desarrollo rápido de sistemas robóticos. Algunas de las características más importantes se listan a continuación:
+
+        \begin{itemize}
+            \item Definiciones de mensajes estándar para robots.
+            \item Lenguaje de descripción de robots URDF.
+            \item Herramientas de diagnóstico.
+            \item Localización.
+            \item Mapeo.
+            \item Navegación.
+            \item Drivers de sensores y actuadores.
+        \end{itemize}
+
+        \subsubsection{Herramientas adicionales}
+        Una de las características más atractivas de ROS es el conjunto de herramientas para desarrollo. Estas herramientas 
+        soportan análisis, depuración y visualización del estado del sistema que esta siendo desarrollado. Los mecanismos presentes
+        de publicación y subscripción permiten analizar de manera espontánea el flujo de datos en el sistema. Las herramientas 
+        de ROS aprovechan esta característica y se presentan como una colección de herramientas gráficas y de línea de comandos que 
+        simplifican el desarrollo y depuración de robots.
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/rviz}
+            \caption{Interfaz de visualización de ROS rviz. Fuente: \cite{roswiki} }
+            \label{fig:rviz}
+        \end{figure}
+
+        \begin{itemize}
+            \item \textbf{Herramientas de Línea de Comandos.} Permiten el control y depuración de los sistemas 
+            de manera remota en una interfaz de línea de comandos. Existen comandos disponibles para ejecutar procesos, 
+            analizar tópicos y mensajes, grabar y reproducir sesiones de mensajes y ejecutar servicios.
+
+            \item \textbf{Rviz.} Es una interfaz de visualización de diversas fuentes de datos y modelos de robots. 
+            Con la herramienta rviz es posible visualizar diversos tipos de mensajes provenientes de sensores tales 
+            como cámaras o sensores láser. También es posible agrupar los distintos tipos de visualizaciones de manera 
+            jerárquica en la misma ventana.
+
+            \item \textbf{Rqt.} Rqt es un \textit{framework} para el desarrollo de interfaces gráficas para robots. 
+            Con rqt es posible crear interfaces de control o monitoreo de manera gráfica y personalizada usando 
+            componentes llamados plugins.
+
+        \end{itemize}
+
+
+        \subsubsection{Criterios de selección}
+        En el marco del presente proyecto y el tiempo establecido para su desarrollo se ha basado la selección del entorno 
+        de trabajo en base a los siguientes criterios:
+        \begin{itemize}
+            \item \textbf{Interfaz de comunicación distribuida.} Es necesario que se puedan desarrollar componentes del sistema 
+            de manera independiente y puedan ser ejecutados de la misma manera. ROS ofrece mediante el desarrollo de 
+            paquetes y nodos la facilidad de poder ejecutar y comunicar procesos de manera sencilla y distribuida a través
+             del intercambio de mensajes.
+            \item \textbf{Implementación de funcionalidades comunes.} También se necesita una plataforma con funcionalidades básicas 
+            implementadas y disponibles para su uso, esto con el fin de concentrar el tiempo de desarrollo en las funcionalidades del 
+            sistema en su conjunto más que en la plataforma sobre la cual se va a desplegar. Se necesitan herramientas reutilizables 
+            para evitar lo que comúnmente se denomina como \textit{reinventar la rueda}.
+            \item \textbf{Uso libre y código abierto.} ROS es una plataforma de código abierto, lo que permite utilizarlo de manera 
+            libre ya sea para proyectos académicos y comerciales. Además, su naturaleza open source permite también realizar cambios 
+            o mejoras en su funcionalidad de manera sencilla. El uso libre es importante dado que en entornos académicos normalmente 
+            no se cuenta con la facilidad de adquirir licencias de software privativo. El uso libre también permite el desarrollo por 
+            parte de investigadores independientes y estudiantes que no pertenecen a alguna institución que pueda apoyarlos financieramente.
+            \item \textbf{Facilidad de uso.} El entorno de trabajo debe tener la facilidad de ser accesible para personas con un 
+            conocimiento previo en electrónica y programación. Tanto los lenguajes de programación como las herramientas de desarrollo, 
+            compilación y despliegue tienen que estar disponibles y ser fáciles de utilizar.
+            \item \textbf{Compatibilidad con herramientas externas.} En el marco del proyecto y la aplicación de los conceptos de 
+            visión artificial y aprendizaje profundo. El entorno de trabajo debe ser compatible o poder extender sus funcionalidades 
+            con otros entornos dedicados al procesamiento de imágenes y visión artificial como a entornos y librerías 
+            para el desarrollo y entrenamiento de redes neuronales. 
+            \item \textbf{Interfaces con sistemas de bajo nivel y tiempo real.} Es necesario que la plataforma también 
+            sea compatible con el desarrollo de sistemas embebidos y de tiempo real para el control de actuadores y 
+            sensores que no se pueden conectar a una PC directamente.
+        \end{itemize}
+
+        Es en este sentido que se ha escogido usar al \textit{framework} ROS como plataforma de desarrollo para los distintos módulos 
+        del sistema. Cabe resaltar que ROS no es la única plataforma para desarrollar robots, y algunas alternativas se detallan en la 
+        Tabla(\ref{tbl:frameworks}) donde se puede analizar las características de cada una. 
+
+      
+        % Please add the following required packages to your document preamble:
+        % \usepackage{booktabs}
+        \begin{table}[!h]
+            \begin{tabular}{@{}|c|c|c|c|c|c|@{}}
+            \toprule
+            \textbf{Nombre}                                             & \textbf{\begin{tabular}[c]{@{}c@{}}Interfaz de \\ Comunicación\\ Distribuida\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Sistema de \\ compilación\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Gestión de \\ paquetes\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Drivers de \\ bajo nivel\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Lenguajes de \\ programación\end{tabular}} \\ \midrule
+            ROS                                                         & SI                                                                                         & SI                                                                         & SI                                                                      & SI                                                                        & \begin{tabular}[c]{@{}c@{}}C++\\ Python\\ Java\end{tabular}                   \\ \midrule
+            YARP                                                        & SI                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \midrule
+            ROCK                                                        & SI                                                                                         & SI                                                                         & NO                                                                      & NO                                                                        & C++                                                                           \\ \midrule
+            MRTP                                                        & NO                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \midrule
+            Player                                                      & SI                                                                                         & SI                                                                         & NO                                                                      & NO                                                                        & C++                                                                           \\ \midrule
+            \begin{tabular}[c]{@{}c@{}}Robotics \\ Library\end{tabular} & NO                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \bottomrule
+            \end{tabular}
+            \caption{Tabla comparativa de características entre distintas plataformas y librerías para desarrollo de sistemas robóticos. Fuente: Elaboración propia} % TODO: referencia
+            \label{tbl:frameworks}
+            \end{table}
+
+        ROS se usa de manera extensiva en el desarrollo del presente proyecto para las siguientes tareas:
+
+        \begin{itemize}
+            \item En el subsistema de control y actuación como una interfaz común de intercambio de mensajes para el control de los motores presentes en el prototipo, así como también en la recuperación de los datos de los sensores. Estas interfaces están implementadas como nodos de ROS.
+            \item En el subsistema de adquisición de datos y entrenamiento como una herramienta de captura de información del control manual y la cámara, tomando en cuenta las estampas de tiempo y sincronización para cada mensaje de ROS.
+            \item En el subsistema de inferencia y control autónomo como la plataforma sobre la cual se definen los distintos controladores como nodos de ROS y el programa del piloto automático como un árbitro entre los mensajes de los distintos controladores. 
+            \item En todo el sistema como la interfaz de comunicación distribuida a través del intercambio de mensajes entre el prototipo y la estación de trabajo remota.
+        \end{itemize}
+
+    \subsection{Tensorflow}
+    Tensorflow es una librería para cálculos numéricos que funciona en base a grafos de flujo de datos Figura(\ref{fig:grafotf}). Las operaciones matemáticas 
+    se representan como nodos en el grafo y los vértices representan matrices de datos multidimensionales o tensores que fluyen de 
+    un nodo a otro  \cite{tensorflow2015-whitepaper}. Debido a esta implementación, los grafos pueden ejecutarse de manera distribuida en varias CPU o GPU. Las operaciones 
+    matemáticas están disponibles para utilizar en la librería y sus implementaciones estan altamente optimizadas, lo que permite 
+    aprovechar al máximo el hardware disponible.
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/grafotf}
+        \caption{Ejemplo de un grafo de cómputo utilizado en Tensorflow. Fuente: \cite{asjad_2016} }
+        \label{fig:grafotf}
+    \end{figure}
+
+    Tensorflow se ha hecho popular por la facilidad con la que se puede implementar la arquitectura de una red neuronal usando grafos
+    de cómputo y por la optimización de los algoritmos usados. Actualmente, Tensorflow representa el estándar en la implementación de 
+    redes neuronales profundas tanto en la academia como la industria. 
+
+    Otra de las características de Tensorflow es que presenta una API en el lenguaje de programación Python, lo que permite el desarrollo
+    de redes neuronales de manera muy sencilla e intuitiva. 
+
+    En el presente proyecto, se utiliza Tensorflow como librería base para la implementación de la red neuronal tanto en la etapa de 
+    entrenamiento como en la etapa de inferencia. El entrenamiento e inferencia se implementan usando los algoritmos de Tensorflow 
+    optimizados para GPU de la marca Nvidia.% TODO: agregar referencia a otros capitulos
+
+    Es importante listar algunos términos que se usarán en el contexto de este proyecto, relacionados exclusivamente con la implementación 
+    de la red neuronal convolucional correspondiente con el sistema fin a fin que se implementa. 
+    \begin{itemize}
+        \item \textbf{Tensor:} Es una generalización de un vector o una matriz en dimensiones superiores. Internamente, 
+        Tensorflow representa tensores como arreglos n-dimensionales de tipos de datos base, como ser Int32 o Float64.
+
+        \item \textbf{Variable: } Refiere a la manera de presentar el estado persistente que se puede manipular por el 
+        programa o grafo de cómputo. Una variable contiene internamente un tensor con valores que se pueden modificar 
+        mediante operaciones. Las variables en Tensorflow comunmente se utilizan para representar a los pesos o parámetros 
+        de la red neuronal.
+
+        \item \textbf{Grafo:} Un grafo es un objeto de Tensorflow que contiene la información acerca de la estructura 
+        del grafo de cómputo que se va a utilizar. Contiene la información de las distintas operaciones y las conexiones 
+        entre las mismas por las que fluyen los tensores. La estructura del grafo debe ser declarada antes de su ejecución.
+
+        \item \textbf{Operación:} Una operación representa a un nodo en el grafo, tiene como entrada uno o varios 
+        tensores y produce como salida uno o varios tensores. Las operaciones definen los cálculos que se realizan entre 
+        tensores como ser una multiplicación de matrices o una operación de convolución, entre otras.
+    \end{itemize}
+
+    En el siguiente ejemplo, se puede observar la definición de un grafo de cómputo básico en Tensorflow:
+
+    \begin{lstlisting}[language=Python]
+        import tensorflow as tf 
+            #definicion de variables
+            input1 = tf.Variable(3.0) 
+            input2 = tf.Variable(2.0)
+            input3 = tf.Variable(5.0)
+
+            #definicion de las operaciones y el grafo
+            intermed = tf.add(input2,input3)
+            mul = tf.mul(input1,intermed)
+
+            #ejecucion de las operaciones 
+            with tf.Session() as sess:
+                result = sess.run([mul,intermed])
+                print(result) 
+    \end{lstlisting}
+
+    \subsection{Keras}
+    Keras es una librería para la definición e implementación de redes neuronales de alto nivel escrita en Python y compatible con 
+    diversas plataformas de cómputo tales como Tensorflow, CNTK o Theano \cite{chollet2015keras}. Esta librería ha sido desarrollada con el objetivo de 
+    facilitar la experimentación y prototipado rápido de modelos de aprendizaje profundo. Las características de la librería que 
+    la convierten en una opción viable en el desarrollo de modelos de aprendizaje profundo son las siguientes:
+
+    \begin{itemize}
+        \item Permite el prototipado rápido a través de su facilidad de uso, modularidad y capacidad de ser extendida.
+        \item Soporta la definición de redes neuronales recurrentes y redes neuronales convolucionales. La última categoría es la más importante para el presente proyecto.
+        \item Soporta la ejecución tanto en CPU como en GPU.
+    \end{itemize}
+
+    Keras se basa en la definición de redes neuronales en base a capas. Existe una clase especial de modelo llamado \textit{Sequential} que 
+    representa básicamente una red neuronal feedforward (Sección(\ref{sec:feedforward})). En un modelo \textit{Sequential} se define 
+    a la red en base a las capas de las que se compone, cada capa puede tener distinta naturaleza y características. 
+    
+    Además de la definición de las capas, Keras también cuenta con implementaciones de algoritmos de optmización y funciones de costo 
+    comunmente utilizadas en trabajos de investigación en la actualidad, lo cual facilita todavía más el desarrollo de modelos de 
+    redes neuronales. En el siguiente 
+    ejemplo, se puede apreciar la definición de la red neuronal de dos capas definida en la Ecuación(\ref{eq:reddoscapas}) con 32 unidades en 
+    la capa de entrada y 4 unidades en la capa de salida, con una función de costo de entropía cruzada categórica y el algoritmo de 
+    optimización de \textit{Stochastic Gradient Descent}:
+
+    \begin{lstlisting}[language=Python]
+        from keras.models import Sequential
+        from keras.layers import Dense, Activation
+
+        modelo = Sequential()
+        #primera capa
+        model.add(Dense(32), input_dim=128)
+        model.add(Activation('sigmoid'))
+        #segunda capa
+        model.add(Dense(4), input_dim=128)
+        model.add(Activation('sigmoid'))
+        #optimizador y funcion de costo
+        model.compile(loss='categorical_crossentropy',
+                            optimizer='sgd',
+                            metrics=['accuracy']
+                            )
+    \end{lstlisting}
+
+    \subsection{ARM Mbed}
+    
+
+
+\section{Herramientas de hardware}
 
 \section{Subsistema de Control y actuación}
 -
@@ -25,6 +264,17 @@
     \subsection{Módulo de la computadora de abordo}
 
     \subsection{Interfaces de comunicación}
+    
+
+\section{Subsistema de Adquisición de Datos y Entrenamiento}
+    -
+    \subsection{Descripción general del subsistema}
+    
+    \subsection{Módulo de adquisición de datos y operación manual}
+    
+    \subsection{Módulo de aumentación de datos y almacenamiento}
+    
+    \subsection{Módulo de Entrenamiento}
     
 \section{Subsistema de Inferencia y control autónomo}
 -
