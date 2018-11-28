@@ -1,7 +1,21 @@
 \chapter{Marco Práctico} \label{ch:m_practico}
 \section{Arquitectura del sistema}
+En la presente sección se procede a detallar la arquitectura del sistema de forma general analizando cada uno de 
+los subsistemas, sus funcionalidades, componentes y características. Posteriormente se detallarán los detalles técnicos
+y de implementación de cada subsistema. Para comenzar, es necesario describir la visión general del sistema, la finalidad 
+y alcance del mismo.
 
-    \subsection{Entorno de trabajo}
+    \subsection{Visión general}
+    Tal como se ha establecido en el Capítulo(\ref{ch:introduccion}), el objetivo del presente proyecto es el de diseñar 
+    un sistema de aprendizaje fin a fin para la tarea de conducción autónoma en vehículos domésticos. Este sistema ha sido 
+    diseñado con la finalidad de plantear una alternativa para el desarrollo de sistemas de conducción autónoma 
+
+    \subsection{Esquema del sistema}
+
+    \subsection{Subsistema de control y actuación} \label{sec:esqcontrol}
+    \subsection{Subsistema de adquisición de datos y entrenamiento}
+    \subsection{Subsistema de inferencia y control autónomo}
+    
 
 \section{Herramientas de software}
     \subsection{Robot Operating System - ROS}
@@ -247,10 +261,149 @@
     \end{lstlisting}
 
     \subsection{ARM Mbed}
-    
+    Mbed es una iniciativa llevada adelante por ARM que brinda un conjunto de herramientas de hardware y software para el 
+    desarrollo de dispositivos IoT (Internet de las Cosas). Mbed es un ecosistema de desarrollo sobre el cual se pueden 
+    desarrollar aplicaciones con microcontroladores con arquitectura ARM provenientes de distintos fabricantes \cite{mbed}. La 
+    característica principal de Mbed es la sencillez de su uso y la amplia gama de librerías disponibles para distintos componentes 
+    de hardware como sensores, actuadores o displays. ARM Mbed presenta las siguientes características clave para el desarrollo 
+    de sistemas embebidos de manera rápida y favorables al contexto del presente proyecto:
+
+    \begin{itemize}
+        \item Variedad de placas de desarrollo de microcontroladores ARM de distintos fabricantes.
+        \item Una interfaz de programación común a todos los microcontroladores y fabricantes para la interfaz con 
+        periféricos embebidos.
+        \item Un compilador en línea donde se pueden crear, compilar y desplegar proyectos.
+        \item Variedad de librerías para dispositivos como sensores, módulos de comunicación o actuadores.
+        \item El uso del lenguaje C++ con la especificación completa hace posible el desarrollo orientado 
+        a objetos para aprovechar altos niveles de abstracción en la programación.
+        \item La capacidad de generación de símbolos de depuración para su ejecución paso por paso con el fin de 
+        identificar \textit{bugs} en tiempo de ejecución.
+        \item La compatibilidad con la librería Rosserial que hace posible poder comunicar al microcontrolador 
+        con el \textit{middleware} de ROS de manera directa usando un puerto serial.
+    \end{itemize}
+
+    Mbed se usará como la plataforma para el desarrollo del control de tiempo real en el subsistema de control y actuación 
+    ya que ofrece todas las facilidades en cuanto a librerías y potencia computacional necesarias para esta tarea. En la 
+    Tabla(\ref{tbl:frameworks}) se puede observar una tabla comparativa entre diversas plataformas de desarrollo embebido 
+    consideradas para el presente proyecto.
+
+
+    \begin{table}[!h]
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Plataforma} & \textbf{Arquitectura}                                                          & \textbf{Lenguaje} & \textbf{\begin{tabular}[c]{@{}c@{}}Nivel de \\ abstracción\end{tabular}} & \textbf{Enfoque}                                                          \\ \hline
+        Arduino             & AVR - 8 bits                                                                   & Wiring (C++)      & Alto                                                                     & \begin{tabular}[c]{@{}c@{}}Hobby, Arte \\ y Educación\end{tabular}        \\ \hline
+        Mbed                & ARM - 32 bits                                                                  & C++               & Alto                                                                     & \begin{tabular}[c]{@{}c@{}}IoT, Sistemas \\ de tiempo real\end{tabular}   \\ \hline
+        Energia             & \begin{tabular}[c]{@{}c@{}}TI MSP430 - 16 bits\\ TI ARM - 32 bits\end{tabular} & Wiring (C++)      & Alto                                                                     & \begin{tabular}[c]{@{}c@{}}Hobby, Sistemas \\ de tiempo real\end{tabular} \\ \hline
+        Freedom E SDK       & RISC V - 32 bits                                                               & C                 & Bajo                                                                     & \begin{tabular}[c]{@{}c@{}}Sistemas de \\ tiempo real\end{tabular}        \\ \hline
+        libOpenCM3          & ARM - 32 bits                                                                  & C                 & Bajo                                                                     & \begin{tabular}[c]{@{}c@{}}Sistemas de \\ tiempo real\end{tabular}        \\ \hline
+        \end{tabular}
+    \end{table}
+
+    Una de las plataformas de desarrollo más utilizadas en la actualidad es Arduino, pese a haberse considerado esta plataforma 
+    por su disponibilidad, popularidad y gran soporte por la comunidad se ha detectado algunas limitaciones en la misma 
+    que hacen que no se la pueda recomendar para desarrollos académicos:
+
+    \begin{itemize}
+        \item Si bien el nivel de abstracción facilita la introducción a los microcontroladores para personas 
+        sin experiencia, oculta varios aspectos referidos al hardware de los periféricos del microcontrolador que 
+        escapan de control. Esta falta de control de bajo nivel puede ocasionar fallos y situaciones en las que no 
+        se pueda predecir con seguridad el comportamiento de un sistema. La predictibilidad es una característica 
+        fundamental en cualquier sistema de tiempo real.
+
+        \item El lenguaje de programación usado Wiring es un subconjunto del lenguaje C++ que carece de varias 
+        funcionalidades y no permite el desarrollo de clases con herencia y polimorfismo implementadas de manera adecuada.
+
+        \item El entorno de desarrollo integrado porporcionado, el Arduino IDE, es un entorno demasiado limitado 
+        para desarrollos de proyectos de mediana y gran envergadura.
+
+        \item La falta de capacidades de depuración, una limitación de la propia arquitectura AVR imposibilita el 
+        análisis del comportamiento en tiempo de ejecución del código y la identificación de posibles \textit{bugs} 
+        que puedan aparecer. Esta característica es de vital importancia para el desarrollo de sistemas de seguridad crítica.
+
+    \end{itemize}
 
 
 \section{Herramientas de hardware}
+Se han seleccionado diversas herramientas de hardware para la implementación del sistema de conducción autónoma. Dichas herramientas
+corresponden con la base física electrónica sobre la cual se ejecutarán las tareas de los tres subsistemas. Se procede a detallar 
+las herramientas utilizadas en el diseño del sistema.
+
+    \subsection{Plataforma de tiempo real}
+    La interfaz de más bajo nivel del sistema es el de la interacción con los actuadores de los motores del prototipo. Esta 
+    interfaz debe tener la capacidad de poder comunicarse con la OBC y además de poder cumplir ciertos requisitos de ejecución 
+    en tiempo real. Estos requisitos de tiempo real hace que tal comportamiento no se pueda implementar en la OBC pues la misma 
+    usa un sistema operativo basado en el kernel GNU/Linux, el cual no cuenta por defecto con capacidades de tiempo real dura. 
+    Por tanto, se ha establecido la necesidad de utilizar una plataforma embebida con una arquitectura más sencilla y con un 
+    nivel de predictibilidad mucho mayor al de la OBC. En este caso se usará un microcontrolador con arquitectura ARM Cortex M3.
+
+    La arquitectura ARM se ha popularizado bastante en los últimos años principalmente por su característica de tener un conjunto 
+    reducido de instrucciones y sencillez en la microarquitectura del procesador en comparación con otras arquitecturas comúnmente 
+    encontradas en servidores y computadoras personales como son X86 o PowerPC. Esta simplificación en la arquitectura y la reproducción
+    del conjunto de instrucciones ha permitido que los dispositivos basados en ARM puedan reducir dramáticamente el consumo de 
+    energía sin degradar demasiado el rendimiento. Es por eso que ARM, en la actualidad se constituye como la principal arquitectura en 
+    dispositivos móviles y de bajo consumo con cientos de millones de dispositivos usándola alrededor del mundo.
+
+    Sin embargo, el desarrollo e implemtación de esta arquitectura se ha dirigido bastante hacia procesadores de aplicación, presentes
+    en dispositivos como teléfonos inteligentes o tablets. Es por eso que ARM ha presentado una familia de procesadores ARM que estan
+    orientados exclusivamente al desarrollo de sistemas embebidos con capacidades de tiempo real y ultra bajo conmo de energía. Esta 
+    familia es la familia ARM Cortex-M que cuenta con varias características que la hacen ideal para el desarrollo del sistema en tiempo 
+    real requerido para la interfaz con los actuadores del presente proyecto.
+
+    Por su parte, dado que ARM no fabrica chips sino mas bien vende licencias de la arquitectura a distintas marcas fabricantes, existe 
+    una multitud de procesadores usando esta arquitectura de distintos fabricantes, entre los cuales podemos mencionar a ST Microelectronics,
+    Texas Instruments, Nordic, entre otros. Para el presente proyecto, se necesita que el microcontrolador pueda cumplir con las 
+    siguientes características. 
+
+    \begin{itemize}
+        \item Al menos un puerto de comunicación serial.
+        \item Periféricos capaces de generar señales PWM o con los recursos necesarios para emular PWM por software.
+        \item Memoria de datos y de programa suficiente para poder incluir la librería de Rosserial en el mismo.
+        \item Capacidades de depuración y ejecución paso por paso para la identificación de fallas.
+        \item Operación en niveles de tensión compatibles con la OBC.
+    \end{itemize}
+
+    Es por eso que se ha seleccionado el microcontrolador de ST Microelectronics STM32f303k8 (Figura()), tomando en cuenta 
+    que cumple con todos los requisitos anteriormente establecidos y además cuenta con una placa de desarrollo llamada 
+    Nucleof303k8 que además incluye las siguientes características:
+
+    \begin{itemize}
+        \item Circuito grabador-depurador en la placa, STlink V2.
+        \item Capacidades de comunicación seria mediante USB para un puerto de comunicación seria virtual e intefaz de depuración.
+        \item Múltiples fuentes de alimentación.
+        \item Leds indicadores.
+        \item Factor de forma compatible con varios entornos de desarrollo electrónico.
+    \end{itemize}
+
+    El microcontrolador utilizado, el STM32F303k8 pertenece a la familia de microcontroladores con arquitectura ARM Cortex M4f del 
+    fabricante ST Microelectronics. Es parte de la gama de microcontroladores f3 de la famila STM32 que esta orientado al procesamiento 
+    de señales pues cuenta con un procesador de 32 bits con una unidad de punto flotante que le permite realizar cálculos y operaciones 
+    con números decimales de manera eficiente. Las características del microcontrolador seleccionado se listan en la Tabla() a continuación:
+
+    Se han explorado diversas alternativas al uso de la placa de desarrollo Nucleof303k8 para la implementación de este módulo. En 
+    la Tabla() se pueden apreciar las características, precios y disponibilidad de varias placas de desarrollo embebido candidatas.
+
+    \subsection{Computadora de Abordo - OBC}
+
+    En el caso del hardware necesario para la OBC, se requiere un sistema capaz ejecutar un sistema operativo GNU/Linux completo 
+    con el fin de poder correr el software necesario para el control, comunicación y adquisición de imágenes de una cámara, necesarias
+    para el funcionamiento correcto del sistema en su conjunto. Es en este sentido que se ha optado por el uso de una \textit{Single Board Computer}
+    o Computadora de Una Placa, que refiere a placas de desarrollo con todas las características de una computadora de escritorio, es decir:
+    procesador, memoria y periféricos incorporados. Existe gran variedad de SBC en el mercado con distintas características y aplicaciones 
+    objetivo. En la Tabla() se puede apreciar una comparación de varias SBC disponibles en el mercado y sus características 
+    relevantes al presente proyecto.
+
+    % poner tabla
+
+    La placa seleccionada como OBC debe cumplir ciertas características específicas para este proyecto:
+
+
+
+    Al final, se ha seleccionado a la placa Raspberry Pi 3B+ para la OBC del proyecto pues cuenta con todas las características 
+    necesarias para poder ejecutar las herramientas de software requeridas y también cuenta con los periféricos adecuados para 
+    comunicarse con la plataforma de tiempo real.
+
+
 
 \section{Subsistema de Control y actuación}
 -
