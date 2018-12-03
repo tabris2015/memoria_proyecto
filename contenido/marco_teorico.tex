@@ -48,7 +48,7 @@ la Carnegie Mellon University y General Motors Corporation con el vehículo Boss
 \begin{figure}[!h] 
     \centering
     \includegraphics[width=0.75\textwidth]{img/darpa}
-    \caption{Vehículos del \textit{Grand Challenge} de 2005: (a) Stanley (1er lugar), (b) Sandstorm (2do lugar). Vehículos del \textit{Urban Challenge} de 2007: (c) Boss (1er lugar) (d) Junior (2do lugar). Fuente: \cite{wikipedia_2018} }
+    \caption[Vehículos del \textit{Grand Challenge}]{Vehículos del \textit{Grand Challenge} de 2005: (a) Stanley (1er lugar), (b) Sandstorm (2do lugar). Vehículos del \textit{Urban Challenge} de 2007: (c) Boss (1er lugar) (d) Junior (2do lugar). Fuente: \cite{wikipedia_2018} }
     \label{fig:darpa}
 \end{figure}
 
@@ -149,13 +149,13 @@ la Carnegie Mellon University y General Motors Corporation con el vehículo Boss
         obstáculos. Otro tipo de sensores utilizados comunmente son sensores de proximidad, que permiten obtener medidas de distancia 
         a los obstáculos más cercanos ofreciendo así información al vehículo sobre su posición relativa a los mismos. 
         
-        Un tipo especial de sensores muy comunes en vehículos autónomos son los LIDAR, que generan una nube de puntos 
+        Un tipo especial de sensores muy comunes en vehículos autónomos son los LIDAR\footnote{Acrónimo del inglés \textit{Laser Imaging Detection and Ranging}}, que generan una nube de puntos 
         con información acerca de la distancia a los obstáculos más cercanos en dos y tres dimensiones.
         % imagen de lidar 
         \begin{figure}[!h] 
             \centering
             \includegraphics[width=0.75\textwidth]{img/lidar}
-            \caption{Visualización de los datos provenientes de un LIDAR para tareas de conducción autónoma. Fuente: \cite{cameron_2017} }
+            \caption[Visualización de los datos provenientes de un LIDAR]{Visualización de los datos provenientes de un LIDAR para tareas de conducción autónoma. Fuente: \cite{cameron_2017} }
             \label{fig:lidar}
         \end{figure}
         
@@ -215,7 +215,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
 \begin{figure}[!h] 
     \centering
     \includegraphics[width=0.75\textwidth]{img/cvision}
-    \caption{Algunas aplicaciones de la visión artificial. Fuente: \cite{Szeliski2011} }
+    \caption[Algunas aplicaciones de la visión artificial]{Algunas aplicaciones de la visión artificial. Fuente: \cite{Szeliski2011} }
     \label{fig:cvision}
 \end{figure}
 
@@ -231,7 +231,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
     \begin{figure}[!h] 
         \centering
         \includegraphics[width=0.75\textwidth]{img/digitalcam}
-        \caption{Proceso de la obtención de una imagen con una cámara digital. Fuente: \cite{Szeliski2011} }
+        \caption[Obtención de una imagen con una cámara digital]{Proceso de la obtención de una imagen con una cámara digital. Fuente: \cite{Szeliski2011} }
         \label{fig:digitalcam}
     \end{figure}
 
@@ -243,7 +243,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
     \begin{figure}[!h] 
         \centering
         \includegraphics[width=0.75\textwidth]{img/digitalimg}
-        \caption{Representación de una imagen digital como un arreglo de pixeles. Fuente: \cite{Szeliski2011} }
+        \caption[Representación de una imagen digital]{Representación de una imagen digital como un arreglo de pixeles. Fuente: \cite{Szeliski2011} }
         \label{fig:digitalimg}
     \end{figure}
 
@@ -254,6 +254,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
 \section{Redes Neuronales Artificiales}         %done
 
     \subsection{Aprendizaje Automático}
+
     El aprendizaje automático es un subcampo de la inteligencia artificial que intenta extraer 
     patrones mediante un proceso de \textit{aprendizaje} a partir de datos \cite{Mitchell1990}. Este proceso 
     de aprendizaje se define de acuerdo a una \textbf{tarea específica} $T$ que intenta aprenderse en base 
@@ -315,7 +316,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             \begin{figure}[!h] 
                 \centering
                 \includegraphics[width=0.75\textwidth]{img/regression}
-                \caption{Regresión lineal, una tarea de aprendizaje supervisado. Fuente: \cite{wikipedia_2018} }
+                \caption[Regresión lineal]{Regresión lineal, una tarea de aprendizaje supervisado. Fuente: \cite{wikipedia_2018} }
                 \label{fig:regresion}
             \end{figure}
 
@@ -340,7 +341,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             \begin{figure}[!h] 
                 \centering
                 \includegraphics[width=0.75\textwidth]{img/clustering}
-                \caption{Clustering, una tarea de aprendizaje no supervisado. Fuente: \cite{viswarupan_2017} }
+                \caption[Clustering]{Clustering, una tarea de aprendizaje no supervisado. Fuente: \cite{viswarupan_2017} }
                 \label{fig:clustering}
             \end{figure}
 
@@ -370,7 +371,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
         \begin{figure}[!h] 
             \centering
             \includegraphics[width=0.75\textwidth]{img/refuerzo}
-            \caption{Esquema de una tarea de aprendizaje por refuerzo. Fuente: \cite{bhatt_2018} }
+            \caption[Esquema de una tarea de aprendizaje por refuerzo]{Esquema de una tarea de aprendizaje por refuerzo. Fuente: \cite{bhatt_2018} }
             \label{fig:refuerzo}
         \end{figure}
 
@@ -394,7 +395,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
     \begin{figure}[!h] 
         \centering
         \includegraphics[width=0.75\textwidth]{img/representacion}
-        \caption{Ilustración de un modelo de aprendizaje profundo. Las representaciones se generan en las capas ocultas y corresponden con características de distintos niveles de complejidad. Fuente: \cite{Goodfellow-et-al-2016} }
+        \caption[Ilustración de un modelo de aprendizaje profundo]{Ilustración de un modelo de aprendizaje profundo. Las representaciones se generan en las capas ocultas y corresponden con características de distintos niveles de complejidad. Fuente: \cite{Goodfellow-et-al-2016} }
         \label{fig:representacion}
     \end{figure}
 
@@ -478,7 +479,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
         \begin{figure}[!h] 
             \centering
             \includegraphics[width=0.75\textwidth]{img/reddoscapas}
-            \caption{Diagrama de la red neuronal de dos capas correspondiente a la Ecuación(\ref{eq:reddoscapas}). Fuente: \cite{Bishop2006} }
+            \caption[Diagrama de una red neuronal de dos capas]{Diagrama de la red neuronal de dos capas correspondiente a la Ecuación(\ref{eq:reddoscapas}). Fuente: \cite{Bishop2006} }
             \label{fig:reddoscapas}
         \end{figure}
         
@@ -548,7 +549,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             \begin{figure}[!h] 
                 \centering
                 \includegraphics[width=0.55\textwidth]{img/gradsup}
-                \caption{Visualización de la función de error $E(\mathbf{w})$ como una superficie. El punto $\mathbf{w}_A$ es un mínimo local y el punto $\mathbf{w}_B$ es el mínimo global. Fuente: \cite{Bishop2006} }
+                \caption[Visualización de la función de error]{Visualización de la función de error $E(\mathbf{w})$ como una superficie. El punto $\mathbf{w}_A$ es un mínimo local y el punto $\mathbf{w}_B$ es el mínimo global. Fuente: \cite{Bishop2006} }
                 \label{fig:gradsup}
             \end{figure}
 
@@ -640,7 +641,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             \begin{figure}[!h] 
                 \centering
                 \includegraphics[width=0.75\textwidth]{img/sigmoide}
-                \caption{Gráfico de la función sigmoide $\sigma(v) = 1 / (1 + e^{(-v)})$ (curva roja), y dos variaciones con un radio de activación de la forma $\sigma(sv)$ con valores $s=1/2$ (curva azul) y $s=10$ (curva púrpura) . Fuente: \cite{Goodfellow-et-al-2016} }
+                \caption[Gráfico de la función sigmoide]{Gráfico de la función sigmoide $\sigma(v) = 1 / (1 + e^{(-v)})$ (curva roja), y dos variaciones con un radio de activación de la forma $\sigma(sv)$ con valores $s=1/2$ (curva azul) y $s=10$ (curva púrpura) . Fuente: \cite{Goodfellow-et-al-2016} }
                 \label{fig:sigmoide}
             \end{figure}
             
@@ -678,7 +679,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             \begin{figure}[!h] 
                 \centering
                 \includegraphics[width=0.75\textwidth]{img/tanh}
-                \caption{Gráfico de la función tangente hiperbólica $tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$. Fuente: \cite{wang_2016} }
+                \caption[Gráfico de la función tangente hiperbólica]{Gráfico de la función tangente hiperbólica $tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$. Fuente: \cite{wang_2016} }
                 \label{fig:tanh}
             \end{figure}
 
@@ -707,7 +708,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             \begin{figure}[!h] 
                 \centering
                 \includegraphics[width=0.75\textwidth]{img/relu}
-                \caption{Gráfico de la ReLU. Fuente: \cite{wang_2016} }
+                \caption[Gráfico de la función ReLU]{Gráfico de la función ReLU. Fuente: \cite{wang_2016} }
                 \label{fig:relu}
             \end{figure}
 
@@ -838,12 +839,10 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
         \begin{figure}[!h] 
             \centering
             \includegraphics[width=0.75\textwidth]{img/convolucion}
-            \caption{Visualización de la operación de convolución sobre una imagen digital. Fuente: \cite{cornelisse_2018} }
+            \caption[Visualización de la operación de convolución sobre una imagen digital]{Visualización de la operación de convolución sobre una imagen digital. Fuente: \cite{cornelisse_2018} }
             \label{fig:convolucion}
         \end{figure}
 
-
-        
 
         \subsubsection{Aprendizaje de representaciones internas}
         Una de las preguntas clave en la visión por computador es el cómo generar una buena y significativa
@@ -877,7 +876,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
         \begin{figure}[!h] 
             \centering
             \includegraphics[width=0.75\textwidth]{img/fmap_imagenet}
-            \caption{Kernels convolucionales de tamaño $11 \times 11 \times 3$ en la primera capa convolucional. Fuente: \cite{krizhevsky2012imagenet} }
+            \caption[Kernels convolucionales de tamaño]{Kernels convolucionales de tamaño $11 \times 11 \times 3$ en la primera capa convolucional. Fuente: \cite{krizhevsky2012imagenet} }
             \label{fig:fmap_imagenet}
         \end{figure}
             
@@ -930,7 +929,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
     En el presente proyecto, se utilizarán los conceptos de aprendizaje profundo, redes convolucionales y aprendizaje 
     fin a fin para diseñar un sistema de conducción autónoma.
 
-\section{Robots móviles y locomoción con ruedas}
+\section{Robots móviles y locomoción con ruedas} \label{sec:ruedas}
 Un robot móvil es una máquina electromecánica con ciertos niveles de autonomía definida que son capaces de moverse 
 y navegar por un entorno. Las ruedas aprovechan la fricción y el contacto con el suelo para hacer que el robot pueda moverse. 
 Si se considera un vehículo ideal, donde las ruedas no se deslizan hacia los costados y mantienen contacto con el suelo en 
@@ -943,7 +942,7 @@ con el movimiento sin deslizamiento de las ruedas y una configuración incompati
 \begin{figure}[!h] 
     \centering
     \includegraphics[width=0.75\textwidth]{img/icc}
-    \caption{Centro instantáneo de curvatura o ICC. (a) Arreglo compatible con el movimiento, (b) arreglo incompatible con el movimiento. Fuente: \cite{krizhevsky2012imagenet} }
+    \caption[Centro instantáneo de curvatura]{Centro instantáneo de curvatura o ICC. (a) Arreglo compatible con el movimiento, (b) arreglo incompatible con el movimiento. Fuente: \cite{krizhevsky2012imagenet} }
     \label{fig:icc}
 \end{figure}
 
@@ -966,7 +965,7 @@ restricciones no holonómicas.
     \begin{figure}[!h] 
         \centering
         \includegraphics[width=0.75\textwidth]{img/ackerman}
-        \caption{Modelo cinemático de Ackerman. Fuente: \cite{GregoryMcGillUniversity2010} }
+        \caption[Modelo cinemático de Ackerman]{Modelo cinemático de Ackerman. Fuente: \cite{GregoryMcGillUniversity2010} }
         \label{fig:ackerman}
     \end{figure}
 
@@ -999,7 +998,7 @@ restricciones no holonómicas.
     \begin{figure}[!h] 
         \centering
         \includegraphics[width=0.75\textwidth]{img/triciclo}
-        \caption{Modelo cinemático del triciclo. Fuente: \cite{GregoryMcGillUniversity2010} }
+        \caption[Modelo cinemático del triciclo]{Modelo cinemático del triciclo. Fuente: \cite{GregoryMcGillUniversity2010} }
         \label{fig:triciclo}
     \end{figure}    
 
@@ -1017,4 +1016,4 @@ restricciones no holonómicas.
 
     
     En el presente proyecto, se considerará el uso del modelo del triciclo definido en la Sección(\ref{sec:triciclo}) 
-    por razones de simplicidad.
+    por razones de simplicidad sin perder generalización.

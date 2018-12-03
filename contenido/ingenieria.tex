@@ -1,0 +1,988 @@
+\chapter{Ingeniería del proyecto}\label{ch:ingenieria}
+\section{Arquitectura del sistema}
+En la presente sección se procede a detallar la arquitectura del sistema de forma general analizando cada uno de 
+los subsistemas, sus funcionalidades, componentes y características. Posteriormente se detallarán los detalles técnicos
+y de implementación de cada subsistema. Para comenzar, es necesario describir la visión general del sistema, la finalidad 
+y alcance del mismo.
+
+    \subsection{Visión general}
+    Tal como se ha establecido en el Capítulo(\ref{ch:introduccion}), el objetivo del presente proyecto es el de diseñar 
+    un sistema de aprendizaje fin a fin para la tarea de conducción autónoma en vehículos domésticos. Este sistema ha sido 
+    diseñado con la finalidad de plantear una alternativa para el desarrollo de sistemas de conducción autónoma en especial 
+    en el subsistema de inferencia y control autónomo. No obstante, se ha desarrollado un prototipo completamente funcional 
+    de un vehículo autónomo que cumple la tarea de seguir una carretera y detenerse cuando un obstáculo se interpone de 
+    manera autónoma. 
+
+    Es importante destacar que este proyecto también brinda un conjunto de herramientas de software 
+    y hardware de manera que se pueda replicar el mismo de forma fácil y con un presupuesto reducido. Si bien el 
+    presente proyecto se centra en el desarrollo 
+    del sistema de visión artificial para la generación de comandos de dirección usando una red neuronal convolucional, la 
+    naturaleza modular de la arquitectura del mismo permite realizar cambios o mejoras en cada uno de los subsistemas. Estos 
+    cambios y mejoras se pueden introducir aprovechando la naturaleza modular de los nodos de ROS y la infraestructura de 
+    comunicación presente en el sistema pudiendo agregarse más de un sistema de control en el mismo, como por ejemplo, un 
+    sistema de reconocimiento de peatones o señales de tránsito.
+
+    \subsection{Esquema del sistema}
+
+    Se procede a detallar el esquema general del sistema en base a la interacción de tres subsistemas básicos. 
+
+    \subsection{Subsistema de control y actuación} \label{sec:esqcontrol}
+    El subsistema de control y actuación tiene el objetivo de servir como base física para la implementación de los algoritmos 
+    de control. En la Figura() se puede apreciar sus componentes y la forma en que interactúan entre sí. El subsistema 
+    interactúa tanto con el subsistema de adquisición de datos y entrenamiento como con el subsistema de inferencia y control 
+    autónomo. 
+    
+    \subsection{Subsistema de adquisición de datos y entrenamiento}
+
+    \subsection{Subsistema de inferencia y control autónomo}
+    
+
+\section{Herramientas de software}
+    \subsection{Robot Operating System - ROS}
+    ROS o Sistema Operativo Robótico es un \textit{framework} flexible para desarrollar software para robots. Se compone 
+    de una colección de herramientas, librerías y convenciones que tienen el objetivo de simplificar la tarea de crear 
+    comportamientos complejos y robustos en plataformas de robótica en general \cite{ros}.
+
+    ROS ha sido construido con el objetivo de hacer accesible el desarrollo de sistemas robóticos mediante el trabajo 
+    colaborativo de paquetes y utilidades, su naturaleza modular hace posible que se puedan implementar sistemas pieza 
+    por pieza de acuerdo a las necesidades específicas de cada proyecto. Dentro de las facilidades que ROS ofrece, podemos 
+    encontrar diversas utilidades que permiten el desarrollo de sistemas con una complejidad elevada.
+
+        \subsubsection{Infraestructura de comunicación}
+        En su núcleo, ROS ofrece una interfaz de intercambio de mensajes que provee comunicación inter-procesos y es 
+        comunmente referida como el \textit{middleware}. El \textit{middleware} de ROS ofrece las siguientes facilidades:
+
+        \begin{itemize}
+            \item Intercambio de mensajes mediante publicación/subscripción y tópicos.
+            \item Registro y reproducción de mensajes.
+            \item Llamadas a procedimientos del tipo request/response.
+            \item Sistema de administración distribuido de parámetros.
+        \end{itemize}
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/rqtgraph}
+            \caption[Diagrama de comunicación de nodos]{Diagrama de comunicación de nodos usando mensajes. Fuente: \cite{roswiki} }
+            \label{fig:rqtgraph}
+        \end{figure}
+
+        La naturaleza distribuida de ROS y las facilidades que ofrece el \textit{middleware}, hacen que el desarrollo de sistemas 
+        robóticos modulares sea una tarea trivial. Aparte de la infraestructura de comunicación, ROS ofrece otras características
+        especialmente diseñadas para el desarrollo de robots.
+        
+        \subsubsection{Características específicas para robótica}
+        Adicionalmente a los componentes del \textit{middleware}, ROS tiene a disposición librerías y herramientas específicas 
+        para el desarrollo rápido de sistemas robóticos. Algunas de las características más importantes se listan a continuación:
+
+        \begin{itemize}
+            \item Definiciones de mensajes estándar para robots.
+            \item Lenguaje de descripción de robots URDF\footnote{URDF: Universal Robot Description Format}.
+            \item Herramientas de diagnóstico.
+            \item Localización.
+            \item Mapeo.
+            \item Navegación.
+            \item Drivers de sensores y actuadores.
+        \end{itemize}
+
+        \subsubsection{Herramientas adicionales}
+        Una de las características más atractivas de ROS es el conjunto de herramientas para desarrollo. Estas herramientas 
+        soportan análisis, depuración y visualización del estado del sistema que esta siendo desarrollado. Los mecanismos presentes
+        de publicación y subscripción permiten analizar de manera espontánea el flujo de datos en el sistema. Las herramientas 
+        de ROS aprovechan esta característica y se presentan como una colección de herramientas gráficas y de línea de comandos que 
+        simplifican el desarrollo y depuración de robots.
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/rviz}
+            \caption[Interfaz de visualización de ROS rviz]{Interfaz de visualización de ROS rviz. Fuente: \cite{roswiki} }
+            \label{fig:rviz}
+        \end{figure}
+
+        \begin{itemize}
+            \item \textbf{Herramientas de Línea de Comandos.} Permiten el control y depuración de los sistemas 
+            de manera remota en una interfaz de línea de comandos. Existen comandos disponibles para ejecutar procesos, 
+            analizar tópicos y mensajes, grabar y reproducir sesiones de mensajes y ejecutar servicios.
+
+            \item \textbf{Rviz.} Es una interfaz de visualización de diversas fuentes de datos y modelos de robots. 
+            Con la herramienta rviz es posible visualizar diversos tipos de mensajes provenientes de sensores tales 
+            como cámaras o sensores láser. También es posible agrupar los distintos tipos de visualizaciones de manera 
+            jerárquica en la misma ventana.
+
+            \item \textbf{Rqt.} Rqt es un \textit{framework} para el desarrollo de interfaces gráficas para robots. 
+            Con rqt es posible crear interfaces de control o monitoreo de manera gráfica y personalizada usando 
+            componentes llamados plugins.
+
+        \end{itemize}
+
+
+        \subsubsection{Criterios de selección}
+        En el marco del presente proyecto y el tiempo establecido para su desarrollo se ha basado la selección del entorno 
+        de trabajo en base a los siguientes criterios:
+        \begin{itemize}
+            \item \textbf{Interfaz de comunicación distribuida.} Es necesario que se puedan desarrollar componentes del sistema 
+            de manera independiente y puedan ser ejecutados de la misma manera. ROS ofrece mediante el desarrollo de 
+            paquetes y nodos la facilidad de poder ejecutar y comunicar procesos de manera sencilla y distribuida a través
+             del intercambio de mensajes.
+            \item \textbf{Implementación de funcionalidades comunes.} También se necesita una plataforma con funcionalidades básicas 
+            implementadas y disponibles para su uso, esto con el fin de concentrar el tiempo de desarrollo en las funcionalidades del 
+            sistema en su conjunto más que en la plataforma sobre la cual se va a desplegar. Se necesitan herramientas reutilizables 
+            para evitar lo que comúnmente se denomina como \textit{reinventar la rueda}.
+            \item \textbf{Uso libre y código abierto.} ROS es una plataforma de código abierto, lo que permite utilizarlo de manera 
+            libre ya sea para proyectos académicos y comerciales. Además, su naturaleza open source permite también realizar cambios 
+            o mejoras en su funcionalidad de manera sencilla. El uso libre es importante dado que en entornos académicos normalmente 
+            no se cuenta con la facilidad de adquirir licencias de software privativo. El uso libre también permite el desarrollo por 
+            parte de investigadores independientes y estudiantes que no pertenecen a alguna institución que pueda apoyarlos financieramente.
+            \item \textbf{Facilidad de uso.} El entorno de trabajo debe tener la facilidad de ser accesible para personas con un 
+            conocimiento previo en electrónica y programación. Tanto los lenguajes de programación como las herramientas de desarrollo, 
+            compilación y despliegue tienen que estar disponibles y ser fáciles de utilizar.
+            \item \textbf{Compatibilidad con herramientas externas.} En el marco del proyecto y la aplicación de los conceptos de 
+            visión artificial y aprendizaje profundo. El entorno de trabajo debe ser compatible o poder extender sus funcionalidades 
+            con otros entornos dedicados al procesamiento de imágenes y visión artificial como a entornos y librerías 
+            para el desarrollo y entrenamiento de redes neuronales. 
+            \item \textbf{Interfaces con sistemas de bajo nivel y tiempo real.} Es necesario que la plataforma también 
+            sea compatible con el desarrollo de sistemas embebidos y de tiempo real para el control de actuadores y 
+            sensores que no se pueden conectar a una PC directamente.
+        \end{itemize}
+
+        Es en este sentido que se ha escogido usar al \textit{framework} ROS como plataforma de desarrollo para los distintos módulos 
+        del sistema. Cabe resaltar que ROS no es la única plataforma para desarrollar robots, y algunas alternativas se detallan en la 
+        Tabla(\ref{tbl:frameworks}) donde se puede analizar las características de cada una. 
+
+      
+        % Please add the following required packages to your document preamble:
+        % \usepackage{booktabs}
+        \begin{table}[!h]
+            \begin{tabular}{@{}|c|c|c|c|c|c|@{}}
+            \toprule
+            \textbf{Nombre}                                             & \textbf{\begin{tabular}[c]{@{}c@{}}Interfaz de \\ Comunicación\\ Distribuida\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Sistema de \\ compilación\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Gestión de \\ paquetes\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Drivers de \\ bajo nivel\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Lenguajes de \\ programación\end{tabular}} \\ \midrule
+            ROS                                                         & SI                                                                                         & SI                                                                         & SI                                                                      & SI                                                                        & \begin{tabular}[c]{@{}c@{}}C++\\ Python\\ Java\end{tabular}                   \\ \midrule
+            YARP                                                        & SI                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \midrule
+            ROCK                                                        & SI                                                                                         & SI                                                                         & NO                                                                      & NO                                                                        & C++                                                                           \\ \midrule
+            MRTP                                                        & NO                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \midrule
+            Player                                                      & SI                                                                                         & SI                                                                         & NO                                                                      & NO                                                                        & C++                                                                           \\ \midrule
+            \begin{tabular}[c]{@{}c@{}}Robotics \\ Library\end{tabular} & NO                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \bottomrule
+            \end{tabular}
+            \caption{Tabla comparativa de características entre distintas plataformas y librerías para desarrollo de sistemas robóticos. Fuente: Elaboración propia} % TODO: referencia
+            \label{tbl:frameworks}
+            \end{table}
+
+        ROS se usa de manera extensiva en el desarrollo del presente proyecto para las siguientes tareas:
+
+        \begin{itemize}
+            \item En el subsistema de control y actuación como una interfaz común de intercambio de mensajes para el control de los motores presentes en el prototipo, así como también en la recuperación de los datos de los sensores. Estas interfaces están implementadas como nodos de ROS.
+            \item En el subsistema de adquisición de datos y entrenamiento como una herramienta de captura de información del control manual y la cámara, tomando en cuenta las estampas de tiempo y sincronización para cada mensaje de ROS.
+            \item En el subsistema de inferencia y control autónomo como la plataforma sobre la cual se definen los distintos controladores como nodos de ROS y el programa del piloto automático como un árbitro entre los mensajes de los distintos controladores. 
+            \item En todo el sistema como la interfaz de comunicación distribuida a través del intercambio de mensajes entre el prototipo y la estación de trabajo remota.
+        \end{itemize}
+
+    \subsection{Tensorflow}
+    Tensorflow es una librería para cálculos numéricos que funciona en base a grafos de flujo de datos Figura(\ref{fig:grafotf}). Las operaciones matemáticas 
+    se representan como nodos en el grafo y los vértices representan matrices de datos multidimensionales o tensores que fluyen de 
+    un nodo a otro  \cite{tensorflow2015-whitepaper}. Debido a esta implementación, los grafos pueden ejecutarse de manera distribuida en varias CPU o GPU. Las operaciones 
+    matemáticas están disponibles para utilizar en la librería y sus implementaciones estan altamente optimizadas, lo que permite 
+    aprovechar al máximo el hardware disponible.
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/grafotf}
+        \caption[Ejemplo de un grafo de cómputo utilizado en Tensorflow]{Ejemplo de un grafo de cómputo utilizado en Tensorflow. Fuente: \cite{asjad_2016} }
+        \label{fig:grafotf}
+    \end{figure}
+
+    Tensorflow se ha hecho popular por la facilidad con la que se puede implementar la arquitectura de una red neuronal usando grafos
+    de cómputo y por la optimización de los algoritmos usados. Actualmente, Tensorflow representa el estándar en la implementación de 
+    redes neuronales profundas tanto en la academia como la industria. 
+
+    Otra de las características de Tensorflow es que presenta una API en el lenguaje de programación Python, lo que permite el desarrollo
+    de redes neuronales de manera muy sencilla e intuitiva. 
+
+    En el presente proyecto, se utiliza Tensorflow como librería base para la implementación de la red neuronal tanto en la etapa de 
+    entrenamiento como en la etapa de inferencia. El entrenamiento e inferencia se implementan usando los algoritmos de Tensorflow 
+    optimizados para GPU\footnote{GPU: Graphics Processing Unit o Unidad de Procesamiento de Gráficos} de la marca Nvidia.% TODO: agregar referencia a otros capitulos
+
+    Es importante listar algunos términos que se usarán en el contexto de este proyecto, relacionados exclusivamente con la implementación 
+    de la red neuronal convolucional correspondiente con el sistema fin a fin que se implementa. 
+    \begin{itemize}
+        \item \textbf{Tensor:} Es una generalización de un vector o una matriz en dimensiones superiores. Internamente, 
+        Tensorflow representa tensores como arreglos n-dimensionales de tipos de datos base, como ser Int32 o Float64.
+
+        \item \textbf{Variable: } Refiere a la manera de presentar el estado persistente que se puede manipular por el 
+        programa o grafo de cómputo. Una variable contiene internamente un tensor con valores que se pueden modificar 
+        mediante operaciones. Las variables en Tensorflow comunmente se utilizan para representar a los pesos o parámetros 
+        de la red neuronal.
+
+        \item \textbf{Grafo:} Un grafo es un objeto de Tensorflow que contiene la información acerca de la estructura 
+        del grafo de cómputo que se va a utilizar. Contiene la información de las distintas operaciones y las conexiones 
+        entre las mismas por las que fluyen los tensores. La estructura del grafo debe ser declarada antes de su ejecución.
+
+        \item \textbf{Operación:} Una operación representa a un nodo en el grafo, tiene como entrada uno o varios 
+        tensores y produce como salida uno o varios tensores. Las operaciones definen los cálculos que se realizan entre 
+        tensores como ser una multiplicación de matrices o una operación de convolución, entre otras.
+    \end{itemize}
+
+    En el siguiente ejemplo, se puede observar la definición de un grafo de cómputo básico en Tensorflow:
+
+    \begin{lstlisting}[title={Ejemplo de un programa escrito con Tensorflow},captionpos=b,language=Python]
+        import tensorflow as tf 
+            #definicion de variables
+            input1 = tf.Variable(3.0) 
+            input2 = tf.Variable(2.0)
+            input3 = tf.Variable(5.0)
+
+            #definicion de las operaciones y el grafo
+            intermed = tf.add(input2,input3)
+            mul = tf.mul(input1,intermed)
+
+            #ejecucion de las operaciones 
+            with tf.Session() as sess:
+                result = sess.run([mul,intermed])
+                print(result) 
+
+    \end{lstlisting}
+
+    \subsection{Keras}
+    Keras es una librería para la definición e implementación de redes neuronales de alto nivel escrita en Python y compatible con 
+    diversas plataformas de cómputo tales como Tensorflow, CNTK o Theano \cite{chollet2015keras}. Esta librería ha sido desarrollada con el objetivo de 
+    facilitar la experimentación y prototipado rápido de modelos de aprendizaje profundo. Las características de la librería que 
+    la convierten en una opción viable en el desarrollo de modelos de aprendizaje profundo son las siguientes:
+
+    \begin{itemize}
+        \item Permite el prototipado rápido a través de su facilidad de uso, modularidad y capacidad de ser extendida.
+        \item Soporta la definición de redes neuronales recurrentes y redes neuronales convolucionales. La última categoría es la más importante para el presente proyecto.
+        \item Soporta la ejecución tanto en CPU como en GPU.
+    \end{itemize}
+
+    Keras se basa en la definición de redes neuronales en base a capas. Existe una clase especial de modelo llamado \textit{Sequential} que 
+    representa básicamente una red neuronal feedforward (Sección(\ref{sec:feedforward})). En un modelo \textit{Sequential} se define 
+    a la red en base a las capas de las que se compone, cada capa puede tener distinta naturaleza y características. 
+    
+    Además de la definición de las capas, Keras también cuenta con implementaciones de algoritmos de optmización y funciones de costo 
+    comunmente utilizadas en trabajos de investigación en la actualidad, lo cual facilita todavía más el desarrollo de modelos de 
+    redes neuronales. En el siguiente 
+    ejemplo, se puede apreciar la definición de la red neuronal de dos capas definida en la Ecuación(\ref{eq:reddoscapas}) con 32 unidades en 
+    la capa de entrada y 4 unidades en la capa de salida, con una función de costo de entropía cruzada categórica y el algoritmo de 
+    optimización de \textit{Stochastic Gradient Descent}:
+
+    \begin{lstlisting}[title={Ejemplo de una red neuronal usando la librería Keras},captionpos=b,language=Python]
+        from keras.models import Sequential
+        from keras.layers import Dense, Activation
+
+        modelo = Sequential()
+        #primera capa
+        model.add(Dense(32), input_dim=128)
+        model.add(Activation('sigmoid'))
+        #segunda capa
+        model.add(Dense(4), input_dim=128)
+        model.add(Activation('sigmoid'))
+        #optimizador y funcion de costo
+        model.compile(loss='categorical_crossentropy',
+                            optimizer='sgd',
+                            metrics=['accuracy']
+                            )
+    \end{lstlisting}
+
+    \subsection{ARM Mbed}
+    Mbed es una iniciativa llevada adelante por ARM que brinda un conjunto de herramientas de hardware y software para el 
+    desarrollo de dispositivos IoT (Internet de las Cosas). Mbed es un ecosistema de desarrollo sobre el cual se pueden 
+    desarrollar aplicaciones con microcontroladores con arquitectura ARM provenientes de distintos fabricantes \cite{mbed}. La 
+    característica principal de Mbed es la sencillez de su uso y la amplia gama de librerías disponibles para distintos componentes 
+    de hardware como sensores, actuadores o displays. ARM Mbed presenta las siguientes características clave para el desarrollo 
+    de sistemas embebidos de manera rápida y favorables al contexto del presente proyecto:
+
+    \begin{itemize}
+        \item Variedad de placas de desarrollo de microcontroladores ARM de distintos fabricantes.
+        \item Una interfaz de programación común a todos los microcontroladores y fabricantes para la interfaz con 
+        periféricos embebidos.
+        \item Un compilador en línea donde se pueden crear, compilar y desplegar proyectos.
+        \item Variedad de librerías para dispositivos como sensores, módulos de comunicación o actuadores.
+        \item El uso del lenguaje C++ con la especificación completa hace posible el desarrollo orientado 
+        a objetos para aprovechar altos niveles de abstracción en la programación.
+        \item La capacidad de generación de símbolos de depuración para su ejecución paso por paso con el fin de 
+        identificar \textit{bugs} en tiempo de ejecución.
+        \item La compatibilidad con la librería Rosserial que hace posible poder comunicar al microcontrolador 
+        con el \textit{middleware} de ROS de manera directa usando un puerto serial.
+    \end{itemize}
+
+    Mbed se usará como la plataforma para el desarrollo del control de tiempo real en el subsistema de control y actuación 
+    ya que ofrece todas las facilidades en cuanto a librerías y potencia computacional necesarias para esta tarea. En la 
+    Tabla(\ref{tbl:frameworks}) se puede observar una tabla comparativa entre diversas plataformas de desarrollo embebido 
+    consideradas para el presente proyecto.
+
+
+    \begin{table}[!h]
+        \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Plataforma} & \textbf{Arquitectura}                                                          & \textbf{Lenguaje} & \textbf{\begin{tabular}[c]{@{}c@{}}Nivel de \\ abstracción\end{tabular}} & \textbf{Enfoque}                                                          \\ \hline
+        Arduino             & AVR - 8 bits                                                                   & Wiring (C++)      & Alto                                                                     & \begin{tabular}[c]{@{}c@{}}Hobby, Arte \\ y Educación\end{tabular}        \\ \hline
+        Mbed                & ARM - 32 bits                                                                  & C++               & Alto                                                                     & \begin{tabular}[c]{@{}c@{}}IoT, Sistemas \\ de tiempo real\end{tabular}   \\ \hline
+        Energia             & \begin{tabular}[c]{@{}c@{}}TI MSP430 - 16 bits\\ TI ARM - 32 bits\end{tabular} & Wiring (C++)      & Alto                                                                     & \begin{tabular}[c]{@{}c@{}}Hobby, Sistemas \\ de tiempo real\end{tabular} \\ \hline
+        Freedom E SDK       & RISC V - 32 bits                                                               & C                 & Bajo                                                                     & \begin{tabular}[c]{@{}c@{}}Sistemas de \\ tiempo real\end{tabular}        \\ \hline
+        libOpenCM3          & ARM - 32 bits                                                                  & C                 & Bajo                                                                     & \begin{tabular}[c]{@{}c@{}}Sistemas de \\ tiempo real\end{tabular}        \\ \hline
+        \end{tabular}
+    \end{table}
+
+    Una de las plataformas de desarrollo más utilizadas en la actualidad es Arduino, pese a haberse considerado esta plataforma 
+    por su disponibilidad, popularidad y gran soporte por la comunidad se ha detectado algunas limitaciones en la misma 
+    que hacen que no se la pueda recomendar para desarrollos académicos:
+
+    \begin{itemize}
+        \item Si bien el nivel de abstracción facilita la introducción a los microcontroladores para personas 
+        sin experiencia, oculta varios aspectos referidos al hardware de los periféricos del microcontrolador que 
+        escapan de control. Esta falta de control de bajo nivel puede ocasionar fallos y situaciones en las que no 
+        se pueda predecir con seguridad el comportamiento de un sistema. La predictibilidad es una característica 
+        fundamental en cualquier sistema de tiempo real.
+
+        \item El lenguaje de programación usado Wiring es un subconjunto del lenguaje C++ que carece de varias 
+        funcionalidades y no permite el desarrollo de clases con herencia y polimorfismo implementadas de manera adecuada.
+
+        \item El entorno de desarrollo integrado porporcionado, el Arduino IDE, es un entorno demasiado limitado 
+        para desarrollos de proyectos de mediana y gran envergadura.
+
+        \item La falta de capacidades de depuración, una limitación de la propia arquitectura AVR imposibilita el 
+        análisis del comportamiento en tiempo de ejecución del código y la identificación de posibles \textit{bugs} 
+        que puedan aparecer. Esta característica es de vital importancia para el desarrollo de sistemas de seguridad crítica.
+
+    \end{itemize}
+
+
+\section{Herramientas de hardware}
+Se han seleccionado diversas herramientas de hardware para la implementación del sistema de conducción autónoma. Dichas herramientas
+corresponden con la base física electrónica sobre la cual se ejecutarán las tareas de los tres subsistemas. Se procede a detallar 
+las herramientas utilizadas en el diseño del sistema.
+
+    \subsection{Plataforma de tiempo real}
+    La interfaz de más bajo nivel del sistema es el de la interacción con los actuadores de los motores del prototipo. Esta 
+    interfaz debe tener la capacidad de poder comunicarse con la OBC y además de poder cumplir ciertos requisitos de ejecución 
+    en tiempo real. Estos requisitos de tiempo real hace que tal comportamiento no se pueda implementar en la OBC pues la misma 
+    usa un sistema operativo basado en el kernel GNU/Linux, el cual no cuenta por defecto con capacidades de tiempo real dura. 
+    Por tanto, se ha establecido la necesidad de utilizar una plataforma embebida con una arquitectura más sencilla y con un 
+    nivel de predictibilidad mucho mayor al de la OBC. En este caso se usará un microcontrolador con arquitectura ARM Cortex M3.
+
+    La arquitectura ARM se ha popularizado bastante en los últimos años principalmente por su característica de tener un conjunto 
+    reducido de instrucciones y sencillez en la microarquitectura del procesador en comparación con otras arquitecturas comúnmente 
+    encontradas en servidores y computadoras personales como son X86 o PowerPC. Esta simplificación en la arquitectura y la reproducción
+    del conjunto de instrucciones ha permitido que los dispositivos basados en ARM puedan reducir dramáticamente el consumo de 
+    energía sin degradar demasiado el rendimiento. Es por eso que ARM, en la actualidad se constituye como la principal arquitectura en 
+    dispositivos móviles y de bajo consumo con cientos de millones de dispositivos usándola alrededor del mundo.
+
+    Sin embargo, el desarrollo e implemtación de esta arquitectura se ha dirigido bastante hacia procesadores de aplicación, presentes
+    en dispositivos como teléfonos inteligentes o tablets. Es por eso que ARM ha presentado una familia de procesadores ARM que estan
+    orientados exclusivamente al desarrollo de sistemas embebidos con capacidades de tiempo real y ultra bajo conmo de energía. Esta 
+    familia es la familia ARM Cortex-M que cuenta con varias características que la hacen ideal para el desarrollo del sistema en tiempo 
+    real requerido para la interfaz con los actuadores del presente proyecto.
+
+    Por su parte, dado que ARM no fabrica chips sino mas bien vende licencias de la arquitectura a distintas marcas fabricantes, existe 
+    una multitud de procesadores usando esta arquitectura de distintos fabricantes, entre los cuales podemos mencionar a ST Microelectronics,
+    Texas Instruments, Nordic, entre otros. Para el presente proyecto, se necesita que el microcontrolador pueda cumplir con las 
+    siguientes características. 
+
+    \begin{itemize}
+        \item Al menos un puerto de comunicación serial.
+        \item Periféricos capaces de generar señales PWM o con los recursos necesarios para emular PWM por software.
+        \item Memoria de datos y de programa suficiente para poder incluir la librería de Rosserial en el mismo.
+        \item Capacidades de depuración y ejecución paso por paso para la identificación de fallas.
+        \item Operación en niveles de tensión compatibles con la OBC.
+    \end{itemize}
+
+    Es por eso que se ha seleccionado la placa de desarrollo de ST Microelectronics Mucleo f303k8 (Figura()), tomando en cuenta 
+    que cumple con todos los requisitos anteriormente establecidos y además cuenta con las siguientes características:
+
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/nucleo}
+        \caption[Placa de desarrollo Nucleof303k8 de ST Microelectronics]{Placa de desarrollo Nucleof303k8 de ST Microelectronics. Fuente: \cite{nucleof303} }
+        \label{fig:nucleo}
+    \end{figure}
+
+
+    \begin{itemize}
+        \item Circuito grabador-depurador en la placa, STlink V2.
+        \item Capacidades de comunicación seria mediante USB para un puerto de comunicación seria virtual e intefaz de depuración.
+        \item Múltiples fuentes de alimentación.
+        \item Leds indicadores.
+        \item Factor de forma compatible con varios entornos de desarrollo electrónico.
+    \end{itemize}
+
+
+    Se han explorado diversas alternativas al uso de la placa de desarrollo Nucleof303k8 para la implementación de este módulo. En 
+    la Tabla(\ref{tbl:mcucomp}) se pueden apreciar las características de varias placas de desarrollo embebido candidatas disponibles en el mercado.
+
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{@{}|c|c|c|c|c|c|c|@{}}
+        \toprule
+        \textbf{Modelo} & \textbf{Arquitectura}                                                & \textbf{\begin{tabular}[c]{@{}c@{}}RAM\\ (KB)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}ROM\\ (KB)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Frecuencia de \\ Reloj (MHz)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Canales \\ PWM\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Entorno de \\ Trabajo\end{tabular}} \\ \midrule
+        Atmega328p      & AVR (8 bits)                                                         & 2                                                           & 32                                                          & 16                                                                            & 6 (8 bits)                                                      & \begin{tabular}[c]{@{}c@{}}Arduino,\\ Atmel Studio\end{tabular}        \\ \midrule
+        PIC18f2550      & PIC (8 bits)                                                         & 2                                                           & 32                                                          & 48                                                                            & 2 (8 bits)                                                      & MPlab                                                                  \\ \midrule
+        STM32f103c8     & \begin{tabular}[c]{@{}c@{}}ARM \\ CortexM3\\  (32 bits)\end{tabular} & 20                                                          & 64                                                          & 72                                                                            & 12 (16 bits)                                                    & \begin{tabular}[c]{@{}c@{}}STM32 HAL,\\ Arduino\end{tabular}           \\ \midrule
+        STM32f303k8     & \begin{tabular}[c]{@{}c@{}}ARM \\ CortexM4f\\ (32 bits)\end{tabular} & 16                                                          & 64                                                          & 72                                                                            & 8                                                               & \begin{tabular}[c]{@{}c@{}}STM32 HAL,\\ \textbf{Mbed}\end{tabular}              \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Comparación de características de microcontroladores disponibles. Fuente: Elaboración propia.}
+        \label{tbl:mcucomp}
+        \end{table}
+
+    
+
+    El microcontrolador utilizado, el STM32F303k8 pertenece a la familia de microcontroladores con arquitectura ARM Cortex M4f del 
+    fabricante ST Microelectronics. Es parte de la gama de microcontroladores f3 de la famila STM32 que esta orientado al procesamiento 
+    de señales pues cuenta con un procesador de 32 bits con una unidad de punto flotante que le permite realizar cálculos y operaciones 
+    con números decimales de manera eficiente. Las características del microcontrolador seleccionado se listan a continuación:
+
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[]
+        \centering
+        \resizebox{0.8\textwidth}{!}{%
+        \begin{tabular}{@{}|r|l|@{}}
+        \toprule
+        \textbf{Núcleo}                     & ARM Cortex M4 de 32 bits con unidad de punto flotante \\ \midrule
+        \textbf{Frecuencia de reloj}        & 72 MHz Máximo                                         \\ \midrule
+        \textbf{Voltaje de operación}       & 2.0 V a 3.6 V (nominal: 3.3 V)                        \\ \midrule
+        \textbf{Memoria de datos}           & 16 KB SRAM                                            \\ \midrule
+        \textbf{Memoria de programa}        & 64 KB FLASH                                           \\ \midrule
+        \textbf{Timers Disponibles}         & 7                                                     \\ \midrule
+        \textbf{Interfaces de Comunicación} & SPI/I2S, I2C, USART, CAN                              \\ \midrule
+        \textbf{Periféricos adicionales}    & GPIO (con interrupciones), ADC, DAC, RTC              \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Características técnicas del microcontrolador STM32f303k8. Fuente: \cite{nucleof303}}
+        \label{tbl:mcuspecs}
+        \end{table}
+
+    % \begin{itemize}
+    %     \item \textbf{Núcleo: } ARM CortexM4 de 32 bits con unidad de punto flotante.
+    %     \item \textbf{Frecuencia de reloj: } 72 MHz máximo.
+    %     \item \textbf{Voltaje de operación: } desde 2.0 V hasta 3.6V (nominal 3.3V).
+    %     \item \textbf{Memoria de datos: } 16 KB SRAM.
+    %     \item \textbf{Memoria de programa: } 64 KB FLASH.
+    %     \item \textbf{Timers: } 7.
+    %     \item \textbf{Interfaces de comunicación: } SPI/I2S, I2C, USART, CAN.
+    %     \item \textbf{Periféricos adicionales: } GPIO (Con interrupciones), ADC, DAC, RTC.
+    % \end{itemize}
+
+    Como se puede observar en la Tabla(\ref{tbl:mcuspecs}), las características del microcontrolador cumplen con los requisitos establecidos tanto en interfaces 
+    de comunicación como en cantidad y variedad de periféricos para una posterior extensión de la funcionalidad. Por otra parte, 
+    tal como se puede apreciar en la Tabla(\ref{tbl:mcucomp}), esta placa es compatible con el entorno de trabajo de programación 
+    ARM Mbed, y con la librería Rosserial.
+
+    \subsection{Computadora de Abordo - OBC}
+
+    En el caso del hardware necesario para la OBC, se requiere un sistema capaz ejecutar un sistema operativo GNU/Linux completo 
+    con el fin de poder correr el software necesario para el control, comunicación y adquisición de imágenes de una cámara, necesarias
+    para el funcionamiento correcto del sistema en su conjunto. Es en este sentido que se ha optado por el uso de una \textit{Single Board Computer}
+    o Computadora de Una Placa, que refiere a placas de desarrollo con todas las características de una computadora de escritorio, es decir:
+    procesador, memoria y periféricos incorporados. Existe gran variedad de SBC en el mercado con distintas características y aplicaciones 
+    objetivo. En la Tabla(\ref{tbl:sbc}) se puede apreciar una comparación de varias SBC disponibles en el mercado y sus características 
+    relevantes al presente proyecto.
+
+   % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{@{}|c|c|c|c|c|c|c|c|@{}}
+        \toprule
+        \textbf{Placa}                                                & \textbf{Procesador}                                                          & \textbf{RAM} & \textbf{LAN} & \textbf{\begin{tabular}[c]{@{}c@{}}Conexión\\ Inalámbrica\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Soporte y\\ documentación\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Precio\\ (\$us)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Soporta \\ ROS\end{tabular}} \\ \midrule
+        \begin{tabular}[c]{@{}c@{}}Asus \\ Tinkerboard\end{tabular}   & 4x A17 @ 1.8 GHz                                                             & 2 GB         & GBe          & \begin{tabular}[c]{@{}c@{}}Wifi\\ Bluetooth\end{tabular}                & Regular                                                                    & 60                                                               & NO                                                              \\ \midrule
+        Odroid X4u                                                    & \begin{tabular}[c]{@{}c@{}}4x A15 @ 2.0 GHz +\\ 4x A7 @ 1.4 GHz\end{tabular} & 2 GB         & GBe          & NO                                                                      & Bueno                                                                      & 85                                                               & SI                                                              \\ \midrule
+        \begin{tabular}[c]{@{}c@{}}Raspberry Pi\\ zero W\end{tabular} & 1x A8 @ 1GHz                                                                 & 512 MB       & NO           & \begin{tabular}[c]{@{}c@{}}Wifi\\ Bluetooth\end{tabular}                & Muy bueno                                                                  & 20                                                               & NO                                                              \\ \midrule
+        \begin{tabular}[c]{@{}c@{}}Beaglebone \\ Black\end{tabular}   & 1x A8 @ 1GHz                                                                 & 512 MB       & Fast         & NO                                                                      & Bueno                                                                      & 60                                                               & SI                                                              \\ \midrule
+        Raspberry Pi 3b+                                              & 4x A53 @ 1.4 GHz                                                             & 1 GB         & Fast         & \begin{tabular}[c]{@{}c@{}}Wifi\\ Bluetooth\end{tabular}                & Muy bueno                                                                  & 40                                                               & SI                                                              \\ \midrule
+        Rock64                                                        & 4x A53 @ 1.5 GHz                                                             & 2 GB         & GBe          & NO                                                                      & Regular                                                                    & 35                                                               & NO                                                              \\ \midrule
+        Beaglebone Blue                                               & 1x A8 @ 1GHz                                                                 & 512 MB       & no           & \begin{tabular}[c]{@{}c@{}}Wifi\\ Bluetooth\end{tabular}                & Regular                                                                    & 80                                                               & SI                                                              \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Tabla comparativa de SBC's disponibles en el mercado. Fuente: Elaboración propia.}
+        \label{tbl:sbc}
+        \end{table}
+
+
+    La placa seleccionada como OBC debe cumplir ciertas características específicas para este proyecto:
+
+
+    \begin{itemize}
+        \item Factor de forma: Dimensiones y peso reducidos para poder ser incorporada en el prototipo.
+        \item Consumo de energía: Bajo consumo de energia, es necesario que pueda ser alimentado por baterías disponibles en el mercado.
+        \item Compatibilidad de software: La placa debe poder correr una distribución completa de GNU/Linux reciente, compatible con ROS.
+        \item Compatibilidad de hardware: La placa debe poder conectarse de manera nativa con el microcontrolador elegido para la interfaz de tiempo real. Contar con puertos USB y puertos USART.
+        \item Interfaz con una cámara: Debe contar también con una forma de conectar y adquirir imágenes provenientes de una cámara digital.
+        \item Comunicación inalámbrica: Se necesita la capacidad de poder conectarse a una red LAN mediante Wifi, ya sea con un módulo incorporado o un accesorio externo.
+        \item Precio y disponibilidad: Es importante que el precio no sea demasiado elevado para poder garantizar la replicabilidad del proyecto, así como también la disponibilidad en el mercado.
+        \item Soporte y documentación: Es necesario que la placa cuente con una buena documentación y soporte de la comunidad o fabricante para que el resolver problemas relativos a la placa no tome demasiado tiempo.
+    \end{itemize}
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/raspi}
+        \caption[Placa de desarrollo Raspberry Pi 3 model B+]{Placa de desarrollo Raspberry Pi 3 model B+. Fuente: \cite{raspi} }
+        \label{fig:raspi}
+    \end{figure}
+
+    Al final, se ha seleccionado a la placa Raspberry Pi 3B+ (Figura()) para la OBC del proyecto pues cuenta con todas las características 
+    necesarias para poder ejecutar las herramientas de software requeridas y también cuenta con los periféricos adecuados para 
+    comunicarse con la plataforma de tiempo real. La placa en cuestión cuenta con las características listadas en la Tabla(\ref{tbl:raspispecs})
+
+    
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[]
+        \centering
+        \resizebox{0.85\textwidth}{!}{%
+        \begin{tabular}{@{}|r|l|@{}}
+        \toprule
+        \textbf{SoC}                        & Broadcom BCM2837B0                                                  \\ \midrule
+        \textbf{CPU}                        & 1.4 GHz 64-bit quad core ARM Cortex-A53                             \\ \midrule
+        \textbf{RAM}                        & 1 GB LPDDR2 SDRAM                                                   \\ \midrule
+        \textbf{Wifi}                       & Dual-band 802.11ac wireless LAN (2.4GHz and 5GHz ) y Bluetooth 4.2. \\ \midrule
+        \textbf{Video}                      & VideoCore IV 3D                                                     \\ \midrule
+        \textbf{USB}                        & 2.0, 4 puertos                                                      \\ \midrule
+        \textbf{Interfaces de Comunicación} & SPI/I2S, I2C, USART                                                 \\ \midrule
+        \textbf{Interfaces de cámara}       & USB webcam, CSI                                                     \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Características de la placa Raspberry Pi 3 model B+. Fuente: \cite{raspi}}
+        \label{tbl:raspispecs}
+        \end{table}
+
+
+    % \begin{itemize}
+    %     \item Soc\footnote{System on Chip}: Broadcom BCM2837B0, Cortex-A53 (ARMv8) 64-bit.
+    %     \item CPU: 1.4GHz 64-bit quad-core ARM Cortex-A53 CPU.
+    %     \item RAM: 1GB LPDDR2 SDRAM.
+    %     \item Wifi: Dual-band 802.11ac wireless LAN (2.4GHz and 5GHz ) and Bluetooth 4.2.
+    %     \item Video: VideoCore IV 3D.
+    %     \item USB: 2.0, 4 ports.
+    % \end{itemize}
+
+
+    \subsection{Estación de trabajo}
+    La estación de trabajo se usa para realizar el entrenamiento de la red neuronal en el subsistema de adquisición de datos y 
+    entrenamiento. Dada la naturaleza de la tarea del entrenamiento de una red neuronal, esta estación de trabajo presenta algunos 
+    requerimientos especiales: 
+
+    \begin{itemize}
+        \item Sistema Operativo: Se necesita un sistema operativo basado en GNU/Linux compatible con ROS, Tensorflow y Keras.
+        \item GPU: Con la finalidad de acelerar el tiempo de entrenamiento de la red neuronal convolucional, es altamente recomendable contar con una GPU de la marca Nvidia, compatible con Tensorflow.
+        \item Wifi: Es necesaria una conexión Wifi inalámbrica para poder comunicarse con el prototipo tanto en la etapa de adquisición de datos y entrenamiento, como en la de inferencia para el monitoreo remoto.
+    \end{itemize}
+    
+    Considerando los requisitos, las características de la estación de trabajo seleccionada se listan en la Tabla(\ref{tbl:pcspecs}). 
+
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[!h]
+        \centering
+        \resizebox{0.85\textwidth}{!}{%
+        \begin{tabular}{@{}|r|l|@{}}
+        \toprule
+        \textbf{Modelo}            & MSI GL62 6qd                                                              \\ \midrule
+        \textbf{CPU}               & Intel Core i7-6700HQ @ 2.6 GHz x 8 núcleos                                \\ \midrule
+        \textbf{RAM}               & 16 GB DDR4 @ 2133 MHz                                                     \\ \midrule
+        \textbf{Wifi}              & Intel Dual-band 802.11ac wireless LAN (2.4GHz and 5GHz ) y Bluetooth 4.2. \\ \midrule
+        \textbf{GPU}               & Nvidia GTX950m 2GB VRAM                                                   \\ \midrule
+        \textbf{Sistema Operativo} & Ubuntu 18.04 Linux 4.15                                                   \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Características de la estación de trabajo seleccionada. }
+        \label{tbl:pcspecs}
+        \end{table}
+
+    La estación de trabajo se utilizará para el entrenamiento de la red neuronal pues cuenta con los requisitos de memoria RAM y una 
+    GPU compatible para la paralelización de los algoritmos de entrenamiento de la librería Tensorflow. Estos algoritmos incluyen 
+    el cálculo de gradientes de toda la red y el ajuste de los pesos optimizados para ejecutarse de forma paralela dada la naturaleza
+    matricial de las operaciones involucradas.
+
+    \subsection{Sensores}
+    Un aspecto fundamental en el desarrollo de un sistema de conducción autónoma es la elección adecuada de los sensores, que son 
+    los dispositivos que recolectan datos acerca del estado del entorno del vehículo. En el presente proyecto, se están utilizando 
+    dos tipos de sensores: Una cámara para recuperar las imágenes de la carretera y un sensor de proximidad para detectar obstáculos 
+    al frente del vehículo.
+        \subsubsection{Cámara}
+        En el caso de la cámara, existen diversas opciones para poder recuperar imágenes del entorno variando desde la calidad 
+        de la imagen que recuperan, velocidad de captura, rango dińamico y otras características. Sin embargo, se debe tomar 
+        en cuenta algunas limitaciones impuestas por el sistema en su conjunto:
+
+        \begin{itemize}
+            \item La capacidad de procesamiento es limitada en la OBC al tratarse de un sistema de bajo consumo de energía y dimensiones reducidas.
+            \item La capacidad de transferencia en la red está limitada a especificaciones de los módulos de comunicación inalámbrica, reduciendo la cantidad de información que puede ser compartida entre la estación de trabajo remota y el prototipo.
+            \item El consumo de energía debe ser limitado al estar el sistema alimentado por baterías.
+        \end{itemize}
+
+        Considerando las limitaciones planteadas, se puede reducir las opciones de cámaras a utilizar en este proyecto a cámaras web 
+        y al módulo de cámara de Raspberry Pi (Figura(\ref{fig:raspicam})). El último ítem cuenta con algunas características muy interesantes que la hacen una 
+        candidata idónea para su uso en el presente proyecto que se pueden observar en la Tabla(\ref{tbl:raspicamspecs}).
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.65\textwidth]{img/raspicam}
+            \caption[Raspberry Pi Camera Module V2]{Raspberry Pi Camera Module V2. Fuente: \cite{raspicam} }
+            \label{fig:raspicam}
+        \end{figure}
+
+        % Please add the following required packages to your document preamble:
+        % \usepackage{booktabs}
+        % \usepackage{graphicx}
+        \begin{table}[!h]
+            \centering
+            \resizebox{0.5\textwidth}{!}{%
+            \begin{tabular}{@{}|r|l|@{}}
+            \toprule
+            \textbf{Sensor}      & Sony IMX219 8 megapixeles          \\ \midrule
+            \textbf{Resolución}  & Fotografía: 3280x2464 Video: 1080p \\ \midrule
+            \textbf{Framerate}   & 1080p@30Hz, 720p@60Hz, 640p@90Hz   \\ \midrule
+            \textbf{Interfaz}    & CSI                                \\ \midrule
+            \textbf{Dimensiones} & 25mm x 23mm x 9mm                  \\ \midrule
+            \textbf{Peso}        & 3.4g                               \\ \bottomrule
+            \end{tabular}%
+            }
+            \caption{Características de la Raspberry Pi Camera Module V2. Fuente: \cite{raspicam}}
+            \label{tbl:raspicamspecs}
+            \end{table}
+        
+        Dentro de las razones por la cual se ha escogido a la Raspberry Pi Camera Module V2 podemos mencionar la capacidad de 
+        grabar video a 90 cuadros por segundo, una característica importante para poder incrementar el tiempo de muestreo del 
+        bucle de control. En segundo lugar, la cámara utiliza una interfaz CSI que puede conectarse directamente a la placa Raspberry
+        Pi tal como se puede apreciar en la Figura(\ref{fig:raspicamconn})
+        
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.65\textwidth]{img/raspicamconn}
+            \caption[Conexión de la Camera Module V2]{Conexión de la Camera Module V2 con una placa Raspberry Pi. Fuente: \cite{raspicam} }
+            \label{fig:raspicamconn}
+        \end{figure}
+
+        La ventaja de poderse conectar con la placa mediante la interfaz CSI es que los \textit{frames} provenientes del sensor 
+        se procesan directamente en la GPU de la Raspberry Pi y no así en la GPU, esto gracias a la disponibilidad de los 
+        controladores correspondientes para la Camera Module V2. Esto no es posible cuando se trata de cámaras USB o webcam 
+        debido a que los controladores de las mismas procesan los \textit{frames} en la CPU haciendo su procesamiento más lento 
+        y ocupando ciclos de CPU.
+
+        \subsubsection{Sensor de proximidad}
+        El segundo sensor necesario para la implementación del sistema de control autónomo es un sensor de proximidad que 
+        sea capaz de detectar la presencia y distancia de obstáculos que se presenten en frente del vehículo. Este sensor 
+        también debe ser compatible con los protocolos de comunicación o periféricos disponibles en la OBC y en el sistema 
+        de control de tiempo real.
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.35\textwidth]{img/laser}
+            \caption[Sensor VL53L0X de ST Microelectronics]{Conexión de la Camera Module V2 . Fuente: \cite{laser} }
+            \label{fig:laser}
+        \end{figure}
+
+        El sensor seleccionado para la tarea es el sensor VL53L0X (Figura(\ref{fig:laser})) de ST Microelectronics. El cual es un sensor óptico de 
+        proximidad con láser que usa el principio ToF{\textit{Time of Flight}} o Tiempo de Vuelo, se basa en el tiempo 
+        en el que la luz tarda en reflejarse de la superficie para calcular la distancia dada una velocidad constante de la luz 
+        mediante la siguiente fórmula:
+        
+        \begin{equation}\label{eq:tof}
+            d = \frac{c}{t_{vuelo} / 2}
+        \end{equation}
+
+        donde $d$ es la distancia recorrida y $c$ es la velocidad de la luz. Se puede apreciar una ilustración del principio 
+        de funcionamiento del sensor en la Figura(\ref{fig:tof}). 
+        
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.35\textwidth]{img/tof}
+            \caption[Ilustración del principio ToF]{Ilustración del principio ToF. Fuente: \cite{laser} }
+            \label{fig:tof}
+        \end{figure}
+
+        Los sensores láser que usan el principio ToF tienen varias ventajas en relación a otro tipo de sensores como los sensores 
+        ultrasónicos, o los sensores infrarrojos refractarios. En primer lugar, son inmunes a interferencia sonora o ultrasónica 
+        y son más robustos en cuanto a la variedad de superfices sobre las cuales se puede reflejar el haz de luz. El sensor 
+        VL53L0X se constituye como una opción favorable para el desarrollo del presente proyecto y por eso se ha elegido. Sus 
+        características se detallan en la Tabla(\ref{tbl:laserspecs}).
+
+        % Please add the following required packages to your document preamble:
+        % \usepackage{booktabs}
+        % \usepackage{graphicx}
+        \begin{table}[!h]
+            \centering
+            \resizebox{0.65\textwidth}{!}{%
+            \begin{tabular}{@{}|r|l|@{}}
+            \toprule
+            \textbf{Láser}                     & 940 nm Clase 1 (seguro a los ojos) \\ \midrule
+            \textbf{Rango efectivo}            & 30 mm  - 1200 mm                   \\ \midrule
+            \textbf{Interfaz de comunicación}  & I2C @ 400 KHz                      \\ \midrule
+            \textbf{Tiempo de muestreo mínimo} & 20 ms                              \\ \midrule
+            \textbf{Voltaje de operación}      & 2.6 V  - 3.5 V (nominal: 3.3 V)    \\ \bottomrule
+            \end{tabular}%
+            }
+            \caption{Características del sensor VL53L0X. Fuente: \cite{vl53l0x}}
+            \label{tbl:laserspecs}
+            \end{table}
+        
+            
+        El sensor se ha utilizado en una placa de desarrollo o \textit{Breakout Board} que incluye un regulador de tensión 
+        y los pines de comunicación correspondientes para su conexión a la SBC. La información proveniente del sensor 
+        de proximidad será recuperada y procesada mediante un nodo de ROS de manera que se pueda integrar al sistema 
+        en su conjunto.
+            
+            \begin{figure}[] 
+                \centering
+                \includegraphics[width=0.45\textwidth]{img/laserbreak}
+                \caption[Breakout Board para el sensor VL53L0X]{Breakout Board para el sensor VL53L0X. Fuente: \cite{laser} }
+                \label{fig:laserboard}
+            \end{figure}
+    
+\section{Subsistema de Control y actuación}
+
+El subsistema de control y actuación representa la base fundamental sobre la cual se desarrolla el resto del proyecto. De acuerdo 
+con la naturaleza del mismo, se pretende implementar una plataforma flexible y modular sobre la cual se pueda controlar el 
+prototipo de múltiples maneras, partiendo desde un modo teleoperado básico donde un operador humano tiene el control 
+de todos los grados de libertad del vehículo, pasando por un modo híbrido hasta un modo autónomo donde los comandos de 
+control son generados por un programa que procesa los datos provenientes de los sensores y otras fuentes externas.
+
+La finalidad del subsistema es brindar una interfaz amigable y flexible para el control de los actuadores del vehículo. Esta 
+interfaz se logra gracias a la infraestructura de ROS mediante el envío de mensajes. Los mensajes utilizados en este subsistema 
+son los mensajes Twist de los cuales se detalla sus características en la Tabla(). Se ha escogido el mensaje Twist porque presenta 
+de manera muy conveniente la separación entre la velocidad lineal o la tracción del vehículo y la desviación o la dirección. 
+
+% tabla del mensaje twist
+
+La interfaz con el \textit{middleware} de ROS se logra a través de un paquete llamado Rosserial, que crea un nodo especial 
+que es capaz de enviar mensajes mediante el puerto serial a sistemas embebidos que no cuentan con una conexión ethernet. De esta 
+manera, el control de los actuadores es transparente a cualquier otro nodo en la red haciendo posible que se pueda controlar 
+el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remota en estaciones de trabajo en la red local.
+
+    \subsection{Módulo de potencia en tiempo real}
+    El prototipo cuenta con dos actuadores para la tracción y la dirección respectivamente. En el caso de la tracción, se 
+    utiliza un motor de corriente contínua de imán permanente en conjunción con un controlador de potencia capaz de manipular 
+    al mismo. El control del motor se basa en la combinación de dos pines de dirección y un pin correspondiente con la velocidad 
+    que es controlada mediante una señal modulada en ancho de pulso o PWM. 
+
+    Por su parte, el control de la dirección se realiza mediante el uso de un servomotor dimensionado adecuadamente para la aplicación 
+    que controla el ángulo de las ruedas delanteras. El ángulo de las ruedas define el ICC (Sección(\ref{sec:ruedas})), que a su vez 
+    define el radio de giro mínimo en base al máximo rango en el que puede variar el ángulo de las ruedas delanteras. En la 
+    Figura() se puede apreciar el prototipo y la disposición de los actuadores del mismo.
+
+    \begin{quote}
+        Foto del carro sin control
+    \end{quote}
+
+        \subsubsection{Control de actuadores mediante ROS}
+        Tal como se pudo especificar en la Sección() el microcontrolador elegido para la tarea tiene la capacidad de usar la 
+        librería Rosserial que hace posible crear un nodo de ROS en el microcontrolador usando el puerto serial. En este sentido, 
+        el control de motores se realiza de manera asíncrona con un tiempo de muestreo fijo. Se puede apreciar el algoritmo 
+        implementado en el nodo de control en el Algoritmo(\ref{alg:nodomcu}).
+
+        \begin{algorithm}
+            \begin{algorithmic}[1]
+            %\REQUIRE Complejo simplicial $K=\{\sigma_1, \dots, \sigma_n \}$ no vacío. \label{lin:lineaRara}
+            %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+            \STATE Conexión con el ros master
+            \WHILE {No hay conexión}
+            \STATE Intentar conexión
+            \ENDWHILE
+            
+            \WHILE {Conectado con el ros master}
+                \IF{Hay mensaje de control pendiente}
+                    \STATE Calcular señal de control
+                    \STATE Enviar comando a los actuadores
+                \ENDIF
+            \ENDWHILE
+            \end{algorithmic}
+            \caption{Algoritmo de control de actuadores}\label{alg:nodomcu}
+        \end{algorithm}
+        
+        En este caso, el microcontrolador entra en un bucle que se ejecuta mientras exista conexión con el maestro. Dentro del 
+        bucle, espera la llegada de algún mensaje de control para realizar un pequeño cálculo dependiendo a la calibración de 
+        los mismos con el fin de enviar una señal de control adecuada para la actuación del vehículo.
+
+        En la Figura() se puede apreciar el diagrama de comunicación entre los nodos de ros correspondientes con el nodo serial 
+        y un control manual con un joystick.
+
+        %%% figura del nodo rosserial
+    
+    \subsection{Módulo de la computadora de abordo}
+    Mientras que el módulo de control de tiempo real se encarga de traducir los mensajes de control de ROS en señales de control 
+    para aplicarse directamente a los actuadores por el microcontrolador a través de un controlador de potencia, la computadora 
+    de abordo u OBC, se encarga se controlar todos los aspectos de \textit{alto nivel} del vehículo. Este módulo se compone de 
+    una SBC corriendo un sistema operativo Linux con una distribución de ROS instalada en ella. La OBC será la responsable de 
+    la comunicación con todos los nodos que interactúan con el vehículo, tanto  de los nodos que generan datos del entorno como 
+    las imágenes provenientes de la cámara o sensores; como con nodos que consumen estos datos y los procesan de alguna manera, 
+    como el nodo del piloto automático. 
+
+    En la Figura() se puede apreciar el prototipo con la OBC incorporada al mismo. Cabe resaltar que por sus características, tanto 
+    la OBC, como el módulo de control de tiempo real pueden alimentarse por una batería a bordo del vehículo. A su vez, la comunicación 
+    inalámbrica de la OBC permite que el vehículo pueda funcionar sin la necesidad de un solo cable ya sea de alimentación de energía 
+    o comunicación.
+
+
+    \subsubsection{Esquema de comunicación en la OBC}
+    La OBC corre el maestro de ROS, que es el que arbitra toda la comunicación en el sistema y, junto con eso, también se encarga 
+    de ejecutar varios nodos correspondientes con los sensores y el control. La lista detallada de los nodos que corren en 
+    la OBC se puede observar en la Tabla(). Por su parte, el esquema de comunicación entre dichos nodos, se puede apreciar en 
+    la Figura().
+
+    %% tabla de nodos 
+
+    %% diagrama de nodos
+
+    Dado que ROS permite el desarrollo de sistemas distribuidos, existen otros nodos que se ejecutan en la estación de trabajo y 
+    se comunican con el maestro, corriendo en la OBC, a través de Wifi mediante una conexión TCP. La implementación de la comunicación 
+    en la red está implementada en el \textit{middleware} de ROS y este proyecto no se concentra en los detalles de la misma.
+
+\section{Subsistema de Adquisición de Datos y Entrenamiento}
+
+Una vez establecida la plataforma de trabajo en el Subsistema de Control y Actuación se procede a detallar el diseño del 
+Subsistema de Adquisición de Datos y Entrenamiento que se encarga principalmente de brindar una forma adecuada de sincronizar 
+y almacenar los datos necesarios para el entrenamiento de la red neuronal así como también de brindar las herramientas necesarias 
+para el entrenamiento en sí. Este subsistema cuenta con vários módulos funcionales que interactúan entre sí como se pudo apreciar 
+en la Sección(). 
+
+
+    \subsection{Módulo de adquisición de datos y operación manual}
+    Como se ha podido establecer en la Sección() referida al aprendizaje automático. Para que un algoritmo de aprendizaje pueda 
+    entrenarse de manera efectiva, es necesario contar con un conjunto de datos sobre el cual se realizará el mismo. Este conjunto 
+    de datos o \textit{dataset} necesita estar almacenado de manera adecuada con el formato y las características necesarias para 
+    un entrenamiento efectivo.
+
+    El módulo cuenta con un nodo que se suscribe a los mensajes provenientes tanto de la cámara como del control manual con el 
+    joystick (Figura()). Luego, se realiza una sincronización para que se pueda generar un par entrada - salida adecuado y luego se procede 
+    a almacenar el mismo. En la Figura() se puede apreciar un diagrama donde se detalla el procedimiento de adquisición de datos
+    y almacenamiento.
+
+    % foto del joystick
+
+    % diagrama del modulo
+    El \textit{dataset} se compone de un conjunto de imágenes en formato \lstinline{PNG} junto con un archivo \lstinline{CSV} que 
+    contiene las columnas detalladas en la Tabla(). En la tabla se almacenan tanto los datos de aceleración y dirección como el 
+    nombre del archivo de la imagen correspondiente con la misma. Los registros se almacenan en el mismo orden en el que fueron 
+    capturados, no obstante, para la tarea de regresión definida en este proyecto, la dependencia temporal entre las muestras 
+    no es importante. 
+
+        \subsubsection{Sesiones de entrenamiento}
+        La manera de adquirir el conjunto de datos es mediante las denominadas \textit{Sesiones de Entrenamiento o Grabación de Comportamiento}.
+        Estas sesiones corresponden con periodos de tiempo en el cual se recuperan datos de manera constante. La cantidad de registros 
+        o muestras recuperadas depende tanto de la resolución temporal de la generación de imágenes y comandos de control sincronizados 
+        así como también de la duración de la sesión en sí. Cada sesión de entrenamiento puede generar un \textit{dataset} distinto 
+        que se puede combinar con otros \textit{datasets} o tomarse de manera independiente. 
+
+        Es importante tomar en cuenta que mientras más sesiones se realicen y más variadas en condiciones ambientales sean las mismas, 
+        más robusto será el algoritmo entrenado y mejor será su generalización. Sin embargo, esta capacidad de generalización estará 
+        limitada por la arquitectura y la cantidad de parámetros disponibles para generar representaciones internas del proceso. 
+
+        En el presente proyecto, se han realizado sesiones de entrenamiento con un clima parcialmente nublado con buena iluminación 
+        ambiental, de manera que se pueda distinguir la pista del piso (Figura()).
+
+        %% foto de ejemplo
+
+    \subsection{Módulo de aumentación de datos}
+    Las redes neuronal profundas tienen la impresionante capacidad de aprender representaciones internas útiles de manera automática 
+    usando el algoritmo de la retropropagación, pero esta capacidad solamente resalta cuando se cuenta con un conjunto de datos 
+    de un tamaño considerable, es decir, que se necesitan muchas muestras para que el entrenamiento de una red neuronal profunda 
+    sea exitosa y pueda mostrar resultados favorables. 
+    
+    Por su parte, la recuperación de datos es un proceso costoso en tiempo y recursos, por lo que no se puede invertir demasiado 
+    tiempo solamente recuperando muestras. De hecho, se ha establecido que el proceso de la generación de un \textit{dataset} efectivo 
+    es el más complicado en un sistema de aprendizaje automático. Por tanto, es importante poder aprovechar al máximo los datos 
+    obtenidos en una sesión de entrenamiento.
+
+    Es por este motivo que se ha decidido incluir una etapa de aumentación de datos que se compone de una serie de transformaciones 
+    de las imágenes originales del \textit{dataset} para poder incrementar la cantidad de muestras sobre la cual se realice el 
+    entrenamiento de la red de manera sintética. En la Tabla() se puede apreciar las transformaciones usadas.
+    
+    % tabla de transformaciones 
+
+    Este módulo no solamente cuenta con ciertas transformaciones disponibles para aumentar los datos existentes en el \textit{dataset}
+    si no también cuenta con la funcion de poder eliminar registros con un valor de dirección nulo si es que fuera necesario. La utilidad
+    de esta funcionalidad se puede apreciar en la etapa de entrenamiento en la Sección().
+    
+    \subsection{Módulo de generación de datos de entrenamiento}
+
+    Una de las desventajas de las redes neuronales convolucionales para el procesamiento de imágenes es que las imágenes 
+    ocupan bastante espacio en memoria y cargar todo el conjunto de datos de entrenamiento en la memoria RAM es usualmente 
+    imposible o demasiado costoso. Es por eso que se necesita una forma de cargar las imágenes en la memoria de forma 
+    fraccionada, de manera que los requisitos de memoria sean manejables por la estación de trabajo. 
+
+    El módulo de generación de datos de entrenamiento se ha desarrollado con la finalidad de poder generar \textit{mini batches} 
+    o conjuntos pequeños de datos para el entrenamiento de la red neuronal convolucional. El algoritmo de la generación se 
+    detalla en el Algoritmo().
+
+    Este módulo es capaz de generar \textit{mini batches} de manera parametrizada de acuerdo a la necesidad de cada sesión de 
+    entrenamiento.
+
+    \subsection{Módulo de Entrenamiento}
+    Una vez se tienen las herramientas para la correcta generación y aumentación de datos del conjunto de datos de entrenamiento 
+    se necesita una herramienta para ejecutar el entrenamiento de la red neuronal convolucional en sí. El módulo de entrenamiento 
+    se compone de un programa que ejecuta las siguientes tareas:
+
+    \begin{itemize}
+        \item Carga del dataset y el modelo de red neuronal.
+        \item Definición de hiperparámetros.
+        \item Ejecución, monitoreo y control del proceso de entrenamiento en línea. 
+        \item Salvaguarda de los parámetros del modelo entrenado.
+        \item Generación de reportes del proceso de entrenamiento.
+    \end{itemize}
+
+    En el Algoritmo() se puede apreciar el proceso detallado de entrenamiento de la red de acuerdo a parametrización definida 
+    por el usuario. 
+    
+    % algoritmo del entrenamiento
+
+    Este módulo se ejecuta en la estación de trabajo y hace uso de la GPU disponible para la paralelización de los algoritmos de 
+    cálculo de gradientes y optimización con el fin de acelerar el tiempo de entrenamiento. El módulo es capaz de realizar 
+    el entrenamiento de distintos modelos de arquitectura de redes neuronales definidas por el usuario en un archivo de código 
+    fuente, en otras palabras, se puede utilizar el mismo programa para entrenar múltiples redes neuronales sin realizar grandes 
+    cambios en el código fuente. También se puede definir los directorios donde están almacenados los datos de entrenamiento y 
+    el destino de los reportes del entrenamiento, esto es útil para cuando se necesita validar el entrenamiento de múltiples 
+    modelos con múltiples conjuntos de datos o para separar las sesiones de entrenamiento de distintos sistemas o prototipos.
+
+    Los productos obtenidos por este módulo son dos:
+    
+    \begin{itemize}
+        \item \textbf{Arquitectura de la red neuronal:} Se almacena la información acerca de la arquitectura de la red en un archivo con formato \lstinline{JSON} donde se puede encontrar la información acerca de las dimensiones de las capas ocultas, cantidad de unidades por capa y dimensiones de cada unidad en la red.
+        \item \textbf{Pesos entrenados de la red neuronal:} Se almacena también los valores de todos los parámetros o pesos de la red neuronal, resultado del entrenamiento. Estos valores están almacenados en un archivo con extensión \lstinline{H5}. 
+    \end{itemize}
+
+    Con estos dos archivos será posible ejecutar la tarea de inferencia en etapas posteriores. Además, es importante mencionar que 
+    los mismos archivos pueden usarse para re-entrenar la red con un nuevo conjunto de datos para mejorar su rendimiento.
+
+    Como se ha podido observar, los módulos que componen el Subsistema de Adquisición de Datos y Entrenamiento se han diseñado 
+    con el fin de poderse utilizar de manera individual con otros sistemas o de manera conjunta, enfocando las funcionalidades 
+    en el entrenamiento de redes neuronales convolucionales para tareas de procesamiento de imágenes y visión artificial.
+
+\section{Subsistema de Inferencia y control autónomo}
+El subsistema de inferencia y control autónomo se ha diseñado tomando en cuenta la modularidad necesaria para poder ser 
+extendible en funcionalidades de 
+    \subsection{Módulo de inferencia con una red neuronal convolucional}
+    Este módulo tiene la tarea de ejecutar la tarea de predicción del comando de control de dirección con la red neuronal entrenada 
+    por el módulo de entrenamiento del subsistema de adquisición de datos y entrenamiento.
+    \subsection{Módulo de detección de obstáculos}
+    \subsection{Módulo del piloto automático}
+
+\section{Diseño de la arquitectura de la red neuronal}
+-
+    \subsection{Consideraciones y requerimientos}
+    \subsection{Unidades y profundidad}
+    \subsection{Funciones de Activación}
+    \subsection{Función de Costo}
+    \subsection{Optimizador}
+    
+\section{Proceso de Entrenamiento de la \\ Red neuronal Convolucional}
+-
+    \subsection{Sistemas de Imitación de comportamiento}
+    \subsection{Evaluación del conjuto de datos}
+    \subsection{Curvas de Aprendizaje}
+
+\section{Implementación del prototipo}
+- 
+    \subsection{Descripción general del prototipo}
+    \subsection{Restricciones de diseño}
+    \subsection{Modos de funcionamiento}
+        \subsubsection{Modo de entrenamiento y adquisición de datos}
+        \subsubsection{Modo de conducción autónoma}
+        

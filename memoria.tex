@@ -26,10 +26,22 @@
 \usepackage{blindtext}
 \usepackage{hyperref}
 
+
+
 \usepackage{booktabs}
 \usepackage{multirow}
-
+% \usepackage[table,xcdraw]{xcolor}
 \usepackage{listings} % para codigo fuente
+
+% para los algoritmos
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\input{spanishAlgorithmic} % mi archivo de traducción
+
+\usepackage{lipsum}
+\usepackage{courier}
+
+\lstset{basicstyle=\footnotesize\ttfamily, breaklines=true}
 % %% para que aparezca Capitulo
 % \usepackage{tocloft}
 
@@ -49,7 +61,7 @@
 % Especificaciones de la caratula PPG
 
 \include{formato/caratula}
-
+\pagenumbering{Roman} % para comenzar la numeracion de paginas en numeros romanos
 % \include{formato/dedicatoria}
 
 % \include{formato/agradecimientos}
@@ -64,7 +76,7 @@
 
 \include{contenido/marco_teorico}
 
-\include{contenido/marco_practico}
+\include{contenido/ingenieria}
 
 % \include{contenido/resultados}
 
