@@ -251,7 +251,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
     de pixeles. Existen distintos métodos y algoritmos que intentan convertir esta inmensa cantidad de datos (los pixeles) en 
     información útil (objetos).
 
-\section{Redes Neuronales Artificiales}         %done
+\section{Redes Neuronales Artificiales}\label{sec:redesneuronales}         %done
 
     \subsection{Aprendizaje Automático}
 
@@ -930,6 +930,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
     fin a fin para diseñar un sistema de conducción autónoma.
 
 \section{Robots móviles y locomoción con ruedas} \label{sec:ruedas}
+
 Un robot móvil es una máquina electromecánica con ciertos niveles de autonomía definida que son capaces de moverse 
 y navegar por un entorno. Las ruedas aprovechan la fricción y el contacto con el suelo para hacer que el robot pueda moverse. 
 Si se considera un vehículo ideal, donde las ruedas no se deslizan hacia los costados y mantienen contacto con el suelo en 
@@ -972,6 +973,7 @@ restricciones no holonómicas.
     La locomoción de Ackerman es la preferida en vehículos de gran tamaño, los cuales están diseñados para operar en carreteras
     existentes y soportar una carga considerable. Normalmente, el tamaño del vehículo permite incorporar una gran cantidad 
     de sensores y sistemas de control. 
+
         \subsubsection{Cinemática directa}
         El vehículo rota alrededor de un punto que yace en la linea que pasa por el eje trasero una distancia $R$ del centro 
         del vehículo donde
@@ -992,9 +994,11 @@ restricciones no holonómicas.
         propiedad importante.
 
     \subsection{Modelo de la bicicleta o triciclo} \label{sec:triciclo}
+
     Los modelos de la bicicleta y el triciclo tienen modelos cinemáticos muy similares. Un triciclo típico tiene tres ruedas: 
     dos ruedas de tracción traseras y una rueda de dirección delantera. El movimiento del robot es controlado por la dirección 
     $\alpha$ y la velocidad $v$.
+    
     \begin{figure}[!h] 
         \centering
         \includegraphics[width=0.75\textwidth]{img/triciclo}
@@ -1013,7 +1017,6 @@ restricciones no holonómicas.
         \end{align}
 
         donde $d$ es la distancia desde la rueda frontal al eje trasero, como se observa en la Figura(\ref{fig:triciclo}).
-
     
-    En el presente proyecto, se considerará el uso del modelo del triciclo definido en la Sección(\ref{sec:triciclo}) 
-    por razones de simplicidad sin perder generalización.
+        En el presente proyecto, se considerará el uso del modelo del triciclo definido en la Sección(\ref{sec:triciclo}) 
+        por razones de simplicidad sin perder generalización.

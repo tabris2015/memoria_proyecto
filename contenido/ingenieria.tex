@@ -24,29 +24,101 @@ y alcance del mismo.
 
     \subsection{Esquema del sistema}
 
-    Se procede a detallar el esquema general del sistema en base a la interacción de tres subsistemas básicos. 
+    Se procede a detallar el esquema general del sistema en base a la interacción de tres subsistemas básicos en la Figura(\ref{fig:arquitectura}). 
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.85\textwidth]{img/arquitectura}
+        \caption[Esquema en diagrama de bloques del sistema]{Esquema en diagrama de bloques del sistema. Fuente: Elaboración propia. }
+        \label{fig:arquitectura}
+    \end{figure}
+
+    En el esquema, se puede observar la interacción entre los subsistemas que componen el sistema en su conjunto haciendo 
+    un énfasis en la comunicación entre el subsistema de control y actuación y los otros dos subsistemas. El sistema de 
+    control y actuación representa la plataforma sobre la cual se van a ejecutar los otros dos subsistemas, el de adquisición 
+    de datos y entrenamiento en primer lugar, para el entrenamiento de la red neuronal y seguidamente el de inferencia 
+    y control autónomo en el que se usará la información generada por el primero para lograr la tarea de conducción autónoma. 
+    
+    Este esquema es particularmente popular y bien establecido en muchos sistemas de aprendizaje automático en el que se cuenta,
+    por un lado, con una forma de obtener y adecuar los datos para el entrenamiento de la red y, por el otro, se tiene una 
+    etapa de inferencia o predicción en la cual se valida la eficacia del modelo. En este caso, la planta o el sistema donde 
+    se puede validar la eficacia de la red neuronal es el prototipo con el vehículo.
+
+    En las siguientes secciones se detalla la arquitectura de cada subsistema exponiendo sus diagramas de bloques asociados.
 
     \subsection{Subsistema de control y actuación} \label{sec:esqcontrol}
     El subsistema de control y actuación tiene el objetivo de servir como base física para la implementación de los algoritmos 
-    de control. En la Figura() se puede apreciar sus componentes y la forma en que interactúan entre sí. El subsistema 
-    interactúa tanto con el subsistema de adquisición de datos y entrenamiento como con el subsistema de inferencia y control 
-    autónomo. 
-    
-    \subsection{Subsistema de adquisición de datos y entrenamiento}
+    de control. En la Figura(\ref{fig:control_esq}) se puede apreciar sus componentes y la forma en que interactúan entre sí. 
+    Este subsistema cuenta con varios módulos funcionales que se encargan del control y actuación del vehículo. Los módulos 
+    tiene la tarea de servir como una plataforma para que los algoritmos de control se puedan ejecutar en el vehículo. 
 
-    \subsection{Subsistema de inferencia y control autónomo}
+    Este subsistema cuenta con módulos que tienen tres principales responsabilidades.
     
+    \begin{itemize}
+        \item Ejecutar un control de tiempo real en los actuadores disponibles para la locomoción del vehículo a través de un sistema embebido.
+        \item Brindar una plataforma para la adquisición de los datos de los sensores (la cámara y el sensor de proximidad).
+        \item Brindar una plataforma de desarrollo para el control autónomo del vehículo mediante ROS (Sección(\ref{sec:ros})).
+    \end{itemize}
 
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.85\textwidth]{img/control_esq}
+        \caption[Subsistema de control y actuación]{Esquema en diagrama de bloques del Subsistema de control y actuación. Fuente: Elaboración propia. }
+        \label{fig:control_esq}
+    \end{figure}
+
+    \subsection{Subsistema de adquisición de datos y entrenamiento}\label{sec:esqdaq}
+    El subsistema de adquisición de datos y entrenamiento tiene la finalidad de proporcionar las herramientas necesarias para 
+    dos tareas fundamentales:
+    \begin{itemize}
+        \item Generar un conjunto de datos o \textit{dataset} para el entrenamiento y validación de la red neuronal.
+        \item Entrenar una red neuronal a partir del conjunto de datos y ciertos parámetros previamente definidos.
+    \end{itemize}
+
+    Para tal cometido, este subsistema cuenta con varios módulos que interactúan entre sí y brindan distintas funcionalidades.
+    En la Figura(\ref{fig:daq_esq}). Es importante destacar que la naturaleza de los módulos de este subsistema hicieron que 
+    los mismos se deban ejecutar en una estación de trabajo remota con características especiales para las tareas necesarias. 
+    Esta forma de trabajo se ha adoptado para disminuir el tiempo necesario en la tarea del entrenamiento de la red neuronal 
+    la cual es una tarea que demanda mucho poder computacional.
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.85\textwidth]{img/daq_esq}
+        \caption[Subsistema de Adquisición de datos y Entrenamiento]{Esquema en diagrama de bloques del Subsistema de Adquisición de datos y Entrenamiento. Fuente: Elaboración propia. }
+        \label{fig:daq_esq}
+    \end{figure}
+
+    El producto de este subsistema es un conjunto de archivos que representan tanto la arquitectura de la red neuronal como 
+    los datos de los pesos obtenidos en el proceso de entrenamiento. Dichos archivos serán utilizados en el subsistema 
+    de inferencia y control autónomo.
+
+    \subsection{Subsistema de inferencia y control autónomo}\label{sec:esqinferencia}
+    En este subsistema se concentra la mayor complejidad del sistema siendo que contiene los módulos correspondientes 
+    con la etapa de inferencia de la red neuronal en el bucle de control, así como también un módulo encargado de enviar 
+    comandos de control para la aceleración que toman en cuenta la detección de obstáculos que se presenten al frente 
+    del vehículo mientras navega por su entorno. 
+
+    El subsistema debe cumplir las siguientes tareas:
+    \begin{itemize}
+        \item Cargar y ejecutar el modelo de predicción implementado en la red neuronal entrenada en el subsistema de adquisición de datos y entrenamiento para la generación de comandos de dirección del vehículo.
+        \item Ejecutar un algoritmo de control para la aceleración basado en la detección de obstáculos presentes frente al vehículo.
+        \item Ejecutar un algoritmo de arbitraje que combine ambos sistemas de control en conjunto con un control manual de respaldo que será referido como el \textit{piloto automático}.
+    \end{itemize}
+
+    En la Figura() se puede observar el esquema en diagramas de bloques del subsistema con la interacción entre los módulos que 
+    lo componen.
+
+    % diagrama
 \section{Herramientas de software}
-    \subsection{Robot Operating System - ROS}
+    \subsection{Robot Operating System - ROS}\label{sec:ros}
     ROS o Sistema Operativo Robótico es un \textit{framework} flexible para desarrollar software para robots. Se compone 
     de una colección de herramientas, librerías y convenciones que tienen el objetivo de simplificar la tarea de crear 
     comportamientos complejos y robustos en plataformas de robótica en general \cite{ros}.
 
     ROS ha sido construido con el objetivo de hacer accesible el desarrollo de sistemas robóticos mediante el trabajo 
     colaborativo de paquetes y utilidades, su naturaleza modular hace posible que se puedan implementar sistemas pieza 
-    por pieza de acuerdo a las necesidades específicas de cada proyecto. Dentro de las facilidades que ROS ofrece, podemos 
-    encontrar diversas utilidades que permiten el desarrollo de sistemas con una complejidad elevada.
+    por pieza de acuerdo a las necesidades específicas de cada proyecto. Dentro de las facilidades que ROS ofrece, se listan 
+    a continuación diversas utilidades que permiten el desarrollo de sistemas con una complejidad elevada.
 
         \subsubsection{Infraestructura de comunicación}
         En su núcleo, ROS ofrece una interfaz de intercambio de mensajes que provee comunicación inter-procesos y es 
@@ -198,7 +270,8 @@ y alcance del mismo.
 
     En el presente proyecto, se utiliza Tensorflow como librería base para la implementación de la red neuronal tanto en la etapa de 
     entrenamiento como en la etapa de inferencia. El entrenamiento e inferencia se implementan usando los algoritmos de Tensorflow 
-    optimizados para GPU\footnote{GPU: Graphics Processing Unit o Unidad de Procesamiento de Gráficos} de la marca Nvidia.% TODO: agregar referencia a otros capitulos
+    optimizados para GPU\footnote{GPU: Graphics Processing Unit o Unidad de Procesamiento de Gráficos} de la marca Nvidia.
+    % TODO: agregar referencia a otros capitulos
 
     Es importante listar algunos términos que se usarán en el contexto de este proyecto, relacionados exclusivamente con la implementación 
     de la red neuronal convolucional correspondiente con el sistema fin a fin que se implementa. 
@@ -372,7 +445,7 @@ las herramientas utilizadas en el diseño del sistema.
     real requerido para la interfaz con los actuadores del presente proyecto.
 
     Por su parte, dado que ARM no fabrica chips sino mas bien vende licencias de la arquitectura a distintas marcas fabricantes, existe 
-    una multitud de procesadores usando esta arquitectura de distintos fabricantes, entre los cuales podemos mencionar a ST Microelectronics,
+    una multitud de procesadores usando esta arquitectura de distintos fabricantes, entre los cuales se puede mencionar a ST Microelectronics,
     Texas Instruments, Nordic, entre otros. Para el presente proyecto, se necesita que el microcontrolador pueda cumplir con las 
     siguientes características. 
 
@@ -607,7 +680,7 @@ las herramientas utilizadas en el diseño del sistema.
     los dispositivos que recolectan datos acerca del estado del entorno del vehículo. En el presente proyecto, se están utilizando 
     dos tipos de sensores: Una cámara para recuperar las imágenes de la carretera y un sensor de proximidad para detectar obstáculos 
     al frente del vehículo.
-        \subsubsection{Cámara}
+        \subsubsection{Cámara}\label{sec:raspicam}
         En el caso de la cámara, existen diversas opciones para poder recuperar imágenes del entorno variando desde la calidad 
         de la imagen que recuperan, velocidad de captura, rango dińamico y otras características. Sin embargo, se debe tomar 
         en cuenta algunas limitaciones impuestas por el sistema en su conjunto:
@@ -649,7 +722,7 @@ las herramientas utilizadas en el diseño del sistema.
             \label{tbl:raspicamspecs}
             \end{table}
         
-        Dentro de las razones por la cual se ha escogido a la Raspberry Pi Camera Module V2 podemos mencionar la capacidad de 
+        Dentro de las razones por la cual se ha escogido a la Raspberry Pi Camera Module V2 se tiene la capacidad de 
         grabar video a 90 cuadros por segundo, una característica importante para poder incrementar el tiempo de muestreo del 
         bucle de control. En segundo lugar, la cámara utiliza una interfaz CSI que puede conectarse directamente a la placa Raspberry
         Pi tal como se puede apreciar en la Figura(\ref{fig:raspicamconn})
@@ -665,9 +738,9 @@ las herramientas utilizadas en el diseño del sistema.
         se procesan directamente en la GPU de la Raspberry Pi y no así en la GPU, esto gracias a la disponibilidad de los 
         controladores correspondientes para la Camera Module V2. Esto no es posible cuando se trata de cámaras USB o webcam 
         debido a que los controladores de las mismas procesan los \textit{frames} en la CPU haciendo su procesamiento más lento 
-        y ocupando ciclos de CPU.
+        y ocupando mayor cantidad de ciclos de CPU.
 
-        \subsubsection{Sensor de proximidad}
+        \subsubsection{Sensor de proximidad}\label{sec:laser}
         El segundo sensor necesario para la implementación del sistema de control autónomo es un sensor de proximidad que 
         sea capaz de detectar la presencia y distancia de obstáculos que se presenten en frente del vehículo. Este sensor 
         también debe ser compatible con los protocolos de comunicación o periféricos disponibles en la OBC y en el sistema 
@@ -737,7 +810,7 @@ las herramientas utilizadas en el diseño del sistema.
                 \label{fig:laserboard}
             \end{figure}
     
-\section{Subsistema de Control y actuación}
+\section{Subsistema de Control y actuación}\label{sec:control}
 
 El subsistema de control y actuación representa la base fundamental sobre la cual se desarrolla el resto del proyecto. De acuerdo 
 con la naturaleza del mismo, se pretende implementar una plataforma flexible y modular sobre la cual se pueda controlar el 
@@ -747,12 +820,11 @@ control son generados por un programa que procesa los datos provenientes de los 
 
 La finalidad del subsistema es brindar una interfaz amigable y flexible para el control de los actuadores del vehículo. Esta 
 interfaz se logra gracias a la infraestructura de ROS mediante el envío de mensajes. Los mensajes utilizados en este subsistema 
-son los mensajes Twist de los cuales se detalla sus características en la Tabla(). Se ha escogido el mensaje Twist porque presenta 
-de manera muy conveniente la separación entre la velocidad lineal o la tracción del vehículo y la desviación o la dirección. 
+son los mensajes Twist, que se utilizan comúnmente para expresar la velocidad del movimiento de un robot o vehículo en ROS. Se ha
+escogido el mensaje Twist porque presenta de manera muy conveniente la separación entre la velocidad lineal o 
+la tracción del vehículo y la desviación o la dirección. 
 
-% tabla del mensaje twist
-
-La interfaz con el \textit{middleware} de ROS se logra a través de un paquete llamado Rosserial, que crea un nodo especial 
+La interfaz con el \textit{middleware} de ROS se logra a través de un paquete llamado \lstinline{rosserial}, que crea un nodo especial 
 que es capaz de enviar mensajes mediante el puerto serial a sistemas embebidos que no cuentan con una conexión ethernet. De esta 
 manera, el control de los actuadores es transparente a cualquier otro nodo en la red haciendo posible que se pueda controlar 
 el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remota en estaciones de trabajo en la red local.
@@ -801,11 +873,25 @@ el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remo
         bucle, espera la llegada de algún mensaje de control para realizar un pequeño cálculo dependiendo a la calibración de 
         los mismos con el fin de enviar una señal de control adecuada para la actuación del vehículo.
 
-        En la Figura() se puede apreciar el diagrama de comunicación entre los nodos de ros correspondientes con el nodo serial 
+        En la Figura(\ref{fig:joy_serial}) se puede apreciar el diagrama de comunicación entre los nodos de ros correspondientes con el nodo serial 
         y un control manual con un joystick.
 
         %%% figura del nodo rosserial
-    
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.55\textwidth]{img/joy_serial}
+            \caption[Visualización del nodo serial]{Visualización del nodo serial. Fuente: Elaboración propia. }
+            \label{fig:joy_serial}
+        \end{figure}
+        
+        En el caso del control manual, existen tres nodos ejecutándose:
+        \begin{itemize}
+            \item \textbf{/joy} es el nodo que recupera los datos provenientes del joystick, botones presionados y valores de los potenciometros provenientes de los joysticks analógicos y los triggers. Este nodo publica mensajes de tipo \lstinline{joy} en el tópico \lstinline{/joy}.
+            \item \textbf{/twist} es el nodo que convierte los datos de entrada del joystick en comandos de control de aceleración y dirección. Se suscribe al tópico \lstinline{/joy} y publica mensajes de tipo \lstinline{Twist} en el tópico \lstinline{/cmd_vel}.
+            \item \textbf{/serial\_node} es el nodo que se comunica con el microcontrolador mediante el puerto serial. El nodo se suscribe a los mensajes publicados en el tópico \lstinline{/cmd_vel}.
+        \end{itemize}
+
     \subsection{Módulo de la computadora de abordo}
     Mientras que el módulo de control de tiempo real se encarga de traducir los mensajes de control de ROS en señales de control 
     para aplicarse directamente a los actuadores por el microcontrolador a través de un controlador de potencia, la computadora 
@@ -820,44 +906,123 @@ el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remo
     inalámbrica de la OBC permite que el vehículo pueda funcionar sin la necesidad de un solo cable ya sea de alimentación de energía 
     o comunicación.
 
-
     \subsubsection{Esquema de comunicación en la OBC}
     La OBC corre el maestro de ROS, que es el que arbitra toda la comunicación en el sistema y, junto con eso, también se encarga 
-    de ejecutar varios nodos correspondientes con los sensores y el control. La lista detallada de los nodos que corren en 
-    la OBC se puede observar en la Tabla(). Por su parte, el esquema de comunicación entre dichos nodos, se puede apreciar en 
-    la Figura().
+    de ejecutar varios nodos correspondientes con los sensores y el control. Por su parte, el esquema de comunicación entre dichos nodos, se puede apreciar en 
+    la Figura(\ref{fig:nodosobc}).
 
-    %% tabla de nodos 
+    
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/nodosobc}
+        \caption[Interacción de los nodos en la OBC]{Interacción de los nodos en la OBC. Fuente: Elaboración propia. }
+        \label{fig:nodosobc}
+    \end{figure}
+    
+    La lista detallada de los nodos que corren en la OBC se puede observar en la Tabla(\ref{tbl:nodosobc}). Se puede rescatar la naturaleza modular 
+    del sistema usando el \textit{middleware} de ROS dado que cada nodo se suscribe (si corresponde) a un tópico del cual obtendrá
+    mensajes con la información necesaria, o publica mensajes producto de algún cálculo o proceso de adquisición.
 
-    %% diagrama de nodos
-
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{multirow}
+    % \usepackage{graphicx}
+    \begin{table}[]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{@{}|c|c|c|c|c|@{}}
+        \toprule
+        \multirow{2}{*}{\textbf{Nodo}} & \multicolumn{2}{c|}{\textbf{Subscribe}} & \multicolumn{2}{c|}{\textbf{Publica}}                                                                                                                                                    \\ \cmidrule(l){2-5} 
+                                    & \textbf{Tópicos} & \textbf{Mensajes}    & \textbf{Tópicos}                                                                        & \textbf{Mensajes}                                                                              \\ \midrule
+        /serial\_node                  & /cmd\_vel        & geometry\_msgs/Twist & /diagnostics                                                                            & diagnostics\_msgs/DiagnosticArray                                                              \\ \midrule
+        /laser                         & -                & -                    & /laser                                                                                  & sensor\_msgs/Range                                                                             \\ \midrule
+        /camera                        & -                & -                    & \begin{tabular}[c]{@{}c@{}}/camera/image/compressed\\ /camera/camera\_info\end{tabular} & \begin{tabular}[c]{@{}c@{}}sensor\_msgs/CompressedImage\\ sensor\_msgs/CameraInfo\end{tabular} \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption[Nodos de interfaz con los actuadores y sensores]{Nodos de interfaz con los actuadores y sensores. Fuente: Elaboración propia}
+        \label{tbl:nodosobc}
+        \end{table}
+    
     Dado que ROS permite el desarrollo de sistemas distribuidos, existen otros nodos que se ejecutan en la estación de trabajo y 
     se comunican con el maestro, corriendo en la OBC, a través de Wifi mediante una conexión TCP. La implementación de la comunicación 
     en la red está implementada en el \textit{middleware} de ROS y este proyecto no se concentra en los detalles de la misma.
+    
+    \subsubsection{Nodo /serial\_node}
+    Este nodo se encarga de establecer la conexión con el módulo de potencia en tiempo real a través de un puerto serial. El 
+    microcontrolador es capaz de enviar y recibir mensajes como si se tratara de un nodo común de ROS. El nodo serial es parte 
+    del paquete \lstinline{rosserial}\cite{ferguson} y publica información de conexión en un tópico de diagnóstico, este tópico es 
+    útil en la depuración y cuando existen problemas en la comunicación serial con el microcontrolador.
 
-\section{Subsistema de Adquisición de Datos y Entrenamiento}
+    \subsubsection{Nodo /laser}
+    Este nodo se encarga de publicar mensajes del tipo \lstinline{sensor_msgs/Range} con información sobre el sensor de proximidad 
+    que se encuentra en frente del vehículo. Se establece la comunicación mediante el protocolo I2C \footnote{I2C: Circuito inter-integrado (I2C, del inglés Inter-Integrated Circuit) es un bus serie de datos para la comunicación entre diferentes partes de un circuito, por ejemplo, entre un controlador y circuitos periféricos integrados.}
+    con el sensor VL53L0X (Sección(\ref{sec:laser})) y se adecúan los datos para ser publicados en el tópico \lstinline{/laser}.
+
+    \subsubsection{Nodo /camera}
+    Este nodo realiza la conexión con la cámara conectada a la OBC, la Raspberry Pi Camera Module V2 (Sección(\ref{sec:raspicam})) 
+    y publica las imágenes en formato compreso JPEG \footnote{JPEG: Estándar de compresión y codificación de archivos e imágenes.}
+    para utilizar menos ancho de banda. Las imágenes se publican en el tópico \lstinline{/camera/image/compressed}. El nodo 
+    es parte del paquete \lstinline{raspicam_node} \cite{agrawalgramlich2018}.
+
+
+\section{Subsistema de Adquisición de Datos y Entrenamiento}\label{sec:daq}
 
 Una vez establecida la plataforma de trabajo en el Subsistema de Control y Actuación se procede a detallar el diseño del 
 Subsistema de Adquisición de Datos y Entrenamiento que se encarga principalmente de brindar una forma adecuada de sincronizar 
 y almacenar los datos necesarios para el entrenamiento de la red neuronal así como también de brindar las herramientas necesarias 
 para el entrenamiento en sí. Este subsistema cuenta con vários módulos funcionales que interactúan entre sí como se pudo apreciar 
-en la Sección(). 
-
+en la Sección(\ref{sec:esqdaq}). 
 
     \subsection{Módulo de adquisición de datos y operación manual}
-    Como se ha podido establecer en la Sección() referida al aprendizaje automático. Para que un algoritmo de aprendizaje pueda 
+    Como se ha podido establecer en la Sección(\ref{sec:redesneuronales}) referida al aprendizaje automático. Para que un algoritmo de aprendizaje pueda 
     entrenarse de manera efectiva, es necesario contar con un conjunto de datos sobre el cual se realizará el mismo. Este conjunto 
     de datos o \textit{dataset} necesita estar almacenado de manera adecuada con el formato y las características necesarias para 
     un entrenamiento efectivo.
-
-    El módulo cuenta con un nodo que se suscribe a los mensajes provenientes tanto de la cámara como del control manual con el 
-    joystick (Figura()). Luego, se realiza una sincronización para que se pueda generar un par entrada - salida adecuado y luego se procede 
-    a almacenar el mismo. En la Figura() se puede apreciar un diagrama donde se detalla el procedimiento de adquisición de datos
-    y almacenamiento.
-
+    
     % foto del joystick
 
+    El módulo cuenta con un nodo que se suscribe a los mensajes provenientes tanto de la cámara como del control manual con el 
+    joystick (Figura()). Luego, se realiza una sincronización para que se pueda generar un par entrada - salida 
+    adecuado y luego se procede a almacenar el mismo. En la Figura(\ref{fig:nodosdaq}) se puede apreciar el grafo de comunicación de los 
+    nodos concernientes a este módulo.
+
+
     % diagrama del modulo
+    
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.95\textwidth]{img/nodosdaq}
+        \caption[Esquema de nodos para la adquisición de datos]{Esquema de nodos para la adquisición de datos. Fuente: Elaboración propia. }
+        \label{fig:nodosdaq}
+    \end{figure}
+
+    El nodo \lstinline{/msg_sync} se encarga de recuperar los mensajes de la cámara y del joystick y sincronizarlos para luego 
+    guardar la imagen en un archivo \lstinline{.bmp} y su correspondiente información en el archivo \lstinline{target.csv}. 
+    Se puede observar el procedimiento en el Algoritmo(\ref{alg:msgsync}).
+
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        %\REQUIRE Complejo simplicial $K=\{\sigma_1, \dots, \sigma_n \}$ no vacío. \label{lin:lineaRara}
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \STATE Subscripción a \lstinline{/stamped_cmd_vel}
+        \STATE Subscripción a \lstinline{/robot/stamped_image/compressed}
+        \STATE Registrar callback
+        
+        \WHILE {Conectado con el ros master}
+            \LOOP
+            \IF{Llegan mensajes sincronizados}
+                \STATE Decodificar imagen
+                \STATE Redimensionar imagen
+                \STATE Guardar archivo
+                \STATE Generar registro con datos de entrada/salida
+                \STATE Actualizar registro en el archivo \lstinline{target.csv}
+            \ENDIF
+            \ENDLOOP
+        \ENDWHILE
+        \end{algorithmic}
+        \caption{Algoritmo de sincronización de mensajes y almacenamiento de datos.}\label{alg:msgsync}
+    \end{algorithm}
+
     El \textit{dataset} se compone de un conjunto de imágenes en formato \lstinline{PNG} junto con un archivo \lstinline{CSV} que 
     contiene las columnas detalladas en la Tabla(). En la tabla se almacenan tanto los datos de aceleración y dirección como el 
     nombre del archivo de la imagen correspondiente con la misma. Los registros se almacenan en el mismo orden en el que fueron 
@@ -876,9 +1041,15 @@ en la Sección().
         limitada por la arquitectura y la cantidad de parámetros disponibles para generar representaciones internas del proceso. 
 
         En el presente proyecto, se han realizado sesiones de entrenamiento con un clima parcialmente nublado con buena iluminación 
-        ambiental, de manera que se pueda distinguir la pista del piso (Figura()).
+        ambiental, de manera que se pueda distinguir la pista del piso (Figura(\ref{fig:fotosejemplo})).
 
         %% foto de ejemplo
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.95\textwidth]{img/fotosejemplo}
+            \caption[Imágenes capturadas por la cámara en una sesión de entrenamiento]{Imágenes capturadas por la cámara en una sesión de entrenamiento. Fuente: Elaboración propia. }
+            \label{fig:fotosejemplo}
+        \end{figure}
 
     \subsection{Módulo de aumentación de datos}
     Las redes neuronal profundas tienen la impresionante capacidad de aprender representaciones internas útiles de manera automática 
@@ -893,14 +1064,63 @@ en la Sección().
 
     Es por este motivo que se ha decidido incluir una etapa de aumentación de datos que se compone de una serie de transformaciones 
     de las imágenes originales del \textit{dataset} para poder incrementar la cantidad de muestras sobre la cual se realice el 
-    entrenamiento de la red de manera sintética. En la Tabla() se puede apreciar las transformaciones usadas.
+    entrenamiento de la red de manera sintética. En la Tabla(\ref{tbl:transf}) se puede apreciar las transformaciones usadas.
     
     % tabla de transformaciones 
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[!h]
+        \centering
+        \resizebox{0.65\textwidth}{!}{%
+        \begin{tabular}{@{}|c|c|@{}}
+        \toprule
+        \textbf{Transformación} & \textbf{Descripción}                                                                                                      \\ \midrule
+        Rotación                & \begin{tabular}[c]{@{}c@{}}Se rota la imagen un ángulo \\ aleatorio entre -20 y 20 grados.\end{tabular}                   \\ \midrule
+        Desplazamiento Vertical & \begin{tabular}[c]{@{}c@{}}Se desplaza la imagen de forma \\ vertical un valor aleatorio entre \\ 0 y 20 \%.\end{tabular} \\ \midrule
+        Espejo Horizontal       & \begin{tabular}[c]{@{}c@{}}Se invierte la imagen \\ hotizontalmente de forma aleatoria.\end{tabular}                      \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Transformaciones realizadas en la aumentación de datos. Fuente: Elaboración propia.}
+    \label{tbl:transf}
+    \end{table}
 
     Este módulo no solamente cuenta con ciertas transformaciones disponibles para aumentar los datos existentes en el \textit{dataset}
     si no también cuenta con la funcion de poder eliminar registros con un valor de dirección nulo si es que fuera necesario. La utilidad
-    de esta funcionalidad se puede apreciar en la etapa de entrenamiento en la Sección().
-    
+    de esta funcionalidad se puede apreciar en la etapa de entrenamiento en la Sección(\ref{sec:training}). El algoritmo para 
+    la aumentación de datos se puede apreciar en el Algoritmo().
+
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        %\REQUIRE Complejo simplicial $K=\{\sigma_1, \dots, \sigma_n \}$ no vacío. \label{lin:lineaRara}
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \STATE Carga del dataset
+        \STATE Configuración de los parámetros de transformación
+        \STATE Iniciar generador de pares $(imagen,target)$
+        \FOR {imagen}
+            \STATE $img_{aux} = imagen$
+            \IF{$abs(target) > 0.09$}       
+                \STATE $hTarget = -target$  
+                \STATE $hImg = flipHorizontal(img_{aux})$
+                \STATE Guardar $(hImg,hTarget)$
+                \STATE $nImg = shiftVertical(img_{aux})$
+                \STATE $nImg = rotacion(nImg)$
+                \STATE Guardar $(hImg,target)$
+            \ENDIF
+        \ENDFOR
+        
+        \end{algorithmic}
+        \caption{Algoritmo del módulo de aumentación de datos.}\label{alg:msgsync}
+    \end{algorithm}
+
+    En el caso de la transformación de espejo horizontal, se debe invertir también la salida o \textit{target} de la imagen 
+    para que corresponda con el espejo, es decir, que si para una imagen $img$ el $target = 0.67$ para su transformación $hImg = flipHorizontal(img)$ 
+    se debe crear un nuevo $hTarget = -target = -0.67$. 
+
+    Para las transformaciones de desplazamiento vertical y rotación, se mantiene el $target$ original de la imagen pues no se 
+    afecta la naturaleza de la imagen de manera sustancial.
+
+
     \subsection{Módulo de generación de datos de entrenamiento}
 
     Una de las desventajas de las redes neuronales convolucionales para el procesamiento de imágenes es que las imágenes 
@@ -910,7 +1130,31 @@ en la Sección().
 
     El módulo de generación de datos de entrenamiento se ha desarrollado con la finalidad de poder generar \textit{mini batches} 
     o conjuntos pequeños de datos para el entrenamiento de la red neuronal convolucional. El algoritmo de la generación se 
-    detalla en el Algoritmo().
+    detalla en el Algoritmo(\ref{alg:datagen}).
+
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        \REQUIRE Tabla de datos, tamaño del mini-batch
+        \STATE Reordenar el dataset aleatoriamente
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \FOR {mini-batch}
+            \STATE $X = [\dots]$
+            \STATE $Y = [\dots]$
+            \FOR {par$(imagen,target)$}
+                \STATE Cargar $imagen$ desde el disco 
+                \STATE Agregar $imagen$ a $X$
+                \STATE Agregar $target$ a $Y$
+            \ENDFOR
+            \STATE Enviar $(X,Y)$
+        \ENDFOR
+        
+        \end{algorithmic}
+        \caption{Algoritmo del módulo de generación de datos.}\label{alg:datagen}
+    \end{algorithm}
+
+    Como se puede observar, para cada mini-batch generado se crean dos listas $X$ y $Y$ que contendrán los datos de 
+    las imágenes y los targets. De esta manera ya no se necesita cargat todo el \textit{dataset} en la memoria ram pues se 
+    cargarán solamente las imágenes del disco correspodiente a cada mini-batch.
 
     Este módulo es capaz de generar \textit{mini batches} de manera parametrizada de acuerdo a la necesidad de cada sesión de 
     entrenamiento.
@@ -932,6 +1176,34 @@ en la Sección().
     por el usuario. 
     
     % algoritmo del entrenamiento
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        \REQUIRE Conjunto de datos, modelo de la red neuronal
+        \STATE Generar conjunto de \textbf{entrenamiento}
+        \STATE Generar conjunto de \textbf{prueba}
+        \STATE Generar conjunto de \textbf{validación}
+        \STATE Definir \textbf{hiperparámetros}
+        \STATE Cargar el \textbf{modelo} de la red neuronal
+        \STATE Crear un generador de datos
+        \STATE Definir $n_{epocas}, n_{minibatches}$
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \FOR {$epoca$}
+            \STATE Generar minibatches
+            \FOR {$(X,Y)$}
+                \STATE Propagacíon hacia adelante de $X\rightarrow\dots \rightarrow\hat{Y}$ 
+                \STATE Cálculo del error $E = Y - \hat{Y}$
+                \STATE Cálculo de gradientes $\nabla E$ (retropropagación)
+                \STATE Ajuste de parámetros con ADAM $w \Leftarrow w - \alpha \frac{\hat{m}_w}{\sqrt{\hat{v}_w} + \epsilon}$
+                \STATE Reporte de datos de entrenamiento de minibatch
+            \ENDFOR
+            \STATE Reporte de datos de entrenamiento de época
+        \ENDFOR
+
+        \STATE Guardar modelo en archivos \lstinline{.json} y \lstinline{.h5}
+        
+        \end{algorithmic}
+        \caption{Algoritmo del módulo de entrenamiento.}\label{alg:training}
+    \end{algorithm}
 
     Este módulo se ejecuta en la estación de trabajo y hace uso de la GPU disponible para la paralelización de los algoritmos de 
     cálculo de gradientes y optimización con el fin de acelerar el tiempo de entrenamiento. El módulo es capaz de realizar 
@@ -959,11 +1231,12 @@ en la Sección().
 El subsistema de inferencia y control autónomo se ha diseñado tomando en cuenta la modularidad necesaria para poder ser 
 extendible en funcionalidades de 
     \subsection{Módulo de inferencia con una red neuronal convolucional}
-    Este módulo tiene la tarea de ejecutar la tarea de predicción del comando de control de dirección con la red neuronal entrenada 
-    por el módulo de entrenamiento del subsistema de adquisición de datos y entrenamiento.
+    Este módulo tiene la tarea de ejecutar la tarea de predicción del comando de control de dirección con la red neuronal 
+    entrenada por el módulo de entrenamiento del subsistema de adquisición de datos y entrenamiento.
     \subsection{Módulo de detección de obstáculos}
+    asdfasdf
     \subsection{Módulo del piloto automático}
-
+    asfdasfd
 \section{Diseño de la arquitectura de la red neuronal}
 -
     \subsection{Consideraciones y requerimientos}
@@ -972,17 +1245,7 @@ extendible en funcionalidades de
     \subsection{Función de Costo}
     \subsection{Optimizador}
     
-\section{Proceso de Entrenamiento de la \\ Red neuronal Convolucional}
--
-    \subsection{Sistemas de Imitación de comportamiento}
-    \subsection{Evaluación del conjuto de datos}
-    \subsection{Curvas de Aprendizaje}
-
-\section{Implementación del prototipo}
-- 
-    \subsection{Descripción general del prototipo}
-    \subsection{Restricciones de diseño}
-    \subsection{Modos de funcionamiento}
-        \subsubsection{Modo de entrenamiento y adquisición de datos}
-        \subsubsection{Modo de conducción autónoma}
-        
+\section{Proceso de Entrenamiento de la \\ Red neuronal Convolucional} \label{sec:training}
+    \subsection{Caracterización del conjunto de datos}
+    \subsection{Limpieza del conjunto de datos}
+    \subsection{}
