@@ -50,7 +50,7 @@ y alcance del mismo.
     El subsistema de control y actuación tiene el objetivo de servir como base física para la implementación de los algoritmos 
     de control. En la Figura(\ref{fig:control_esq}) se puede apreciar sus componentes y la forma en que interactúan entre sí. 
     Este subsistema cuenta con varios módulos funcionales que se encargan del control y actuación del vehículo. Los módulos 
-    tiene la tarea de servir como una plataforma para que los algoritmos de control se puedan ejecutar en el vehículo. 
+    tienen la tarea de brundar una plataforma para que los algoritmos de control se puedan ejecutar en el vehículo. 
 
     Este subsistema cuenta con módulos que tienen tres principales responsabilidades.
     
@@ -1088,7 +1088,7 @@ en la Sección(\ref{sec:esqdaq}).
     Este módulo no solamente cuenta con ciertas transformaciones disponibles para aumentar los datos existentes en el \textit{dataset}
     si no también cuenta con la funcion de poder eliminar registros con un valor de dirección nulo si es que fuera necesario. La utilidad
     de esta funcionalidad se puede apreciar en la etapa de entrenamiento en la Sección(\ref{sec:training}). El algoritmo para 
-    la aumentación de datos se puede apreciar en el Algoritmo().
+    la aumentación de datos se puede apreciar en el Algoritmo(\ref{alg:msgsync}).
 
     \begin{algorithm}
         \begin{algorithmic}[1]
@@ -1232,11 +1232,162 @@ El subsistema de inferencia y control autónomo se ha diseñado tomando en cuent
 extendible en funcionalidades de 
     \subsection{Módulo de inferencia con una red neuronal convolucional}
     Este módulo tiene la tarea de ejecutar la tarea de predicción del comando de control de dirección con la red neuronal 
-    entrenada por el módulo de entrenamiento del subsistema de adquisición de datos y entrenamiento.
+    entrenada por el módulo de entrenamiento del subsistema de adquisición de datos y entrenamiento. Para que la red pueda 
+    utilizarse para realizar predicciones es necesario cargar los parámetros de arquitectura y pesos de la red previamente 
+    generados en el Subsistema de Adquisición de datos y Entrenamiento. Una vez cargados los datos, la red puede usarse 
+    para predecir comandos de control de dirección en base a nuevas imágenes provenientes de la cámara.
+
+    El proceso de predicción se detalla en el Algoritmo(\ref{alg:predict}). Es importante destacar que este módulo se ha implementado como 
+    un nodo de ROS, de manera tal que puede integrarse al sistema usando tópicos y mensajes. En este caso, el nodo se 
+    suscribe al tópico de la cámara frontal y publica comandos de control en un tópico especial que puede ser consumido por 
+    cualquier otro nodo, en este proyecto, los mensajes provenientes del módulo de inferencia son consumidos por el módulo 
+    del piloto automático. 
+
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        % \REQUIRE Conjunto de datos, modelo de la red neuronal
+        \STATE Cargar parámetros 
+        \STATE Cargar la arquitectura de la red neuronal (archivo \lstinline{.json}) 
+        \STATE Cargar los pesos de la red neuronal (archivo \lstinline{.h5})
+        \STATE Subscribirse al tópico de las imágenes de la cámara \lstinline{/camera/image/compressed}
+        \STATE Crear tópico para publicar la salida \lstinline{/neural_ouput}
+        \STATE Conectar con el ROS master
+        
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \WHILE {hay conexión}
+            \IF{ha llegado un mensaje de la cámara}
+                \STATE Decodificar imagen 
+                \STATE Redimensionar imagen 
+                \STATE Normalizar imagen 
+                \STATE Obtener predicción de la red neuronal en $angular$
+                \STATE Crear mensaje de tipo \lstinline{Float32()}
+                \STATE Publicar $angular$ en el tópico \lstinline{/neural_ouput}
+            \ENDIF
+        \ENDWHILE
+        \end{algorithmic}
+        \caption{Algoritmo del módulo de inferencia.}\label{alg:predict}
+    \end{algorithm}
+
+    El nodo de predicción se suscribe al tópico \lstinline{/camera/image/compressed} para obtener mensajes provenientes de 
+    la cámara y publica mensajes de tipo \lstinline{std_msgs/Float32} en el tópico \lstinline{/neural_ouput} que representa 
+    la salida de la red neuronal. Se puede apreciar el diagrama de conexión de los nodos en la Figura(\ref{fig:nodosneural}).
+
+    %% foto de ejemplo
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.95\textwidth]{img/nodosneural}
+        \caption[Esquema del módulo de inferencia]{Esquema del módulo de inferencia. Fuente: Elaboración propia. }
+        \label{fig:nodosneural}
+    \end{figure}
+    
+    Este módulo tiene especial importancia pues implementa el concepto de aprendizaje \textbf{fin a fin}
+    en el sistema de conducción. Como se ha podido observar, la única tarea que realiza es alimentar la 
+    red neuronal con imágenes provenientes de la cámara para obtener comandos de control a la salida, sin 
+    realizar ningún procesamiento previo a la imagen, como puede ser la extracción  de características o reducción 
+    de dimensionalidad.
+
+    
     \subsection{Módulo de detección de obstáculos}
-    asdfasdf
+    El módulo de detección de obstáculos tiene la finalidad de controlar la aceleración del vehículo basado en la 
+    presencia de obstáculos físicos frente al mismo. Se basa en las mediciones de proximidad realizadas por el 
+    sensor de proximidad montado en frente del vehículo. 
+
+    Este módulo se suscribe al nodo que publica los mensajes de distancia del sensor, y publica el valor de la aceleración 
+    en otro nodo para ser consumido por el nodo de piloto automático. Cuando no se encuentran obstáculos cerca del vehículo, 
+    el control imprime una aceleración constante, si se detecta un obstáculo, el algoritmo reduce la aceleración de manera 
+    proporcional a la distancia con el fin de obtener una deceleración suave para detenerse a una distancia segura. Si el obstáculo 
+    se encuentra a una distancia menor a la segura, el algoritmo hace que el vehículo retroceda para no colisionar. El algoritmo 
+    se detalla en el Algoritmo().
+
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        \REQUIRE Distancia segura $distancia_{stop}$, Constante proporcional $K_p$, Aceleración máxima $acc_{max}$
+        \STATE Cargar parámetros 
+        \STATE Subscribirse al tópico de las mediciones del sensor \lstinline{/laser}
+        \STATE Crear tópico para publicar la salida \lstinline{/obstacle_ouput}
+        \STATE Conectar con el ROS master
+        
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \WHILE {hay conexión}
+            \IF{ha llegado un mensaje del sensor $msg$}
+                \STATE $error = msg.range - distancia_{stop}$
+                \STATE $aceleracion = K_p\cdot error $
+                \IF{$aceleracion > acc_{max}$}
+                    \STATE $aceleracion \Leftarrow acc_{max}$
+                \ENDIF
+
+                \IF{$(distancia_{stop} - 0.03) < aceleracion < (distancia_{stop} + 0.03)$}
+                    \STATE $aceleracion \Leftarrow 0$
+                \ENDIF
+
+                \STATE Crear mensaje de tipo \lstinline{Float32()}
+                \STATE Publicar $aceleracion$ en el tópico \lstinline{/obstacle_ouput}
+            \ENDIF
+        \ENDWHILE
+        \end{algorithmic}
+        \caption{Algoritmo del módulo de detección de obstáculos.}\label{alg:obstacle}
+    \end{algorithm}
+
+    El módulo se ha implementado como un nodo de ROS, de la misma manera que el nodo de inferencia con la red neuronal, para que 
+    sea compatible con toda la infraestructura de comunicación que brinda ROS. El esquema de la interacción del nodo con otros nodos 
+    se puede apreciar en la Figura(\ref{fig:nodosobs}). Como se puede observar, el nodo es una unidad de procesamiento independiente 
+    y puede ser implementada de distintas maneras. Este módulo puede ser reemplazado por uno más sofisticado o tomando en cuenta más
+    sensores y variables. 
+
+    %% foto de ejemplo
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.95\textwidth]{img/nodosobs}
+        \caption[Esquema del módulo de detección de obstáculos]{Esquema del módulo de detección de obstáculos. Fuente: Elaboración propia. }
+        \label{fig:nodosobs}
+    \end{figure}
+
     \subsection{Módulo del piloto automático}
-    asfdasfd
+    Este módulo se encarga de arbitrar los comandos de control provenientes de las distintas fuentes utilizadas en el sistema. Se 
+    suscribe a cada tópico correspondiente y redirecciona los mensajes para el control del vehículo mediante mensajes de tipo 
+    \lstinline{geometry_msgs/Twist}.
+
+    De la misma manera que los anteriores módulos del subsistema, el módulo del piloto automático está implementado como un nodo 
+    de ROS que se suscribe a ciertos tópicos y publica mensajes en el tópico correspondiente con el control del vehículo cerrando 
+    el lazo de control. El funcionamiento del nodo se puede analizar en el Algoritmo(\ref{alg:autopilot}).
+
+    \begin{algorithm}
+        \begin{algorithmic}[1]
+        \REQUIRE Tiempo de muestreo $t_s$
+        \STATE Cargar parámetros 
+        \STATE Subscribirse al tópico de la detección de obstáculos \lstinline{/obstacle_ouput}
+        \STATE Subscribirse al tópico de la red neuronal \lstinline{/neural_ouput}
+        \STATE Subscribirse al tópico de los comandos del joystick \lstinline{/joy_cmd_vel}
+        \STATE Crear tópico para publicar la salida \lstinline{/cmd_vel}
+        \STATE Configurar temporizador para el tiempo de muestreo fijo
+        \STATE Conectar con el ROS master
+        
+        %\ENSURE \TRUE si $K$ es contráctil y \FALSE en caso contrario.
+        \WHILE {hay conexión}
+            \IF{ha llegado un mensaje de la detección de obstáculos $aceleracion$}
+                \STATE Guardar $aceleracion$
+            \ENDIF
+            \IF{ha llegado un mensaje de la red neuronal $direccion$}
+                \STATE Guardar $direccion$
+            \ENDIF
+            \IF{ha llegado un mensaje del joystick $twist_{joy}$}
+                \STATE Guardar $twist_{joy}$
+            \ENDIF
+            \IF{se ha cumplido el intervalo de tiempo $t_s$}
+                \IF{hay comando de control $twist_{joy}$}
+                    \STATE Publicar $twist_{joy}$ en \lstinline{/cmd_vel}
+                \ELSE
+                    \STATE Publicar $(aceleracion, direccion)$ en \lstinline{/cmd_vel}
+                \ENDIF
+            \ENDIF
+
+        \ENDWHILE
+        \end{algorithmic}
+        \caption{Algoritmo del módulo de detección de obstáculos.}\label{alg:autopilot}
+    \end{algorithm}
+
+    
+
 \section{Diseño de la arquitectura de la red neuronal}
 -
     \subsection{Consideraciones y requerimientos}
