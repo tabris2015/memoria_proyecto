@@ -242,7 +242,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
 
     \begin{figure}[!h] 
         \centering
-        \includegraphics[width=0.75\textwidth]{img/digitalimg}
+        \includegraphics[width=0.55\textwidth]{img/digitalimg}
         \caption[Representación de una imagen digital]{Representación de una imagen digital como un arreglo de pixeles. Fuente: \cite{Szeliski2011} }
         \label{fig:digitalimg}
     \end{figure}
@@ -583,7 +583,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
                 \item \textbf{\textit{Mini-batch Gradient Descent.}} Es una mezcla del descenso de gradiente tradicional y el descenso de gradiente estocástico, en este caso, las muestras se alimentan al algoritmo en \textit{mini-batches} o muestras de tamaño pequeño.
             \end{itemize}
         
-            \paragraph{Adam}
+            \paragraph{Adam}\label{sec:adam}
             Adam, abreviación de \textit{Adaptive Moment Estimation}, es un algoritmo de optimización alternativo al descenso de 
             gradiente que utiliza promedios tanto de los gradientes como los momentos de segundo orden de los gradientes \cite{kingma2014adam}. Dados 
             los parámetros $\mathbf{w}^{(\tau)}$ y la función de error $E^{(\tau)}$, la actualización de parámetros de acuerdo 
@@ -688,7 +688,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             lugar se ha generado nuevos tipos de funciones de activación que presentan características bastante favorables 
             para el aprendizaje y ajuste de pesos basados en gradientes.
 
-            \paragraph{Unidad Lineal Rectificada - ReLU}
+            \paragraph{Unidad Lineal Rectificada - ReLU}\label{sec:relu}
             Introducida por primera vez en el año 2010 por Nair y Hinton, las Unidades Lineales Rectificadas o ReLU, se 
             propusieron para mejorar el rendimiento de un tipo especial de red neuronal: las máquinas restringidas de Boltzman 
             (RMB, por sus siglas en inglés) \cite{nair2010rectified}, pero pronto, ganarían gran popularidad también en las 
@@ -715,6 +715,50 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             Sin embargo, dado que la función ReLU tiene una gradiente nula para valores negativos es de vital importancia 
             que se garantice la existencia de gradientes positivos, aunque sea pequeños durante la inicialización y las capas 
             previas.
+
+        
+        \subsubsection{Métricas y puntajes para tareas de regresión}
+        Una vez definidos los componentes de una red neuronal y el procedimiento para el entrenamiento, es necesario 
+        definir alguna forma de evaluar el rendimiento de la misma. Esta evaluación normalmente se realiza en base al 
+        cálculo de puntajes o \textit{scores} para cada tarea en específico. Si se trata de una tarea de regresión, como 
+        es el caso del presente proyecto, se tienen distintas métricas para evaluar el rendimiento del modelo.
+
+        \paragraph{Error cuadrático medio - MSE}
+        El error cuadrático medio es una medida correspondiente con el valor esperado del error elevado al cuadrado \cite{mse}. Si $\hat{y}_i$ 
+        es el valor predicho de la $i$-ésima muestra y $y_i$ es el valor real correspondiente, entonces el error 
+        cuadrático medio (MSE) estimado sobre $n$ muestras se define como:
+        
+        \begin{equation}\label{eq:mse}
+            MSE(y,\hat{y}) = \frac{1}{n} \sum_{i=0}^{n-1} (y_1 - \hat{y}_i)^2
+        \end{equation}
+
+        Un valor de MSE igual a $0$ indica que el modelo puede predecir perfectamente todas las muestras.
+
+        \paragraph{Error absoluto medio - MAE}
+
+        El error absoluto medio es una medida correspondiente con el valor esperado del error absoluto \cite{mae}. Si $\hat{y}_i$ 
+        es el valor predicho de la $i$-ésima muestra y $y_i$ es el valor real correspondiente, entonces el error 
+        absoluto medio (MAE) estimado sobre $n$ muestras se define como:
+        
+        \begin{equation}\label{eq:mae}
+            MAE(y,\hat{y}) = \frac{1}{n} \sum_{i=0}^{n-1} |y_1 - \hat{y}_i|
+        \end{equation}
+
+        Un valor de MAE igual a $0$ indica que el modelo puede predecir perfectamente todas las muestras.
+
+        \paragraph{Coeficiente de determinación - $R^2$}
+        El coeficiente de determinación $R^2$ provee una medida de cuán efectiva será la predicción de futuras muestras 
+        por el modelo. El mejor puntaje posible es 1.0 y puede tomar valores negativos para una predicción especialmente 
+        ineficiente \cite{r2}. 
+
+        Si $\hat{y}_i$ es el valor predicho de la $i$-ésima muestra y $y_i$ es el valor real correspondiente, entonces el puntaje
+        $R^2$ estimado sobre $n$ muestras se define como:
+        
+        \begin{equation}\label{eq:r2}
+            R^2(y,\hat{y}) = 1 - \frac{\displaystyle\sum_{i=0}^{n-1} (y_1 - \hat{y}_i)^2}{\displaystyle\sum_{i=0}^{n-1} (y_1 - \overline{y}_i)^2}
+        \end{equation}
+
+        donde $\overline{y} = \frac{1}{n} \displaystyle\sum_{i=0}^{n-1} y_i$.
 
         \subsubsection{Diseño de Arquitectura e hiperparámetros de una red neuronal}
         Como se ha podido ver en las secciones anteriores, la característica más importante de una red neuronal es que es capaz
@@ -756,7 +800,7 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             del comportamiento de una red neuronal profunda normalmente se eligen en conjunto con un proceso de prueba y error, 
             analizando las curvas de aprendizaje y rendimiento en conjuntos de datos de validación y prueba.
 
-    \subsection{Redes Neuronales Convolucionales}
+    \subsection{Redes Neuronales Convolucionales} \label{sec:convnet}
     Las redes neuronales convolucionales son un tipo especializado de red neuronal que 
     sirven para procesar datos de tipo "grilla" \cite{Goodfellow-et-al-2016}. Algunos ejemplos 
     de datos de tipo grilla que se pueden mencionar son los siguientes:
@@ -811,6 +855,25 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
         En el contexto de las aplicaciones de aprendizaje automático o, más específicamente, aprendizaje profundo,
         la entrada es usualmente un arreglo multidimensional de datos, y el kernel es usualmente un arreglo 
         multidimensional de parámetros que se adaptan en el proceso de aprendizaje. 
+
+        \subsection{Operación de max pooling} \label{sec:maxpool}
+        Usualmente, las capas convolucionales utilizan a su salida una operación de \textit{pooling}, en específico, 
+        el \textit{max pooling}. Esta operación permite hacer un submuestreo del mapa de características de la salida 
+        de la capa convolucional donde se toman en cuenta solamente los valores máximos. Esta etapa de submuestreo 
+        tiene la ventaja de reducir la dimensionalidad de los mapas de características obtenidos y, a su vez, de 
+        mantener solamente los valores de activación máximos para las capas convolucionales. Además, la operación 
+        permite agregar algo de invarianza a pequeñas variaciones en el mapa de características para mantener 
+        siempre las activaciones máximas. 
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/maxpool}
+            \caption[Gráfico de la operación max pooling]{Gráfico de la operación max pooling. Fuente: \cite{wang_2016} }
+            \label{fig:maxpool}
+        \end{figure}
+
+        La operación trabaja sobre vecindades de pixeles definidas de acuerdo a la parametrización de cada 
+        capa de \textit{max pooling}. Como se puede apreciar en la Figura(\ref{fig:maxpool})
 
         \subsubsection{Procesamiento de imágenes con redes neuronales convolucionales}
         La operación de convolución se usa frecuentemente sobre datos con más de una dimensión. Las imágenes digitales 

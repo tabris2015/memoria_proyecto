@@ -9,7 +9,7 @@
 %\documentclass[12pt,letterpaper,oneside]{book}
 
 % Paquetes basicos ...
-\usepackage[spanish]{babel}
+\usepackage[spanish, mexico]{babel}
 \usepackage[utf8]{inputenc} % OJO!!!  => MANTENER ESTA LINEA PARA FACIL CONVERSION A WORD EN EL FUTURO ...
 \usepackage{float,xcolor}
 \usepackage{graphicx} 
@@ -25,8 +25,11 @@
 \usepackage{enumitem}
 \usepackage{blindtext}
 \usepackage{hyperref}
-
-
+% figuras
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{epstopdf}
 
 \usepackage{booktabs}
 \usepackage{multirow}
@@ -41,6 +44,9 @@
 
 \usepackage{lipsum}
 \usepackage{courier}
+
+\usepackage{tikz}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
 
 \lstset{basicstyle=\footnotesize\ttfamily, breaklines=true}
 % %% para que aparezca Capitulo

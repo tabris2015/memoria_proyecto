@@ -1,5 +1,5 @@
 \chapter{Ingeniería del proyecto}\label{ch:ingenieria}
-\section{Arquitectura del sistema}
+\section{Arquitectura del sistema}\label{sec:arquitectura}
 En la presente sección se procede a detallar la arquitectura del sistema de forma general analizando cada uno de 
 los subsistemas, sus funcionalidades, componentes y características. Posteriormente se detallarán los detalles técnicos
 y de implementación de cada subsistema. Para comenzar, es necesario describir la visión general del sistema, la finalidad 
@@ -105,11 +105,26 @@ y alcance del mismo.
         \item Ejecutar un algoritmo de arbitraje que combine ambos sistemas de control en conjunto con un control manual de respaldo que será referido como el \textit{piloto automático}.
     \end{itemize}
 
-    En la Figura() se puede observar el esquema en diagramas de bloques del subsistema con la interacción entre los módulos que 
+    En la Figura(\ref{fig:inferencia_esq}) se puede observar el esquema en diagramas de bloques del subsistema con la interacción entre los módulos que 
     lo componen.
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.85\textwidth]{img/inferencia_esq}
+        \caption[Subsistema de Inferencia y Control Autónomo]{Esquema en diagrama de bloques del Subsistema de Inferencia y Control Autónomo. Fuente: Elaboración propia. }
+        \label{fig:inferencia_esq}
+    \end{figure}
 
-    % diagrama
-\section{Herramientas de software}
+    Este subsistema depende de los otros dos subsistemas de la siguiente manera:
+    \begin{itemize}
+        \item El subsistema de de adquisión y entrenaminto es el encargado de generar los archivos de la red neuronal que se usan en este subsistema.
+        \item El subsistema de control y actuación es el encargado de generar los datos de los sensores y de proveer una plataforma para el control del vehículo.
+    \end{itemize}
+
+    El presente proyecto presenta en este subsistema una alternativa a otros métodos tradicionales para sistemas de visión artificial 
+    para tareas de control autónomo.
+
+    
+\section{Herramientas de software}\label{sec:software}
     \subsection{Robot Operating System - ROS}\label{sec:ros}
     ROS o Sistema Operativo Robótico es un \textit{framework} flexible para desarrollar software para robots. Se compone 
     de una colección de herramientas, librerías y convenciones que tienen el objetivo de simplificar la tarea de crear 
@@ -142,6 +157,28 @@ y alcance del mismo.
         robóticos modulares sea una tarea trivial. Aparte de la infraestructura de comunicación, ROS ofrece otras características
         especialmente diseñadas para el desarrollo de robots.
         
+        \subsubsection{Nodos de ROS}
+        Un nodo en ROS representa a un proceso que se ejecuta de manera independiente y puede aprovechar las facilidades 
+        de la infraestructura de comunicación de ROS. Los nodos pueden publicar o subscribirse a uno o varios tópicos. 
+
+        Para que los nodos puedan comunicarse entre sí de manera distribuida y coordinada, existe un proceso especial llamado 
+        el ROS master, que registra a todos los nodos y establece los canales de comunicación entre ellos usando los tópicos 
+        y mensajes a los cuales los nodos se suscriben y publican. 
+
+        Una característica importante de los Nodos de ROS es que se pueden ejecutar de manera distribuida sobre una red local, 
+        lo que implica que se pueden desarrollar sistemas robóticos distribuidos en varias computadoras o estaciones de trabajo. 
+        Esto es muy útil en casos donde las características de tamaño, peso y consumo de energía de un robot móvil imposibilita 
+        la inclusión de una computadora con las características de memoria y velocidad de procesamiento necesarias para tareas 
+        de procesamiento de imágenes o inteligencia artificial, pudiendo ejecutar los nodos con altos requerimientos computacionales 
+        en una estación de trabajo remota.
+
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/rosnodos}
+            \caption[Esquema de la comunicación entre nodos]{Esquema de la comunicación entre nodos. Fuente: \cite{roswiki} }
+            \label{fig:rosnodos}
+        \end{figure}
+
         \subsubsection{Características específicas para robótica}
         Adicionalmente a los componentes del \textit{middleware}, ROS tiene a disposición librerías y herramientas específicas 
         para el desarrollo rápido de sistemas robóticos. Algunas de las características más importantes se listan a continuación:
@@ -418,12 +455,12 @@ y alcance del mismo.
     \end{itemize}
 
 
-\section{Herramientas de hardware}
+\section{Herramientas de hardware}\label{sec:hardware}
 Se han seleccionado diversas herramientas de hardware para la implementación del sistema de conducción autónoma. Dichas herramientas
 corresponden con la base física electrónica sobre la cual se ejecutarán las tareas de los tres subsistemas. Se procede a detallar 
 las herramientas utilizadas en el diseño del sistema.
 
-    \subsection{Plataforma de tiempo real}
+    \subsection{Plataforma de tiempo real}\label{sec:mcu}
     La interfaz de más bajo nivel del sistema es el de la interacción con los actuadores de los motores del prototipo. Esta 
     interfaz debe tener la capacidad de poder comunicarse con la OBC y además de poder cumplir ciertos requisitos de ejecución 
     en tiempo real. Estos requisitos de tiempo real hace que tal comportamiento no se pueda implementar en la OBC pues la misma 
@@ -457,7 +494,7 @@ las herramientas utilizadas en el diseño del sistema.
         \item Operación en niveles de tensión compatibles con la OBC.
     \end{itemize}
 
-    Es por eso que se ha seleccionado la placa de desarrollo de ST Microelectronics Mucleo f303k8 (Figura()), tomando en cuenta 
+    Es por eso que se ha seleccionado la placa de desarrollo de ST Microelectronics Mucleo f303k8 (Figura(\ref{fig:nucleo})), tomando en cuenta 
     que cumple con todos los requisitos anteriormente establecidos y además cuenta con las siguientes características:
 
 
@@ -599,7 +636,7 @@ las herramientas utilizadas en el diseño del sistema.
         \label{fig:raspi}
     \end{figure}
 
-    Al final, se ha seleccionado a la placa Raspberry Pi 3B+ (Figura()) para la OBC del proyecto pues cuenta con todas las características 
+    Al final, se ha seleccionado a la placa Raspberry Pi 3B+ (Figura(\ref{fig:raspi})) para la OBC del proyecto pues cuenta con todas las características 
     necesarias para poder ejecutar las herramientas de software requeridas y también cuenta con los periféricos adecuados para 
     comunicarse con la plataforma de tiempo real. La placa en cuestión cuenta con las características listadas en la Tabla(\ref{tbl:raspispecs})
 
@@ -829,6 +866,7 @@ que es capaz de enviar mensajes mediante el puerto serial a sistemas embebidos q
 manera, el control de los actuadores es transparente a cualquier otro nodo en la red haciendo posible que se pueda controlar 
 el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remota en estaciones de trabajo en la red local.
 
+
     \subsection{Módulo de potencia en tiempo real}
     El prototipo cuenta con dos actuadores para la tracción y la dirección respectivamente. En el caso de la tracción, se 
     utiliza un motor de corriente contínua de imán permanente en conjunción con un controlador de potencia capaz de manipular 
@@ -838,14 +876,34 @@ el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remo
     Por su parte, el control de la dirección se realiza mediante el uso de un servomotor dimensionado adecuadamente para la aplicación 
     que controla el ángulo de las ruedas delanteras. El ángulo de las ruedas define el ICC (Sección(\ref{sec:ruedas})), que a su vez 
     define el radio de giro mínimo en base al máximo rango en el que puede variar el ángulo de las ruedas delanteras. En la 
-    Figura() se puede apreciar el prototipo y la disposición de los actuadores del mismo.
+    Figura(\ref{fig:actuadores}) se puede apreciar el prototipo y la disposición de los actuadores del mismo.
 
-    \begin{quote}
-        Foto del carro sin control
-    \end{quote}
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.75\textwidth]{img/actuadores}
+        \caption[Prototipo del vehículo]{Prototipo del vehículo. Fuente: Elaboración propia. }
+        \label{fig:actuadores}
+    \end{figure}
+
+    El servomotor que se encarga de la dirección del vehículo se puede apreciar en la Figura(\ref{fig:servo}) y el motor DC de aceleración 
+    en la Figura(\ref{fig:dcmotor}).
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/servo}
+        \caption[Fotografía del servomotor de dirección]{Fotografía del servomotor de dirección. Fuente: Elaboración propia. }
+        \label{fig:servo}
+    \end{figure}
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/dcmotor}
+        \caption[Fotografía del motor DC de aceleración]{Fotografía del motor DC de aceleración. Fuente: Elaboración propia. }
+        \label{fig:dcmotor}
+    \end{figure}
 
         \subsubsection{Control de actuadores mediante ROS}
-        Tal como se pudo especificar en la Sección() el microcontrolador elegido para la tarea tiene la capacidad de usar la 
+        Tal como se pudo especificar en la Sección(\ref{sec:mcu}) el microcontrolador elegido para la tarea tiene la capacidad de usar la 
         librería Rosserial que hace posible crear un nodo de ROS en el microcontrolador usando el puerto serial. En este sentido, 
         el control de motores se realiza de manera asíncrona con un tiempo de muestreo fijo. Se puede apreciar el algoritmo 
         implementado en el nodo de control en el Algoritmo(\ref{alg:nodomcu}).
@@ -901,10 +959,25 @@ el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remo
     las imágenes provenientes de la cámara o sensores; como con nodos que consumen estos datos y los procesan de alguna manera, 
     como el nodo del piloto automático. 
 
-    En la Figura() se puede apreciar el prototipo con la OBC incorporada al mismo. Cabe resaltar que por sus características, tanto 
+    En la Figura(\ref{fig:obc}) se puede apreciar la OBC y en la Figura(\ref{fig:carro}) el prototipo con la OBC incorporada al mismo. Cabe resaltar que por sus características, tanto 
     la OBC, como el módulo de control de tiempo real pueden alimentarse por una batería a bordo del vehículo. A su vez, la comunicación 
     inalámbrica de la OBC permite que el vehículo pueda funcionar sin la necesidad de un solo cable ya sea de alimentación de energía 
     o comunicación.
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/obc}
+        \caption[Fotografía de la OBC]{Fotografía de la OBC. Fuente: Elaboración propia. }
+        \label{fig:obc}
+    \end{figure}
+
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.65\textwidth]{img/carro}
+        \caption[Fotografía del prototipo]{Fotografía del prototipo. Fuente: Elaboración propia. }
+        \label{fig:carro}
+    \end{figure}
+
 
     \subsubsection{Esquema de comunicación en la OBC}
     La OBC corre el maestro de ROS, que es el que arbitra toda la comunicación en el sistema y, junto con eso, también se encarga 
@@ -980,9 +1053,15 @@ en la Sección(\ref{sec:esqdaq}).
     un entrenamiento efectivo.
     
     % foto del joystick
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.55\textwidth]{img/joystick}
+        \caption[Fotografía del mando inalámbrico de Xbox 360]{Fotografía del mando inalámbrico de Xbox 360. Fuente: Elaboración propia. }
+        \label{fig:joystick}
+    \end{figure}
 
     El módulo cuenta con un nodo que se suscribe a los mensajes provenientes tanto de la cámara como del control manual con el 
-    joystick (Figura()). Luego, se realiza una sincronización para que se pueda generar un par entrada - salida 
+    joystick (Figura(\ref{fig:joystick})). Luego, se realiza una sincronización para que se pueda generar un par entrada - salida 
     adecuado y luego se procede a almacenar el mismo. En la Figura(\ref{fig:nodosdaq}) se puede apreciar el grafo de comunicación de los 
     nodos concernientes a este módulo.
 
@@ -1024,11 +1103,31 @@ en la Sección(\ref{sec:esqdaq}).
     \end{algorithm}
 
     El \textit{dataset} se compone de un conjunto de imágenes en formato \lstinline{PNG} junto con un archivo \lstinline{CSV} que 
-    contiene las columnas detalladas en la Tabla(). En la tabla se almacenan tanto los datos de aceleración y dirección como el 
+    contiene las columnas detalladas en la Tabla(\ref{tbl:columns}). En la tabla se almacenan tanto los datos de aceleración y dirección como el 
     nombre del archivo de la imagen correspondiente con la misma. Los registros se almacenan en el mismo orden en el que fueron 
     capturados, no obstante, para la tarea de regresión definida en este proyecto, la dependencia temporal entre las muestras 
     no es importante. 
 
+        % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[!h]
+        \centering
+        \resizebox{0.55\textwidth}{!}{%
+        \begin{tabular}{@{}|c|c|c|@{}}
+        \toprule
+        \textbf{Columna} & \textbf{Descripción} & \textbf{Tipo de dato} \\ \midrule
+        id & \begin{tabular}[c]{@{}c@{}}Número de identificación\\ único para cada muestra del \\ dataset.\end{tabular} & Int32 \\ \midrule
+        angular & \begin{tabular}[c]{@{}c@{}}Valor del comando de \\ dirección proveniente \\ del Joystick \\ 1: completamente a la izquierda\\ -1: completamente a la derecha\\ 0: adelante\end{tabular} & Float32 \\ \midrule
+        imgpath & \begin{tabular}[c]{@{}c@{}}Nombre del archivo de la \\ imagen correspondiente con \\ el id actual\end{tabular} & String \\ \midrule
+        linear & \begin{tabular}[c]{@{}c@{}}Valor del comando de \\ aceleración proveniente \\ del Joystick \\ 1: aceleración máxima adelante\\ -1: aceleración máxima atrás\\ 0: detenido\end{tabular} & Float32 \\ \midrule
+        target & \begin{tabular}[c]{@{}c@{}}Par de valores correspondientes\\  con los valores angular y linear.\end{tabular} & Array \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Columnas de la tabla del conjunto de datos generado}
+        \label{tbl:columns}
+    \end{table}
+    
         \subsubsection{Sesiones de entrenamiento}
         La manera de adquirir el conjunto de datos es mediante las denominadas \textit{Sesiones de Entrenamiento o Grabación de Comportamiento}.
         Estas sesiones corresponden con periodos de tiempo en el cual se recuperan datos de manera constante. La cantidad de registros 
@@ -1046,12 +1145,13 @@ en la Sección(\ref{sec:esqdaq}).
         %% foto de ejemplo
         \begin{figure}[!h] 
             \centering
-            \includegraphics[width=0.95\textwidth]{img/fotosejemplo}
+            \includegraphics[width=0.75\textwidth]{img/fotosejemplo}
             \caption[Imágenes capturadas por la cámara en una sesión de entrenamiento]{Imágenes capturadas por la cámara en una sesión de entrenamiento. Fuente: Elaboración propia. }
+
             \label{fig:fotosejemplo}
         \end{figure}
 
-    \subsection{Módulo de aumentación de datos}
+    \subsection{Módulo de aumentación de datos}\label{sec:aumentacion}
     Las redes neuronal profundas tienen la impresionante capacidad de aprender representaciones internas útiles de manera automática 
     usando el algoritmo de la retropropagación, pero esta capacidad solamente resalta cuando se cuenta con un conjunto de datos 
     de un tamaño considerable, es decir, que se necesitan muchas muestras para que el entrenamiento de una red neuronal profunda 
@@ -1172,7 +1272,7 @@ en la Sección(\ref{sec:esqdaq}).
         \item Generación de reportes del proceso de entrenamiento.
     \end{itemize}
 
-    En el Algoritmo() se puede apreciar el proceso detallado de entrenamiento de la red de acuerdo a parametrización definida 
+    En el Algoritmo(\ref{alg:training}) se puede apreciar el proceso detallado de entrenamiento de la red de acuerdo a parametrización definida 
     por el usuario. 
     
     % algoritmo del entrenamiento
@@ -1227,7 +1327,7 @@ en la Sección(\ref{sec:esqdaq}).
     con el fin de poderse utilizar de manera individual con otros sistemas o de manera conjunta, enfocando las funcionalidades 
     en el entrenamiento de redes neuronales convolucionales para tareas de procesamiento de imágenes y visión artificial.
 
-\section{Subsistema de Inferencia y control autónomo}
+\section{Subsistema de Inferencia y control autónomo}\label{sec:inferencia}
 El subsistema de inferencia y control autónomo se ha diseñado tomando en cuenta la modularidad necesaria para poder ser 
 extendible en funcionalidades de 
     \subsection{Módulo de inferencia con una red neuronal convolucional}
@@ -1297,7 +1397,7 @@ extendible en funcionalidades de
     el control imprime una aceleración constante, si se detecta un obstáculo, el algoritmo reduce la aceleración de manera 
     proporcional a la distancia con el fin de obtener una deceleración suave para detenerse a una distancia segura. Si el obstáculo 
     se encuentra a una distancia menor a la segura, el algoritmo hace que el vehículo retroceda para no colisionar. El algoritmo 
-    se detalla en el Algoritmo().
+    se detalla en el Algoritmo(\ref{alg:obstacle}).
 
     \begin{algorithm}
         \begin{algorithmic}[1]
@@ -1386,17 +1486,429 @@ extendible en funcionalidades de
         \caption{Algoritmo del módulo de detección de obstáculos.}\label{alg:autopilot}
     \end{algorithm}
 
+    Es impotante resaltar que, por seguridad, todavía se mantiene activo el control manual con el joystick, esto con el objetivo 
+    de poder brindar a el operador una forma de evitar algún accidente debido a fallos en el sistema. Con todo, en la Figura(\ref{fig:nodesauto}) se 
+    puede apreciar el esquema de conexión de nodos del sistema en su conjunto, operando en modo autónomo.
+
+    %% foto de ejemplo
+    \begin{figure}[!ht] 
+        \centering
+        \includegraphics[width=\textwidth]{img/nodesauto}
+        \caption[Esquema de los nodos del sistema en modo autónomo]{Esquema de los nodos del sistema en modo autónomo. Fuente: Elaboración propia. }
+        \label{fig:nodesauto}
+    \end{figure}
+
+    Una característica importante de este módulo es que la interacción no está limitada a las tres 
+    fuentes de datos para el control definidas: la red neuronal, la detección de obstáculos y el joystic, sino que es completamente 
+    extensible a otras fuentes de control o decisión. Se pueden agregar múltiples fuentes de información para el control de 
+    alto nivel del vehículo tales como detección de señales de tránsito, detección de peatones, detección de otros vehículos, 
+    sensores de proximidad en todo el vehículo o sensores inerciales. También es importante considerar que el piloto automático 
+    es un modo de control de medio nivel pues simplemente implementa el seguimiento de una trayectoria definida por la red neuronal. Se puede incluir 
+    y desarrollar sistemas de toma de decisión de alto nivel o módulos de planificación y navegación avanzados. Estas son las 
+    ventajas de utilizar un \textit{framework} de trabajo distribuido como ROS. 
+
+    Otra característica es que el nodo actualiza los comandos de control con un tiempo de muestreo fijo, esto con el fin de 
+    garantizar la estabilidad del subsistema de control y actuación. 
+
+\section{Diseño de la arquitectura de la red neuronal}\label{sec:design}
+Una vez establecida la plataforma sobre la cual se va a implementar el entrenamiento de la red neuronal así como también la 
+etapa de inferencia para el control autónomo, es necesario definir el procedimiento de diseño de la arquitectura de la red 
+que se encargará de tomar las imágenes provenientes de la cámara para mapearlas en un valor escalar que representa a la 
+desviación de la dirección del vehículo.
+
+Con el propósito de validar la eficacia del uso de una red neuronal convolucional se han generado dos arquitecturas de 
+red neuronal profunda: una tradicional, y una con capas convolucionales.
+
+    \subsection{Requerimientos}
+    Se necesita definir los requerimientos de desempeño para la red neuronal considerando la tarea de generación de comandos 
+    de control en base a imágenes de la carretera o entorno.
+    
+    \subsection{Unidades y profundidad}
+
+    Tomando en cuenta el requerimiento de poderse ejecutar de manera fluída en el sistema embebido proporcionado como computadora 
+    de abordo (OBC) la red neuronal no debe poseer demasiados parámetros pues la cantidad de memoria es limitada. Es necesario 
+    recordar que en el caso de contar con una GPU, los parámetros de la red se cargan en la memoria integrada en la GPU, sin 
+    embargo, si el sistema no cuenta con una GPU dedicada, los parámetros se cargan en la memoria RAM del sistema. Para 
+    la OBC escogida para el presente proyecto, se tiene disponible una cantidad de memoria RAM de 1 GB, lo cual significa 
+    que todo el sistema en su conjunto, incluyendo nodos de sensores, actuación y sistemas de control necesitan compartir la 
+    memoria RAM del sistema. Por tanto, en base a estas consideraciones se han generado dos modelos de arquitectura con el 
+    objetivo de comparar el rendimiento de ambas.
+
+
+        \subsubsection{Capas Convolucionales y Pooling}
+        Como se ha visto en la Sección(\ref{sec:convnet}), las redes neuronales convolucionales tienen la capacidad de generar representaciones 
+        internas para imágenes a través de filtros o \textit{kernels} de convolución. Cada capa convolucional tiene como entrada 
+        una imagen o mapa de características y como salida se obtiene otro mapa de características que, a medida que se va 
+        avanzando em profundidad, constituyen representaciones cada vez más complejas de la imagen de entrada. No se debe olvidar 
+        que el propósito de usar una red neuronal convolucional para el procesamiento de imágenes es el de reducir la dimensionalidad 
+        de entrada en cantidad de pixeles a otro tipo de representación más abstracta en la salida, en este caso, un comando de control 
+        correspodiente con una fotografía de la carretera. En la Figura(\ref{fig:convlayer}) se puede apreciar la naturaleza 
+        de una capa convolucional en la red implementada en Tensorflow.
+
+        %% foto de ejemplo
+        \begin{figure}[!ht] 
+            \centering
+            \includegraphics[width=0.85\textwidth]{img/convlayer}
+            \caption[Visualización de una capa convolucional]{Visualización de una capa convolucional. Fuente: Elaboración propia. }
+            \label{fig:convlayer}
+        \end{figure}
+
+        Es así que a medida que se avanza en las capas de la red convolucional, la dimensión de los mapas de características 
+        van reduciéndose más y más. Un elemento importante para esta reducción se denomina \textit{pooling}, como se ha visto 
+        en la Sección(\ref{sec:maxpool}), que reduce las dimensiones de la imagen seleccionando los pixeles con valores de 
+        activación más altos. 
+
+        Las capas de \textit{max pooling} no contienen parámetros entrenables y por tanto, no influyen en el proceso 
+        de aprendizaje con el algoritmo de la retropropagacion. En la Figura(\ref{fig:maxpooltf}) se puede apreciar 
+        una visualización de una capa de max pooling implementada en Tensorflow.
+
+         %% foto de ejemplo
+         \begin{figure}[!ht] 
+            \centering
+            \includegraphics[width=0.75\textwidth]{img/maxpooltf}
+            \caption[Visualización de una capa de max pooling]{Visualización de una capa de max pooling. Fuente: Elaboración propia. }
+            \label{fig:maxpooltf}
+        \end{figure}
+
+        \subsubsection{Capas densamente conectadas}
+        Las capas convolucionales cumplen un gran trabajo en la generación de representaciones internas abstractas a medida 
+        que se incrementa la profundidad de la red, pero pese a eso, siguen siendo representaciones en varias dimensiones. En 
+        el caso de la tarea de regresión, la salida de la red se expresa simplemente como un escalar, es por eso que, 
+        en las últimas capas de la red, se suelen agregar una o varias capas densamente conectadas, con unidades tradicionales 
+        para generar una representación vectorial de la imagen de la entrada. Esta representación vectorial se suele denominar 
+        \textit{embedding} en terminología de redes neuronales. 
+        
+        La salida corresponde simplemente con una combinación lineal del \textit{embedding} seguido de una función 
+        de activación no lineal. En la Figura(\ref{fig:densetf}) se puede apreciar la implementación de una capa densamente conectada 
+        en Tensorflow.
+
+         %% foto de ejemplo
+         \begin{figure}[!ht] 
+            \centering
+            \includegraphics[width=0.85\textwidth]{img/densetf}
+            \caption[Visualización de una capa densamente conectada]{Visualización de una capa densamente conectada. Fuente: Elaboración propia. }
+            \label{fig:densetf}
+        \end{figure}
+
+
+    \subsection{Funciones de Activación}
+    Se han escogido distintas funciones de activación para las capas ocultas y la capa de salida en base a los requisitos de 
+    rendimiento, naturaleza de las capas de la red e implementaciones previas en la literatura y proyectos relacionados. 
+    Las funciones de activación escogidas se listan en la Tabla(\ref{tbl:activ}). 
+
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{@{}|c|c|c|@{}}
+        \toprule
+        \textbf{Función de activación} & \textbf{Objetivo}                                                                                                                  & \textbf{Criterios de implementación}                                                                                                                                        \\ \midrule
+        ReLU(Sección(\ref{sec:relu}))                  & \begin{tabular}[c]{@{}c@{}}Rectificar las activaciones de las \\ capas ocultas de la red. Mantener \\ los gradientes.\end{tabular} & \begin{tabular}[c]{@{}c@{}}Se usan para todas las activaciones \\ de las capas ocultas de la red, tanto \\ capas convolucionales como densamente \\ conectadas\end{tabular} \\ \midrule
+        Tangente hiperbólica(Sección(\ref{sec:tanh}))  & \begin{tabular}[c]{@{}c@{}}Mapear la activación en un \\ rango de -1 a 1.\end{tabular}                                             & \begin{tabular}[c]{@{}c@{}}Se usa para la capa de salida de la red \\ dado que la salida requiere estar en rango \\ -1 a 1\end{tabular}                                     \\ \bottomrule
+        \end{tabular}%
+        }
+        \caption{Funciones de activación usadas}
+        \label{tbl:activ}
+    \end{table}
+
+    Las funciones de activación usadas en las capas ocultas corresponden con la función ReLU, pues se ha demostrado que son 
+    eficaces en la implementación y en la generación de gradientes para el entrenamiento por retropropagación.
+
+    En el caso de la capa de salida, se ha utilizado una función de activación tangente hiperbólica, debido a que esta función 
+    representa de manera muy fiel la naturaleza del proceso de generación de comandos, pues los comandos de dirección varían 
+    entre los valores $-1$ y $1$.
+
+    \subsection{Función de Costo}
+    La función de costo utilizada es el error cuadrático medio, definido en la Ecuación(\ref{eq:error}). La función de costo 
+    escogida permite calcular una medida del error básica y funciona perfectamente en las tareas de regresión.
+
+    \subsection{Optimizador}
+    El algoritmo de optimización es una parte importante en el proceso de entrenamiento de una red neuronal profunda pues 
+    en base a este se define el rendimiento del proceso de entrenamiento en si. En otras palabras, se debe escoger un 
+    algoritmo de optimización adecuado que garantice la convergencia de la disminución del error así como también que los 
+    tiempos de entrenamiento para cada época sean razonables. En este sentido, se ha escogido el algoritmo de ADAM (Sección(\ref{sec:adam}))
+    pues garantiza la convergencia de la red usando el concepto de momentos de primer y segundo órden. Por su parte, ADAM 
+    es un algoritmo altamente recomendado para tareas de regresión con redes neuronales profundas \cite{kingma2014adam}.
+
+    \subsection{Arquitecturas implementadas}
+    Con todo, se ha llegado a la implementación de dos distintas arquitecturas de red neuronal para su 
+    entrenamiento en el presente proyecto. Se ha implementado, en primer lugar una red neuronal tradicional, con 
+    capas ocultas densamente conectadas y una red neuronal convolucional. 
+
+        \subsubsection{Red neuronal tradicional}
+        Con el objetivo de validar la efectividad de una red neuronal convolucional para tareas de visión artificial 
+        y procesamiento de imágenes, se ha implementado una red neuronal densamente conectada, o una red tradicional 
+        que servirá como punto de referencia para el entrenamiento de la red convolucional posteriormente. 
+
+        La arquitectura de la red se puede analizar en la Tabla(\ref{tbl:arqdense}). Se puede observar que esta no es una red 
+        compuesta exclusivamente por capas densamente conectada, pues se tiene una capa convolucional en la entrada. Esta 
+        capa se suele usar para crear un mapa de características inicial sobre el cual se puedan generar representaciones 
+        en las neuronas en las capas posteriores. Las demás capas de la red corresponden con capas densamente conectadas 
+        como las analizadas en la Sección(\ref{sec:feedforward}). 
+
+        % Please add the following required packages to your document preamble:
+        % \usepackage{booktabs}
+        % \usepackage{graphicx}
+        \begin{table}[]
+            \centering
+            \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{@{}cccccc@{}}
+            \toprule
+            \multicolumn{1}{|c|}{\textbf{Capa}} & \multicolumn{1}{c|}{\textbf{Tipo}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Unidades\\ (Filtros)\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Dimensiones \\ de salida\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Parámetros \\ entrenables\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Función de \\ Activación\end{tabular}}} \\ \midrule
+            \multicolumn{1}{|c|}{input\_1}      & \multicolumn{1}{c|}{InputLayer}    & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{(224,224,3)}                                                               & \multicolumn{1}{c|}{0}                                                                          & \multicolumn{1}{c|}{}                                                                          \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_1}     & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{3 (1 x 1)}                                                             & \multicolumn{1}{c|}{(224,224,3)}                                                               & \multicolumn{1}{c|}{12}                                                                         & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{dense\_1}      & \multicolumn{1}{c|}{Dense}         & \multicolumn{1}{c|}{64}                                                                    & \multicolumn{1}{c|}{64}                                                                        & \multicolumn{1}{c|}{9633856}                                                                    & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{dropout\_1}    & \multicolumn{1}{c|}{Dropout}       & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{64}                                                                        & \multicolumn{1}{c|}{0}                                                                          & \multicolumn{1}{c|}{-}                                                                         \\ \midrule
+            \multicolumn{1}{|c|}{dense\_2}      & \multicolumn{1}{c|}{Dense}         & \multicolumn{1}{c|}{32}                                                                    & \multicolumn{1}{c|}{32}                                                                        & \multicolumn{1}{c|}{2080}                                                                       & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{dropout\_2}    & \multicolumn{1}{c|}{Dropout}       & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{32}                                                                        & \multicolumn{1}{c|}{0}                                                                          & \multicolumn{1}{c|}{-}                                                                         \\ \midrule
+            \multicolumn{1}{|c|}{dense\_3}      & \multicolumn{1}{c|}{Dense}         & \multicolumn{1}{c|}{16}                                                                    & \multicolumn{1}{c|}{16}                                                                        & \multicolumn{1}{c|}{528}                                                                        & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{dropout\_3}    & \multicolumn{1}{c|}{Dropout}       & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{16}                                                                        & \multicolumn{1}{c|}{0}                                                                          & \multicolumn{1}{c|}{-}                                                                         \\ \midrule
+            \multicolumn{1}{|c|}{dense\_4}      & \multicolumn{1}{c|}{Dense}         & \multicolumn{1}{c|}{12}                                                                    & \multicolumn{1}{c|}{12}                                                                        & \multicolumn{1}{c|}{204}                                                                        & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{dense\_5}      & \multicolumn{1}{c|}{Dense}         & \multicolumn{1}{c|}{1}                                                                     & \multicolumn{1}{c|}{1}                                                                         & \multicolumn{1}{c|}{13}                                                                         & \multicolumn{1}{c|}{Tanh}                                                                      \\ \midrule
+                                                &                                    &                                                                                            &                                                                                                &                                                                                                 &                                                                                                \\ \cmidrule(l){3-6} 
+                                                & \multicolumn{1}{c|}{}              & \multicolumn{2}{c|}{Total Capas}                                                                                                                                                            & \multicolumn{2}{c|}{10}                                                                                                                                                                          \\ \cmidrule(l){3-6} 
+                                                & \multicolumn{1}{c|}{}              & \multicolumn{2}{c|}{Total Parámetros}                                                                                                                                                       & \multicolumn{2}{c|}{9636693}                                                                                                                                                                     \\ \cmidrule(l){3-6} 
+            \end{tabular}%
+            }
+            \caption{Arquitectura de la red neuronal densamente conectada. Fuente: Elaboración propia}
+            \label{tbl:arqdense}
+        \end{table}
+
+        Es interesante tomar en cuenta la cantidad de capas de la red y la cantidad de parámetros entrenables en la misma. En 
+        este caso, se cuentan con más de 9 millones de parámetros para una red de 10 capas. La cantidad de parámetros 
+        está relacionada directamente con la cantidad de memoria RAM usada en el proceso de predicción, es decir, mientras 
+        más parámetros tenga la red, más memoria RAM necesita el sistema para poder ejecutar la inferencia con dicha red.
+
+        En la Figura(\ref{fig:arqdense}) se puede apreciar la implementación de la red en Tensorflow visualizada mediante la herramienta 
+        Tensorboard. Una herramienta de visualización y monitoreo que incluye la librería Tensorflow.
+
+        %% foto de ejemplo
+        \begin{figure}[!ht] 
+            \centering
+            \includegraphics[width=\textwidth]{img/arqdense}
+            \caption[Arquitectura de la red neuronal densamente conectada]{Visualización de la arquitectura de la red neuronal densamente conectada. Fuente: Elaboración propia. }
+            \label{fig:arqdense}
+        \end{figure}
+
+        \subsubsection{Red neuronal convolucional}
+
+        Por su parte, como se ha establecido en el Capítulo(\ref{ch:introduccion}), el objetivo de este proyecto es lograr 
+        implementar y validar el funcionamiento de una red neuronal convolucional para la tarea de generación de comandos 
+        para la conducción autónoma. Es en este sentido que se ha diseñado la arquitectura detallada en la Tabla(\ref{tbl:arqconv})
+        siguiendo las convenciones usadas en diversos proyectos, en especial en la implementación de la red fin a fin 
+        de Nvidia \cite{bojarski2016end}.
+
+        % tablas de la arquitectura de la red
+
+        % Please add the following required packages to your document preamble:
+        % \usepackage{booktabs}
+        % \usepackage{graphicx}
+        \begin{table}[!h]
+            \centering
+            \resizebox{\textwidth}{!}{%
+            \begin{tabular}{@{}cccccc@{}}
+            \toprule
+            \multicolumn{1}{|c|}{\textbf{Capa}}     & \multicolumn{1}{c|}{\textbf{Tipo}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Unidades\\ (Filtros)\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Dimensiones \\ de salida\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Parámetros \\ entrenables\end{tabular}}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Función de \\ Activación\end{tabular}}} \\ \midrule
+            \multicolumn{1}{|c|}{input\_1}          & \multicolumn{1}{c|}{InputLayer}    & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{(224,224,3)}                                                               & \multicolumn{1}{c|}{0}                                                                          & \multicolumn{1}{c|}{}                                                                          \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_1}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{16 (3 x 5)}                                                            & \multicolumn{1}{c|}{(222,220,16)}                                                              & \multicolumn{1}{c|}{736}                                                                        & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_2}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{16 (3 x 5)}                                                            & \multicolumn{1}{c|}{(220,216,16)}                                                              & \multicolumn{1}{c|}{3856}                                                                       & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{max\_pooling2d\_1} & \multicolumn{1}{c|}{MaxPooling2D}  & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{(55,108,16)}                                                               & \multicolumn{1}{c|}{-}                                                                          & \multicolumn{1}{c|}{-}                                                                         \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_3}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{32 (3 x 5)}                                                            & \multicolumn{1}{c|}{(53,104,32)}                                                               & \multicolumn{1}{c|}{7712}                                                                       & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_4}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{32 (3 x 5)}                                                            & \multicolumn{1}{c|}{(51,100,32)}                                                               & \multicolumn{1}{c|}{15392}                                                                      & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{max\_pooling2d\_2} & \multicolumn{1}{c|}{MaxPooling2D}  & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{(12,50,32)}                                                                & \multicolumn{1}{c|}{-}                                                                          & \multicolumn{1}{c|}{-}                                                                         \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_5}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{64 (3 x 5)}                                                            & \multicolumn{1}{c|}{(10,46,64)}                                                                & \multicolumn{1}{c|}{30784}                                                                      & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_6}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{64 (3 x 5)}                                                            & \multicolumn{1}{c|}{(8,42,64)}                                                                 & \multicolumn{1}{c|}{61504}                                                                      & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{max\_pooling2d\_3} & \multicolumn{1}{c|}{MaxPooling2D}  & \multicolumn{1}{c|}{-}                                                                     & \multicolumn{1}{c|}{(2,21,64)}                                                                 & \multicolumn{1}{c|}{-}                                                                          & \multicolumn{1}{c|}{-}                                                                         \\ \midrule
+            \multicolumn{1}{|c|}{conv2d\_7}         & \multicolumn{1}{c|}{Conv2D}        & \multicolumn{1}{c|}{64 (3 x 5)}                                                            & \multicolumn{1}{c|}{(2,21,4)}                                                                  & \multicolumn{1}{c|}{260}                                                                        & \multicolumn{1}{c|}{ReLU}                                                                      \\ \midrule
+            \multicolumn{1}{|c|}{dense\_1}          & \multicolumn{1}{c|}{Dense}         & \multicolumn{1}{c|}{1}                                                                     & \multicolumn{1}{c|}{1}                                                                         & \multicolumn{1}{c|}{169}                                                                        & \multicolumn{1}{c|}{Tanh}                                                                      \\ \midrule
+                                                    &                                    &                                                                                            &                                                                                                &                                                                                                 &                                                                                                \\ \cmidrule(l){3-6} 
+                                                    & \multicolumn{1}{c|}{}              & \multicolumn{2}{c|}{Total Capas}                                                                                                                                                            & \multicolumn{2}{c|}{12}                                                                                                                                                                          \\ \cmidrule(l){3-6} 
+                                                    & \multicolumn{1}{c|}{}              & \multicolumn{2}{c|}{Total Parámetros}                                                                                                                                                       & \multicolumn{2}{c|}{120413}                                                                                                                                                                      \\ \cmidrule(l){3-6} 
+            \end{tabular}%
+            }
+            \caption{Arquitectura de la red neuronal convolucional. Fuente: Elaboración propia}
+            \label{tbl:arqconv}
+        \end{table}
+
+        En este caso, la red cuenta con 12 capas, de las cuales 11 son capas convolucionales, y se cuenta con una unidad densamente
+        conectada en la salida para poder obtener un escalar. Se puede diferenciar tres macrocapas que cuentan con dos capas 
+        convolucionales y una capa de max pooling a la salida, esta arquitectura se ha escogido tomando en cuenta que 
+        las capas convolucionales generan representaciones mediante mapas de características en su salida y las capas de max pooling 
+        dejan pasar solamente las activaciones máximas para reducir su dimensión. Es importante también destacar la naturaleza 
+        de los filtros convolucionales y su antisimetría. Esto se ha diseñado con el fin de reducir la dimensionalidad en el 
+        eje vertical más agresivamente que en el eje horizontal por la naturaleza de las imágenes procesadas. Se puede apreciar 
+        la visualización de la implementación en Tensorflow en la Figura(\ref{fig:arqconv}).
+
+        %% foto de ejemplo
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=\textwidth]{img/arqconv}
+            \caption[Arquitectura de la red neuronal convolucional]{Visualización de la arquitectura de la red neuronal convolucional. Fuente: Elaboración propia. }
+            \label{fig:arqconv}
+        \end{figure}
+
+        Una característica importante de destacar es la cantidad de parámetros utilizados en la arquitectura de red convolucional 
+        que ha pasado de más de 9 millones de parámetros a 120 mil. Si bien esto representa una reducción sustancial en la 
+        memoria RAM requerida para ejecutar el modelo la cantidad de procesamiento se incrementa por la naturaleza 
+        de las capas convolucionales, donde se necesita realizar la operación de convolución para cada filtro.
+
+\section{Proceso de Entrenamiento de la \\ Red neuronal Convolucional} \label{sec:training}
+
+    \subsection{Caracterización del conjunto de datos}\label{sec:dataset}
+    Antes de entrenar la red neuronal directamente con todos los datos obtenidos en una sesión de entrenamiento 
+    es necesario analizar las características y calidad del conjunto de entrenamiento, pues el desempeño final de la 
+    red es enteramente dependiente a los datos que se usan en el entrenamiento. 
+
+        \subsubsection{Balanceo del conjunto de datos}
+        Se dice que un conjunto de datos está balanceado cuando la distribución de probabilidad de las muestras que la compone 
+        se acerca lo más posible a la distribución uniforme, de esta manera, se puede asegurar que existen cantidades similares 
+        de muestras para todos los casos a los que se ha sometido al sistema en el proceso de las sesiones de aprendizaje. 
+
+        En el caso de la conducción autónoma para el seguimiento de una carretera, se tiene que gran parte del tiempo en la 
+        sesión de entrenamiento el vehículo avanza en línea recta, es decir, con un valor de desviación de 0 o muy cercano a 0.
+        Esto constituye un riesgo muy grande para el entrenamiento pues la red neuronal puede incurrir en la situación llamada 
+        sobre-entrenamiento u \textit{overfitting} donde, al ver demasiadas muestras similares, simplemente empieza a \textit{memorizar}
+        la salida y deja de aprender, lo que causa que su capacidad de generalización sea gravemente afectada. Se puede apreciar el 
+        efecto del \textit{overfitting} en la Figura(\ref{fig:overfitting}). Por su parte, si la red carece de la complejidad necesaria para aproximar 
+        la función que define la tarea, se puede incurrir en el sub-entrenamiento o \textit{underfitting} que, de la misma manera 
+        que el \textit{overfitting} tiene un efecto negativo en el rendimiento final de la red neuronal.
+        % grafico del overfitting
+
+        %% foto de ejemplo
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.95\textwidth]{img/overfitting}
+            \caption[Overfitting en modelos de aprendizaje]{Cuando el modelo se aproxima mucho al conjunto de entrenamiento, pierde capacidad 
+            de generalización(figura de la derecha). Por su parte, cuando el modelo es demasiado sencillo, no es capaz de representar 
+            adecuadamente la naturaleza de los datos y ocurre el underfitting (figura de la izquierda). Se busca un modelo 
+            que sea sencillo y sea capaz de aproximar los datos razonablemente (figura central). Fuente: \cite{rayon}. }
+            \label{fig:overfitting}
+        \end{figure}
+
+        El efecto del desbalanceo se puede analizar en el histograma de la Figura(\ref{fig:histinicial}), donde se puede apreciar claramente 
+        que existen muchas muestras alrededor del valor de cero. Esto puede ocasionar un sobreentrenamiento en la red en el que 
+        la red podría empezar a predecir 0 todo el tiempo y pese a eso obtener un rendimiento relativamente bueno. Otra forma 
+        de entender este caso es considerar que los parámetros de la red se estancan en un mínimo local que no cuenta con 
+        los requisitos de rendimiento establecidos. 
+
+        % histograma desbalanceado
+
+        %% foto de ejemplo
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.65\textwidth]{img/histinicial}
+            \caption[Distribución inicial del dataset]{Distribución inicial del dataset. Fuente: Elaboración propia. }
+            \label{fig:histinicial}
+        \end{figure}
+
+        Es por eso que se procede a eliminar la mayor parte de las muestras con el valor de 0 en la salida y muestras con valores 
+        muy cercanos a 0. De esta manera, el conjunto de datos se puede balancear de mejor manera teniendo muestras en los 
+        extremos, representando casos en los que el carro debe girar con la máxima desviación. En el histograma de la Figura(\ref{fig:histfinal}) 
+        se puede apreciar la distribución de las muestras luego de la limpieza de los valores iguales a cero. 
+        
+         %% foto de ejemplo
+         \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.65\textwidth]{img/histfinal}
+            \caption[Distribución final del dataset]{Distribución final del dataset. Fuente: Elaboración propia. }
+            \label{fig:histfinal}
+        \end{figure}
+
+        Por su parte, 
+        en este proceso de balanceo también se ha aplicado las transformaciones definidas en la Sección(\ref{sec:aumentacion}) 
+        para incrementar las muestras que no son cercanas al valor de 0, ya sean positivas o negativas. En la Figura(\ref{fig:aumentacion}) se 
+        puede observar algunos ejemplos de las imágenes generadas con el proceso de aumentación de datos. Es importante también 
+        mencionar que este proceso incrementa el número de muestras en un 40\% al número de muestras original.
+
+        %% foto de ejemplo
+        \begin{figure}[!h] 
+            \centering
+            \includegraphics[width=0.65\textwidth]{img/aumentacion}
+            \caption[Ejemplos de aumentación de datos]{Ejemplos del proceso de aumentación de datos: (a) imagen original, 
+            imagen espejada horizontalmente, (c) imagen desplazada verticalmente, (d) imagen rotada. Fuente: Elaboración propia. }
+            \label{fig:aumentacion}
+        \end{figure}
+
+        Es importante resaltar la tarea de aumentación de datos, pues, como se pudo observar en la Figura(\ref{fig:aumentacion}),
+        a partir de una sola imagen, se han generado tres imágenes adicionales completamente válidas para el entrenamiento. Esto 
+        ayuda bastante en el proceso de entrenamiento pues es como si se estuviera expandiendo el conjunto de entrenamiento 
+        y sometiendo a la red neuronal a varios casos simultáneamente. 
+
+        Existen otras formas de aumentar los datos como realizar cambios en el brillo y simular distintos escenarios 
+        de ilumiación global, en este proyecto, no se han considerado esos casos.
+
+    \subsection{Separación de conjuntos de entrenamiento, pruebas y validación}
+
+    Tal como se acostumbra para cualquier sistema de aprendizaje automático, el conjunto de datos se 
+    ha dividido en tres conjuntos, mostrados en la Figura(\ref{fig:dataset1}) y la cantidad de muestras en el conjunto 
+    de datos se puede apreciar en la Tabla(\ref{tbl:dataset}):
+    
+    % Please add the following required packages to your document preamble:
+    % \usepackage{booktabs}
+    % \usepackage{graphicx}
+    \begin{table}[!h]
+        \centering
+        \resizebox{0.5\textwidth}{!}{%
+        \begin{tabular}{@{}|l|l|l|@{}}
+            \toprule
+            \textbf{Conjunto de datos} & \textbf{Muestras} & \textbf{Fracción} \\ \midrule
+            Entrenamiento              & 21084             & 80\%              \\ \midrule
+            Prueba                     & 3691              & 14\%              \\ \midrule
+            Validación                 & 1581              & 6\%               \\ \midrule
+            \textbf{Total}             & \textbf{26356}    & \textbf{100\%}    \\ \bottomrule
+            \end{tabular}%
+            }
+        \caption{Cantidad de muestras en los conjuntos de datos}
+        \label{tbl:dataset}
+    \end{table}
+
+    %% foto de ejemplo
+    \begin{figure}[!h] 
+        \centering
+        \includegraphics[width=0.65\textwidth]{img/dataset1}
+        \caption[Separación del conjunto de datos]{Separación del conjunto de datos en conjunto de entrenamiento, prueba y validación. Fuente: Elaboración propia. }
+        \label{fig:dataset1}
+    \end{figure}
+    % poner diagrama de fraccionamiento 
+    
     
 
-\section{Diseño de la arquitectura de la red neuronal}
--
-    \subsection{Consideraciones y requerimientos}
-    \subsection{Unidades y profundidad}
-    \subsection{Funciones de Activación}
-    \subsection{Función de Costo}
-    \subsection{Optimizador}
-    
-\section{Proceso de Entrenamiento de la \\ Red neuronal Convolucional} \label{sec:training}
-    \subsection{Caracterización del conjunto de datos}
-    \subsection{Limpieza del conjunto de datos}
-    \subsection{}
+        \subsubsection{Conjunto de entrenamiento}
+        Este conjunto de datos se usa para el proceso de entrenamiento de la red neuronal, con los datos de este conjunto 
+        se alimenta a la red para el proceso de retropropagación. En cada época, se realiza una pasada completa por 
+        el conjunto de entrenamiento. En otras palabras, la red neuronal se entrena en base a lo que \textit{ve} en este 
+        conjunto de datos.
+
+        Se puede calcular el error de entrenamiento simplemente acumulando el error en cada mini-batch y comparándolo con 
+        los valores reales, sin embargo, el error de entrenamiento no ofrece el panorama completo del rendimiento de la red.
+        Si bien un error de entrenamiento grande indica que el rendimiento de la red es malo, un error de entrenamiento pequeño 
+        no siempre indica un buen rendimiento, en este caso, puede tratarse de un sobreentrenamiento.
+
+        Del total de muestras en el conjunto de datos se ha tomado el 80\% para el conjunto de entrenamiento, el cual 
+        es un valor estándar en tareas de aprendizaje automático.
+
+        \subsubsection{Conjunto de validación}
+        Este conjunto se utiliza para evaluar al sistema durante el entrenamiento, usualmente, corresponde con una pequeña fracción
+        del conjunto de datos, con el cual se analiza el error del modelo en cada época. Es decir, que el conjunto de validación 
+        puede ofrecer una idea de cómo está evolucionando el entrenamiento de la red. 
+
+        Es importante destacar que el conjunto de validación no se utiliza en el entrenamiento, mas bien representa una medida 
+        de evaluación que afecta el entrenamiento de la red de manera indirecta. Por ejemplo, puede existir el caso de que 
+        el error de entrenamiento esté disminuyendo conforme pasan las épocas pero el error de validación comienza a incrementar. 
+        Este caso puede ser el indicio de un sobreentrenamiento en la red. 
+
+        La fracción de muestras dedicada al conjunto de validación es del 6\% del total de muestras disponibles. 
+
+        \subsubsection{Conjunto de prueba}
+        El conjunto de prueba se usa para evaluar el modelo una vez se ha terminado de entrenar, el error en el conjunto de 
+        prueba ofrece el panorama completo del rendimiento de la red. Con el error sobre el conjunto de prueba se puede obtener 
+        una medida final del rendimiento de la red. 
+
+        Normalmente la fracción de muestras para el conjunto de prueba es mayor al del conjunto de validación, en el 
+        presente proyecto, se ha utilizado un 14\% del total de muestras del conjunto de datos para la tarea de 
+        prueba del modelo.
+
+
+

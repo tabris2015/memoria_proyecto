@@ -1,4 +1,122 @@
 \chapter{Conclusiones y recomendaciones}
 \label{ch:conclusiones}
 \section{Conclusiones}
+Se detallan las conclusiones correspondientes con cada objetivo específico planteado:
+
+\begin{itemize}
+
+    \item \textit{Estudiar los aspectos concernientes al desarrollo de sistemas de conducción autónoma y sistemas de aprendizaje.}
+    
+    \textbf{Conclusión:} Se estudiaron los aspectos relacionados al desarrollo de sistemas de conducción autónoma, en principio, 
+    analizando su origen y potencialidad en la Sección(\ref{sec:antecedentes}). Para posteriormente estudiar los conceptos básicos 
+    de aprendizaje 
+    automático, aprendizaje profundo, redes convolucionales y el proceso de entrenamiento de una red neuronal.
+
+    \item \textit{Analizar los requerimientos de un sistema de conducción autónoma capaz identificar y mantener su carril 
+    mientras se conduce.}
+
+    \textbf{Conclusión:} Se ha introducido el esquema de la arquitectura de un sistema de conducción autónomo y se han planteado 
+    los requisitos y funcionalidades que debe tener el sistema en su conjunto en la Sección(\ref{sec:arquitectura}) y de las 
+    características de los 
+    subsistemas de los que se compone: el subsistema de control y actuación en la Sección(\ref{sec:esqcontrol}), el subsistema de adquisición de 
+    datos y entrenamiento en la Sección(\ref{sec:esqdaq}), el subsistema de inferencia y control autónomo en la Sección(\ref{sec:esqinferencia}). 
+
+    \item \textit{Diseñar la arquitectura de un sistema de conducción autónoma en base a los requerimientos previamente 
+    establecidos.}
+
+    \textbf{Conclusión:} Se ha planteado la arquitectura general del sistema en base a las características analizadas en 
+    el Capítulo(\ref{ch:introduccion}) y (\ref{ch:m_teorico}) en la Sección(\ref{sec:arquitectura}). Considerando todos los alcances
+    y limitaciones planteados por el proyecto en el inicio. 
+    Por su parte, también se han definido las herramientas de hardware en la Sección(\ref{sec:software}) y las herramientas 
+    de software en 
+    la Sección(\ref{sec:software}) que hicieron posible la implementación de todos los subsistemas asociados.
+
+    \item \textit{Diseñar el subsistema de adquisición de datos y entrenamiento para tareas de conducción autónoma.}
+    
+    \textbf{Conclusión:} Se ha diseñado el Subsistema de Adquisición de Datos y Entrenamiento en base a la arquitectura planteada 
+    en la Sección(\ref{sec:esqdaq}) en la Sección(\ref{sec:daq}) considerando los detalles de implementación, algoritmos y características necesarias para 
+    las tareas de adquisición de datos, aumentación de datos y entrenamiento de modelos de redes neuronales explorados en el Capítulo(\ref{ch:ingenieria}).
+    Los detalles del proceso de diseño y entrenamiento de las arquitecturas de redes neuronales planteadas se exploran con detalle en la 
+    Sección(\ref{sec:design}) para el diseño de la red neuronal y en la Sección(\ref{sec:training}) para el entrenamiento. 
+
+    \item \textit{Diseñar el subsistema de control y actuación para la conducción autónoma de un vehículo con características 
+    similares a las de un vehículo doméstico real.}
+
+    \textbf{Conclusión:} Se ha diseñado el Subsistema de Control y Actuación de acuerdo con la arquitectura planteada en la 
+    Sección(\ref{sec:arquitectura}) en la Sección(\ref{sec:control}). Se ha considerado las características y requerimientos 
+    planteados para dicho subsistema en 
+    las tareas de control de tiempo real implementado en un microcontrolador, interfaz con los actuadores y sensores 
+    sobre la plataforma de comunicación de ROS. Se han expuesto los detalles de implementación tanto a nivel de hardware 
+    como de software procurando que el diseño de este subsistema sea modular.
+
+    \item \textit{Diseñar el subsistema de inferencia y control autónomo basado en el uso de redes neuronales convolucionales.}
+    
+    \textbf{Conclusión:} Por su parte, se ha diseñado a detalle el Inferencia y Control autónomo en base a todos los fundamentos 
+    teóricos de redes neuronales exploradas en la Sección(\ref{sec:sec:esqinferencia}). Los detalles de la implementación se pueden 
+    encontrar en la Sección(\ref{sec:inferencia})
+    donde se abunda en la implementación de los módulos que componen este subsistema para las tareas de predicción de dirección
+    con la red neuronal convolucional, detección de obstáculos con un sensor de proximidad y el algoritmo del piloto automático 
+    implementados como nodos de ROS para garantizar la modularidad del sistema.
+
+    \item \textit{Analizar los resultados del entrenamiento e implementación del subsistema de inferencia y control autónomo.}
+    
+    \textbf{Conclusión:} El análisis de los resultados del entrenamiento de la red neuronal convolucional se ha explorado en 
+    la Sección(\ref{sec:analisistrain}) pudiendo hacer la comparación de resultados en errores de entrenamiento, validación 
+    y prueba de dos arquitecturas:
+    una con una red neuronal tradicional o densamente conectada, y otra con una red neuronal convolucional. En base a los 
+    resultados y puntajes en el entrenamiento obtenidos se puede concluir que una red neuronal convolucional es capaz de cumplir la 
+    tarea de generar comandos de control para la tarea de conducción autónoma. 
+
+    Por otro lado, la implementación de la red y los resultados en pruebas de campo se han explorado en la 
+    Sección(\ref{sec:analisistest}) en la cual 
+    se pudo observar la efectividad de la red neuronal convolucional para generar representaciones internas relevantes y útiles. 
+    En base a este análisis se puede concluir que, efectivamente, una la red convolucional entrenada es capaz de generar 
+    representaciones internas relevantes en muestras nunca antes vistas, en otras palabras, que la capacidad de generalización 
+    es aceptable.
+
+    \item \textit{Realizar pruebas de rendimiento y análisis comparativos en el sistema implementado.}
+    
+    \textbf{Conclusión:} Con el fin de realizar un análisis comparativo entre distintas implementaciones de redes neuronales 
+    para la tarea especificada por este proyecto, se ha diseñado y entrenado un par de arquitecturas de red neuronal sobre las 
+    cuales se realiza un análisis comparativo de rendimiento en base a indicadores y puntajes estándar en el campo de la estadística
+    en la Sección(\ref{sec:scores}). 
+
+    Por su parte, también se ha analizado las predicciones generadas por la red convolucional, para distintos casos, explorando 
+    la naturaleza de las representaciones generadas por la misma en la Sección(\ref{sec:representaciones}). Por tanto, se puede 
+    concluir que la implementación 
+    de la red neuronal convolucional planteada se ha realizado exitosamente.
+
+\end{itemize}
+
 \section{Recomendaciones}
+
+Luego de haber analizado y generado conclusiones relativas a los resultados obtenidos en base a los objetivos planteados en 
+la etapa inicial del presente proyecto, se plantea una serie de recomendaciones:
+
+\begin{itemize}
+    \item Debido a la capacidad de generalización que puede lograrse con una red neurona convolucional se recomienda 
+    generar distintos conjuntos de entrenamiento en condiciones climáticas diversas. Esto incrementará la complejidad 
+    de la red convolucional y logrará que las predicciones de la red sean más robustas en cambios de iluminación 
+    causados por distintos aspectos climáticos.
+    \item Por su parte, gracias a la naturaleza modular del presente proyecto, se recomienda diseñar, entrenar y 
+    validar arquitecturas de redes neuronales distintas o con variaciones a una red neuronal convolucional 
+    tradicional. Se recomienda, por ejemplo, implementar una red convolucional recurrente que sea capaz de tomar 
+    en cuenta el estado anterior de la misma. Implementar otros algoritmos de predicción y visión artificial también 
+    ayudarían al desarrollo de sistemas más robustos.
+    \item Se recomienda también extender la implementación de la red a una tarea de clasificación categórica para 
+    comparar el rendimiento entre el entrenamiento y rendimiento obtenidos en el problema planteado como una regresión 
+    y una clasificación.
+    \item Debido ala modularidad del sistema planteando en el presente proyecto, se recomienda implementar el mismo 
+    sistema fin a fin para otros modelos de vehículos, como pueden ser un robot de tracción diferencial u otro modelo.
+    \item Es también importante poder extender el sistema presentado en este proyecto con tareas de control y detección 
+    avanzadas, incluyendo en el flujo de trabajo módulos de planificación de trayectorias, detección de objetos y 
+    programación de misiones.
+    \item Dada la gran potencialidad en el área de sistemas de conducción autónoma se recomienda que se pueda crear 
+    una línea de investigación dedicada al diseño e implementación de sistemas robóticos inteligentes en la cual 
+    se agrupen esfuerzos para el desarrollo de cada uno de los subsistemas que componen un vehículo autónomo. 
+    \item Por último, la forma en la que ha sido implementado el presente proyecto permite modificarlo y extenderlo 
+    de distintas maneras y a distintos niveles. Se recomienda considerar este proyecto como una plataforma de 
+    desarrollo sobre la cual se puedan implementar diversos algoritmos y aplicaciones útiles para el desarrollo de 
+    nuestra sociedad.
+
+\end{itemize}
