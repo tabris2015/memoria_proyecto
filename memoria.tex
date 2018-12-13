@@ -1,6 +1,6 @@
 \documentclass[12pt,letterpaper]{book}
-\setcounter{tocdepth}{4}
-\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
 
 %%%%%%%%%%%%%%%% for dev
 % \includeonly{Chapter_1,Chapter_4}
@@ -69,11 +69,11 @@
 
 \include{formato/caratula}
 \pagenumbering{Roman} % para comenzar la numeracion de paginas en numeros romanos
-% \include{formato/dedicatoria}
+\include{formato/dedicatoria}
 
-% \include{formato/agradecimientos}
+\include{formato/agradecimientos}
 
-% \include{contenido/resumen}
+\include{contenido/resumen}
 
 % Generacion del indice
 \include{formato/indices}
@@ -89,7 +89,6 @@
 
 \include{contenido/conclusiones}
 
-% \include{anexos/codigo}
 
 % \include{bibliografia/biblio.tex}
 \cleardoublepage
@@ -99,4 +98,9 @@
 \bibliography{referencias}
 
 
+\appendix
+\addcontentsline{toc}{chapter}{Apéndice} 
+\include{anexos/sigmoide}
+\include{anexos/codigo}
+\include{anexos/datasheets}
 \end{document}

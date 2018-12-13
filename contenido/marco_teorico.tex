@@ -59,33 +59,33 @@ la Carnegie Mellon University y General Motors Corporation con el vehículo Boss
     una manera de categorizar los niveles de automatización de la conducción por parte de  la Sociedad de Ingenieros en Automoción
     (SAE, por sus siglas en inglés) en la que se definen seis niveles de automatización en vehículos terrestres, acuáticos y aéreos.
 
-        \subsubsection{Nivel 0: Sin automatización}
+        \textbf{Nivel 0: Sin automatización}
         El conductor está en completo control de todas las funciones del vehículo en todo momento, no existe intervención 
         de ningún sistema automatizado en el control. Sistemas de alerta de colisión o pérdida de carril entran en esta categoría.
         
-        \subsubsection{Nivel 1: Conducción asistida}
+        \textbf{Nivel 1: Conducción asistida}
         El conductor tiene el control del vehículo, pero el sistema puede modificar la aceleración o dirección del mismo. Los 
         sistemas de control de velocidad de crucero caen en esta categoría.
         
-        \subsubsection{Nivel 2: Automatización parcial}
+        \textbf{Nivel 2: Automatización parcial}
         El conductor debe poder ser capaz de tomar el control del vehículo si ciertas se necesitan ciertas correcciones, pero  
         ya no está en control de la aceleración y dirección del vehículo directamente. Es importante resaltar que desde los
         niveles 0 al 2 el conductor no puede estar distraido en ningún momento de la conducción. Los sistemas de parqueo 
         automático representan un buen ejemplo de sistemas de Nivel 2.
         
-        \subsubsection{Nivel 3: Automatización condicional}
+        \textbf{Nivel 3: Automatización condicional}
         El sistema automatizado tiene el control del vehículo, tanto de la aceleración, dirección así como también del monitoreo 
         del entorno bajo condiciones específicas. El conductor debe estar preparado para intervenir cuando el sistema así lo 
         requiera, por tanto, se permiten distracciones ocasionales. Uno de los sistemas recientemente implementados que cae en esta 
         categoría es el sistema \textit{autopilot} de los vehículos de Tesla Motors. % agregar referencia
         
-        \subsubsection{Nivel 4: Automatización elevada}
+        \textbf{Nivel 4: Automatización elevada}
         El sistema está en completo control del vehículo y la presencia humana ya no es necesaria, sin embargo, la operación autónoma 
         del vehículo está limitada a condiciones específicas. Si las actuales condiciones del entorno sobrepasan las fronteras 
         de rendimiento definidas, el vehículo puede desplegar un protocolo o secuencia de emergencia. Actualmente el desarrollo 
         de vehículos autónomos o \textit{self driving cars} se enfoca en este nivel. 
         
-        \subsubsection{Nivel 5: Automatización completa}
+        \textbf{Nivel 5: Automatización completa}
         El sistema está en completo control del vehículo y la presencia humana no es necesaria en absoluto. El sistema es capaz 
         de proveer las mismas características que en el Nivel 4, pero en esta ocasión puede operar al vehículo en todas las condiciones.
         En este nivel, el conductor pasa a ser un pasajero en el vehículo. Actualmente, no existen sistemas que operen en este nivel.
@@ -358,22 +358,22 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
             entendido, es muy útil conocer o aproximar la distribución de probabilidad de los datos para luego poder realizar 
             predicciones o tratarlos con algún modelo en específico.
 
-        \subsubsection{Aprendizaje por refuerzo}
-        En las tareas de aprendizaje por refuerzo se toma en cuenta la interacción de un agente con su entorno y la forma 
-        en la que las acciones que toma dicho agente afectan a su entorno y se materializan en una recompensa o castigo \cite{sutton2018reinforcement}. Formalmente
-        se pueden definir ciertos elementos que componen una tarea de aprendizaje por refuerzo:
-        \begin{itemize}
-            \item \textbf{Agente.} Es la entidad que interactúa con el entorno. El agente se comunica con el entorno mediante acciones.
-            \item \textbf{Política.} Representan la forma de actuar del agente en base al conocimiento que ha adquirido.
-            \item \textbf{Recompensa.} Es la función que define la efectividad del agente de cumplir el objetivo deseado, normalmente, el aprendizaje se enfoca en maximizar la recompensa que el agente puede obtener. 
-        \end{itemize}
+        % \subsubsection{Aprendizaje por refuerzo}
+        % En las tareas de aprendizaje por refuerzo se toma en cuenta la interacción de un agente con su entorno y la forma 
+        % en la que las acciones que toma dicho agente afectan a su entorno y se materializan en una recompensa o castigo \cite{sutton2018reinforcement}. Formalmente
+        % se pueden definir ciertos elementos que componen una tarea de aprendizaje por refuerzo:
+        % \begin{itemize}
+        %     \item \textbf{Agente.} Es la entidad que interactúa con el entorno. El agente se comunica con el entorno mediante acciones.
+        %     \item \textbf{Política.} Representan la forma de actuar del agente en base al conocimiento que ha adquirido.
+        %     \item \textbf{Recompensa.} Es la función que define la efectividad del agente de cumplir el objetivo deseado, normalmente, el aprendizaje se enfoca en maximizar la recompensa que el agente puede obtener. 
+        % \end{itemize}
         
-        \begin{figure}[!h] 
-            \centering
-            \includegraphics[width=0.75\textwidth]{img/refuerzo}
-            \caption[Esquema de una tarea de aprendizaje por refuerzo]{Esquema de una tarea de aprendizaje por refuerzo. Fuente: \cite{bhatt_2018} }
-            \label{fig:refuerzo}
-        \end{figure}
+        % \begin{figure}[!h] 
+        %     \centering
+        %     \includegraphics[width=0.75\textwidth]{img/refuerzo}
+        %     \caption[Esquema de una tarea de aprendizaje por refuerzo]{Esquema de una tarea de aprendizaje por refuerzo. Fuente: \cite{bhatt_2018} }
+        %     \label{fig:refuerzo}
+        % \end{figure}
 
         
     \subsection{Aprendizaje Profundo}
@@ -629,36 +629,36 @@ usadas en diversas aplicaciones de la vida real de las cuales podemos citar algu
 
         Tomando en cuenta lo anterior, se han generado diversas tendencias en la aplicación de funciones de activación y a 
         continuación se analizarán las más relevantes para este proyecto.
-            \paragraph{Función sigmoide}\label{sec:sigmoide}
-            Esta función ha sido introducida en la Ecuación(\ref{eq:sigmoide}) y representa, históricamente, la función 
-            más utilizada en las primeras redes neuronales artificiales porque modela de manera aproximada, una respuesta 
-            característica de las neuronas del cerebro \cite{narayan1997generalized}, pero sobre todo, porque posee las dos características mencionadas 
-            anteriormente: naturaleza no lineal y diferenciable. Otra característica llamativa, es que se puede interpretar 
-            a la salida como una función de probabilidad, pues sus valores van desde $0$ a $1$, como se puede apreciar 
-            en la Figura(\ref{fig:sigmoide}). Usualmente se incluye un parámetro adicional para controlar el \textit{radio de activación}
-            que hace que la función responda con más o menos sensibilidad a su entrada.
+            % \paragraph{Función sigmoide}\label{sec:sigmoide} %% TODO: pasar a anexos
+            % Esta función ha sido introducida en la Ecuación(\ref{eq:sigmoide}) y representa, históricamente, la función 
+            % más utilizada en las primeras redes neuronales artificiales porque modela de manera aproximada, una respuesta 
+            % característica de las neuronas del cerebro \cite{narayan1997generalized}, pero sobre todo, porque posee las dos características mencionadas 
+            % anteriormente: naturaleza no lineal y diferenciable. Otra característica llamativa, es que se puede interpretar 
+            % a la salida como una función de probabilidad, pues sus valores van desde $0$ a $1$, como se puede apreciar 
+            % en la Figura(\ref{fig:sigmoide}). Usualmente se incluye un parámetro adicional para controlar el \textit{radio de activación}
+            % que hace que la función responda con más o menos sensibilidad a su entrada.
 
-            \begin{figure}[!h] 
-                \centering
-                \includegraphics[width=0.75\textwidth]{img/sigmoide}
-                \caption[Gráfico de la función sigmoide]{Gráfico de la función sigmoide $\sigma(v) = 1 / (1 + e^{(-v)})$ (curva roja), y dos variaciones con un radio de activación de la forma $\sigma(sv)$ con valores $s=1/2$ (curva azul) y $s=10$ (curva púrpura) . Fuente: \cite{Goodfellow-et-al-2016} }
-                \label{fig:sigmoide}
-            \end{figure}
+            % \begin{figure}[!h] 
+            %     \centering
+            %     \includegraphics[width=0.75\textwidth]{img/sigmoide}
+            %     \caption[Gráfico de la función sigmoide]{Gráfico de la función sigmoide $\sigma(v) = 1 / (1 + e^{(-v)})$ (curva roja), y dos variaciones con un radio de activación de la forma $\sigma(sv)$ con valores $s=1/2$ (curva azul) y $s=10$ (curva púrpura) . Fuente: \cite{Goodfellow-et-al-2016} }
+            %     \label{fig:sigmoide}
+            % \end{figure}
             
-            Pese a las características anteriormente mencionadas, la función sigmoide tiene una gran desventaja: el llamado 
-            \textit{desvanecimiendo de gradientes} \cite{hochreiter1998vanishing}. Este fenómeno ocurre cuando la activación 
-            de una capa oculta tiene valores muy altos o muy negativos, se puede apreciar en la Figura(\ref{fig:sigmoide}), que 
-            para estos valores, la derivada tiene un valor muy pequeño, aproximándose a cero mientras más grandes sean los valores.
-            Este fenómeno ocasiona que, mientras se realiza la retropropagación de gradientes, dado que el gradiente tiene un valor 
-            muy bajo, el ajuste en los pesos sea mínimo, deteniendo así el aprendizaje de la neurona en la que ocurre el fenómeno.
+            % Pese a las características anteriormente mencionadas, la función sigmoide tiene una gran desventaja: el llamado 
+            % \textit{desvanecimiendo de gradientes} \cite{hochreiter1998vanishing}. Este fenómeno ocurre cuando la activación 
+            % de una capa oculta tiene valores muy altos o muy negativos, se puede apreciar en la Figura(\ref{fig:sigmoide}), que 
+            % para estos valores, la derivada tiene un valor muy pequeño, aproximándose a cero mientras más grandes sean los valores.
+            % Este fenómeno ocasiona que, mientras se realiza la retropropagación de gradientes, dado que el gradiente tiene un valor 
+            % muy bajo, el ajuste en los pesos sea mínimo, deteniendo así el aprendizaje de la neurona en la que ocurre el fenómeno.
 
-            Esta dificultad se presenta especialmente cuando la red neuronal se compone de varias capas ocultas y 
-            ha motivado el desarrollo de nuevas funciones de activación que no presenten esta limitación y puedan 
-            mantener valores de gradientes adecuados durante el entrenamiento.
+            % Esta dificultad se presenta especialmente cuando la red neuronal se compone de varias capas ocultas y 
+            % ha motivado el desarrollo de nuevas funciones de activación que no presenten esta limitación y puedan 
+            % mantener valores de gradientes adecuados durante el entrenamiento.
             
-            Cabe resaltar que, pese a las dificultades con la propagación de los gradientes de la función sigmoide, ésta se suele 
-            utilizar bastante en la capa de salida, cuando se trata de clasificación binaria, ya que representa de manera adecuada
-            la noción de probabilidad, lo cual es deseable en este tipo de modelos.
+            % Cabe resaltar que, pese a las dificultades con la propagación de los gradientes de la función sigmoide, ésta se suele 
+            % utilizar bastante en la capa de salida, cuando se trata de clasificación binaria, ya que representa de manera adecuada
+            % la noción de probabilidad, lo cual es deseable en este tipo de modelos.
 
             \paragraph{Función tangente hiperbólica} \label{sec:tanh}
             La función tangente hiperbólica o $tanh()$ se define mediante la siguiente expresión:
