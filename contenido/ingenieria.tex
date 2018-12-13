@@ -458,7 +458,8 @@ y alcance del mismo.
 \section{Herramientas de hardware}\label{sec:hardware}
 Se han seleccionado diversas herramientas de hardware para la implementación del sistema de conducción autónoma. Dichas herramientas
 corresponden con la base física electrónica sobre la cual se ejecutarán las tareas de los tres subsistemas. Se procede a detallar 
-las herramientas utilizadas en el diseño del sistema.
+las herramientas utilizadas en el diseño del sistema. Cabe señalar que las hojas de datos relevantes a las herramientas de hardware 
+utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datasheet}).
 
     \subsection{Plataforma de tiempo real}\label{sec:mcu}
     La interfaz de más bajo nivel del sistema es el de la interacción con los actuadores de los motores del prototipo. Esta 
@@ -866,6 +867,8 @@ que es capaz de enviar mensajes mediante el puerto serial a sistemas embebidos q
 manera, el control de los actuadores es transparente a cualquier otro nodo en la red haciendo posible que se pueda controlar 
 el vehículo de distintas maneras, incluso desde nodos ejecutados de manera remota en estaciones de trabajo en la red local.
 
+El código fuente de los programas y nodos concernientes a este subsistema se pueden consultar en el Apéndice(\ref{apx:source}).
+
 
     \subsection{Módulo de potencia en tiempo real}
     El prototipo cuenta con dos actuadores para la tracción y la dirección respectivamente. En el caso de la tracción, se 
@@ -1045,6 +1048,8 @@ Subsistema de Adquisición de Datos y Entrenamiento que se encarga principalment
 y almacenar los datos necesarios para el entrenamiento de la red neuronal así como también de brindar las herramientas necesarias 
 para el entrenamiento en sí. Este subsistema cuenta con vários módulos funcionales que interactúan entre sí como se pudo apreciar 
 en la Sección(\ref{sec:esqdaq}). 
+
+El código fuente de los programas y nodos concernientes a este subsistema se pueden consultar en el Apéndice(\ref{apx:source}).
 
     \subsection{Módulo de adquisición de datos y operación manual}
     Como se ha podido establecer en la Sección(\ref{sec:redesneuronales}) referida al aprendizaje automático. Para que un algoritmo de aprendizaje pueda 
@@ -1329,7 +1334,12 @@ en la Sección(\ref{sec:esqdaq}).
 
 \section{Subsistema de Inferencia y control autónomo}\label{sec:inferencia}
 El subsistema de inferencia y control autónomo se ha diseñado tomando en cuenta la modularidad necesaria para poder ser 
-extendible en funcionalidades de 
+extendible en sus funcionalidades. En este sentido, se aprovecha al máximo las capacidades de comunicación y ejecución 
+distribuida de ROS con el objetivo de que el desarrollo de este subsistema pueda extenderse o reemplazarse de una manera 
+trivial. 
+
+El código fuente de los programas y nodos concernientes a este subsistema se pueden consultar en el Apéndice(\ref{apx:source}).
+
     \subsection{Módulo de inferencia con una red neuronal convolucional}
     Este módulo tiene la tarea de ejecutar la tarea de predicción del comando de control de dirección con la red neuronal 
     entrenada por el módulo de entrenamiento del subsistema de adquisición de datos y entrenamiento. Para que la red pueda 
