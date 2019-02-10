@@ -271,7 +271,7 @@ y alcance del mismo.
             Player                                                      & SI                                                                                         & SI                                                                         & NO                                                                      & NO                                                                        & C++                                                                           \\ \midrule
             \begin{tabular}[c]{@{}c@{}}Robotics \\ Library\end{tabular} & NO                                                                                         & NO                                                                         & NO                                                                      & SI                                                                        & C++                                                                           \\ \bottomrule
             \end{tabular}
-            \caption{Tabla comparativa de características entre distintas plataformas y librerías para desarrollo de sistemas robóticos. Fuente: Elaboración propia} % TODO: referencia
+            \caption[Tabla comparativa de librerías y plataformas para sistemas robóticos.]{Tabla comparativa de características entre distintas plataformas y librerías para desarrollo de sistemas robóticos. Fuente: Elaboración propia} % TODO: referencia
             \label{tbl:frameworks}
             \end{table}
 
@@ -415,7 +415,7 @@ y alcance del mismo.
 
     Mbed se usará como la plataforma para el desarrollo del control de tiempo real en el subsistema de control y actuación 
     ya que ofrece todas las facilidades en cuanto a librerías y potencia computacional necesarias para esta tarea. En la 
-    Tabla(\ref{tbl:frameworks}) se puede observar una tabla comparativa entre diversas plataformas de desarrollo embebido 
+    Tabla(\ref{tbl:embedded}) se puede observar una tabla comparativa entre diversas plataformas de desarrollo embebido 
     consideradas para el presente proyecto.
 
 
@@ -429,6 +429,8 @@ y alcance del mismo.
         Freedom E SDK       & RISC V - 32 bits                                                               & C                 & Bajo                                                                     & \begin{tabular}[c]{@{}c@{}}Sistemas de \\ tiempo real\end{tabular}        \\ \hline
         libOpenCM3          & ARM - 32 bits                                                                  & C                 & Bajo                                                                     & \begin{tabular}[c]{@{}c@{}}Sistemas de \\ tiempo real\end{tabular}        \\ \hline
         \end{tabular}
+        \caption[Tabla comparativa de plataformas de desarrollo embebido.]{Tabla comparativa de plataformas de desarrollo embebido. Fuente: Elaboración propia} % TODO: referencia
+        \label{tbl:embedded}
     \end{table}
 
     Una de las plataformas de desarrollo más utilizadas en la actualidad es Arduino, pese a haberse considerado esta plataforma 
@@ -534,7 +536,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
         STM32f303k8     & \begin{tabular}[c]{@{}c@{}}ARM \\ CortexM4f\\ (32 bits)\end{tabular} & 16                                                          & 64                                                          & 72                                                                            & 8                                                               & \begin{tabular}[c]{@{}c@{}}STM32 HAL,\\ \textbf{Mbed}\end{tabular}              \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Comparación de características de microcontroladores disponibles. Fuente: Elaboración propia.}
+        \caption[Comparación de características de microcontroladores disponibles.]{Comparación de características de microcontroladores disponibles. Fuente: Elaboración propia.}
         \label{tbl:mcucomp}
         \end{table}
 
@@ -563,7 +565,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
         \textbf{Periféricos adicionales}    & GPIO (con interrupciones), ADC, DAC, RTC              \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Características técnicas del microcontrolador STM32f303k8. Fuente: \cite{nucleof303}}
+        \caption[Características técnicas del microcontrolador STM32f303k8.]{Características técnicas del microcontrolador STM32f303k8. Fuente: \cite{nucleof303}}
         \label{tbl:mcuspecs}
         \end{table}
 
@@ -611,7 +613,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
         Beaglebone Blue                                               & 1x A8 @ 1GHz                                                                 & 512 MB       & no           & \begin{tabular}[c]{@{}c@{}}Wifi\\ Bluetooth\end{tabular}                & Regular                                                                    & 80                                                               & SI                                                              \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Tabla comparativa de SBC's disponibles en el mercado. Fuente: Elaboración propia.}
+        \caption[Tabla comparativa de SBC's disponibles en el mercado.]{Tabla comparativa de SBC's disponibles en el mercado. Fuente: Elaboración propia.}
         \label{tbl:sbc}
         \end{table}
 
@@ -660,7 +662,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
         \textbf{Interfaces de cámara}       & USB webcam, CSI                                                     \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Características de la placa Raspberry Pi 3 model B+. Fuente: \cite{raspi}}
+        \caption[Características de la placa Raspberry Pi 3 model B+.]{Características de la placa Raspberry Pi 3 model B+. Fuente: \cite{raspi}}
         \label{tbl:raspispecs}
         \end{table}
 
@@ -704,7 +706,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
         \textbf{Sistema Operativo} & Ubuntu 18.04 Linux 4.15                                                   \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Características de la estación de trabajo seleccionada. }
+        \caption[Características de la estación de trabajo seleccionada.]{Características de la estación de trabajo seleccionada. Fuente: Elaboración propia.}
         \label{tbl:pcspecs}
         \end{table}
 
@@ -756,7 +758,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
             \textbf{Peso}        & 3.4g                               \\ \bottomrule
             \end{tabular}%
             }
-            \caption{Características de la Raspberry Pi Camera Module V2. Fuente: \cite{raspicam}}
+            \caption[Características de la Raspberry Pi Camera Module V2.]{Características de la Raspberry Pi Camera Module V2. Fuente: \cite{raspicam}}
             \label{tbl:raspicamspecs}
             \end{table}
         
@@ -831,7 +833,7 @@ utilizadas en este proyecto se pueden consultar en el Apéndice(\ref{apx:datashe
             \textbf{Voltaje de operación}      & 2.6 V  - 3.5 V (nominal: 3.3 V)    \\ \bottomrule
             \end{tabular}%
             }
-            \caption{Características del sensor VL53L0X. Fuente: \cite{vl53l0x}}
+            \caption[Características del sensor VL53L0X.]{Características del sensor VL53L0X. Fuente: \cite{vl53l0x}}
             \label{tbl:laserspecs}
             \end{table}
         
@@ -1129,7 +1131,7 @@ El código fuente de los programas y nodos concernientes a este subsistema se pu
         target & \begin{tabular}[c]{@{}c@{}}Par de valores correspondientes\\  con los valores angular y linear.\end{tabular} & Array \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Columnas de la tabla del conjunto de datos generado}
+        \caption[Columnas de la tabla del conjunto de datos generado]{Columnas de la tabla del conjunto de datos generado. Fuente: Elaboración propia.}
         \label{tbl:columns}
     \end{table}
     
@@ -1186,7 +1188,7 @@ El código fuente de los programas y nodos concernientes a este subsistema se pu
         Espejo Horizontal       & \begin{tabular}[c]{@{}c@{}}Se invierte la imagen \\ hotizontalmente de forma aleatoria.\end{tabular}                      \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Transformaciones realizadas en la aumentación de datos. Fuente: Elaboración propia.}
+        \caption[Transformaciones realizadas en la aumentación de datos.]{Transformaciones realizadas en la aumentación de datos. Fuente: Elaboración propia.}
     \label{tbl:transf}
     \end{table}
 
@@ -1619,7 +1621,7 @@ red neuronal profunda: una tradicional, y una con capas convolucionales.
         Tangente hiperbólica(Sección(\ref{sec:tanh}))  & \begin{tabular}[c]{@{}c@{}}Mapear la activación en un \\ rango de -1 a 1.\end{tabular}                                             & \begin{tabular}[c]{@{}c@{}}Se usa para la capa de salida de la red \\ dado que la salida requiere estar en rango \\ -1 a 1\end{tabular}                                     \\ \bottomrule
         \end{tabular}%
         }
-        \caption{Funciones de activación usadas}
+        \caption[Funciones de activación usadas]{Funciones de activación usadas. Fuente: Elaboración propia.}
         \label{tbl:activ}
     \end{table}
 
@@ -1682,7 +1684,7 @@ red neuronal profunda: una tradicional, y una con capas convolucionales.
                                                 & \multicolumn{1}{c|}{}              & \multicolumn{2}{c|}{Total Parámetros}                                                                                                                                                       & \multicolumn{2}{c|}{9636693}                                                                                                                                                                     \\ \cmidrule(l){3-6} 
             \end{tabular}%
             }
-            \caption{Arquitectura de la red neuronal densamente conectada. Fuente: Elaboración propia}
+            \caption[Arquitectura de la red neuronal densamente conectada.]{Arquitectura de la red neuronal densamente conectada. Fuente: Elaboración propia}
             \label{tbl:arqdense}
         \end{table}
 
@@ -1738,7 +1740,7 @@ red neuronal profunda: una tradicional, y una con capas convolucionales.
                                                     & \multicolumn{1}{c|}{}              & \multicolumn{2}{c|}{Total Parámetros}                                                                                                                                                       & \multicolumn{2}{c|}{120413}                                                                                                                                                                      \\ \cmidrule(l){3-6} 
             \end{tabular}%
             }
-            \caption{Arquitectura de la red neuronal convolucional. Fuente: Elaboración propia}
+            \caption[Arquitectura de la red neuronal convolucional.]{Arquitectura de la red neuronal convolucional. Fuente: Elaboración propia}
             \label{tbl:arqconv}
         \end{table}
 
@@ -1870,7 +1872,7 @@ red neuronal profunda: una tradicional, y una con capas convolucionales.
             \textbf{Total}             & \textbf{26356}    & \textbf{100\%}    \\ \bottomrule
             \end{tabular}%
             }
-        \caption{Cantidad de muestras en los conjuntos de datos}
+        \caption[Cantidad de muestras en los conjuntos de datos.]{Cantidad de muestras en los conjuntos de datos. Fuente: Elaboración propia.}
         \label{tbl:dataset}
     \end{table}
 

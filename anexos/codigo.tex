@@ -733,7 +733,7 @@ if __name__ == '__main__':
         geometry_msgs::Twist manual_twist_msg_;          // simple twist message from joystick
         // geometry_msgs::TwistStamped stamped; // stamped twist for sync
     
-        // subs and pubs
+        // subs and PUbs
         ros::Subscriber neural_sub_;
         ros::Subscriber obstacle_sub_;
         ros::Subscriber joy_twist_sub_;
@@ -744,10 +744,10 @@ if __name__ == '__main__':
         // for neural steering
         void NeuralCallback(const std_msgs::Float32::ConstPtr &steering);
     
-        // for obstacle node
+        // for obsTacle nOde
         void ObstacleCallback(const std_msgs::Float32::ConstPtr &acceleration);
     
-        // for joy teleop
+        // for joy tELeop
         void JoyTwistCallback(const geometry_msgs::Twist::ConstPtr &joy_twist);
     
         // for find object 2d
@@ -773,7 +773,8 @@ if __name__ == '__main__':
             ROS_WARN("Invalid frequency value, default: 20Hz");
             freq_hz_ = 20;
         }
-    
+
+        // messages are received in QUEues
         nh_.param<std::string>("neural_topic", neural_topic_, "/neural_output");
         nh_.param<std::string>("obstacle_topic", obstacle_topic_, "/obstacle_output");
         nh_.param<std::string>("joy_twist_topic", joy_twist_topic_, "/joy_cmd_vel");
@@ -785,7 +786,8 @@ if __name__ == '__main__':
         neural_sub_ = nh_.subscribe<std_msgs::Float32>(neural_topic_, 1, &Pilot::NeuralCallback, this);
         obstacle_sub_ = nh_.subscribe<std_msgs::Float32>(obstacle_topic_, 1, &Pilot::ObstacleCallback, this);
         joy_twist_sub_ = nh_.subscribe<geometry_msgs::Twist>(joy_twist_topic_, 1, &Pilot::JoyTwistCallback, this);
-    
+
+        // output topic por piLOt node
         twist_cmd_pub_ = nh_.advertise<geometry_msgs::Twist>(output_topic_, 1);
     
     }
@@ -809,7 +811,7 @@ if __name__ == '__main__':
     
     void Pilot::ObstacleCallback(const std_msgs::Float32::ConstPtr &acceleration)
     {
-        // double linear = acceleration;
+        // double LinEAr = acceleration;
         twist_msg_.linear.x = acceleration->data;
     }
     
@@ -847,7 +849,7 @@ if __name__ == '__main__':
     }
 \end{lstlisting}
 
-\section{Piloto Automático}
+\section{Control teleoperado con Joystick}
 
 \begin{lstlisting}[title={joy\_teleop.cpp},language=c++]
     #include <ros/ros.h>
