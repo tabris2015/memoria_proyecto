@@ -52,13 +52,13 @@
 
     El sistema presenta las siguientes dificultades:
     \begin{itemize}
-        \item Conocimiento experto en cada etapa.
-        \item Poca flexibilidad en el diseño y la implementación.
-        \item Tiempo y recursos necesarios elevados.
+        \item \alert{Conocimiento experto} en cada etapa.
+        \item \alert{Poca flexibilidad} en el diseño y la implementación.
+        \item \alert{Tiempo y recursos} necesarios elevados.
     \end{itemize}
     \begin{figure}[!h] 
       \centering
-      \includegraphics[width=0.35\textwidth]{../img/inferencia}
+      \includegraphics[width=0.39\textwidth]{../img/inferencia}
       \end{figure}
   
   \end{frame}
@@ -108,27 +108,38 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
 \end{frame}
 
 \begin{frame}{Visión Artificial}
-    Es un campo de las ciencias de la computación que intenta reproducir las capacidades de una persona para entender imágenes.
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Es un campo de las ciencias de la computación que intenta reproducir las capacidades de una persona para entender imágenes.
+            Aplicaciones:
+            \begin{itemize}
+                \item \small{Reconocimiento óptico de caracteres (OCR).}
+                \item Inspección automática.
+                \item Ventas.
+                \item Reconstrucción de modelos en 3D (fotogrametría).
+                \item Imagenología médica.
+                \item Seguridad automotriz.
+                \item Seguridad y vigilancia.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.95\textwidth]{../img/cvision}
+                \caption[Algunas aplicaciones de la visión artificial]{Algunas aplicaciones de la visión artificial. Fuente: \cite{Szeliski2011} }
+            \end{figure}
+        \end{column}
+    \end{columns}
     
-    Aplicaciones:
-    \begin{itemize}
-        \item Reconocimiento optico de caracteres (OCR).
-        \item Inspección automática.
-        \item Ventas.
-        \item Reconstrucción de modelos en 3D (fotogrametría).
-        \item Imagenología médica.
-        \item Seguridad automotriz.
-        \item Seguridad y vigilancia.
-    \end{itemize}
 \end{frame}
 
-\begin{frame}{Visión Artificial}
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.55\textwidth]{../img/cvision}
-        \caption[Algunas aplicaciones de la visión artificial]{Algunas aplicaciones de la visión artificial. Fuente: \cite{Szeliski2011} }
-    \end{figure}
-\end{frame}
+% \begin{frame}{Visión Artificial}
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.55\textwidth]{../img/cvision}
+%         \caption[Algunas aplicaciones de la visión artificial]{Algunas aplicaciones de la visión artificial. Fuente: \cite{Szeliski2011} }
+%     \end{figure}
+% \end{frame}
 
 \subsection{Redes Neuronales Artificiales}
 \begin{frame}{Redes Neuronales Artificiales}
@@ -238,15 +249,15 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
         \end{figure}
 \end{frame}
 
-\begin{frame}{Tareas}
-    Este subsistema cuenta con módulos que tienen tres principales responsabilidades.
+% \begin{frame}{Tareas}
+%     Este subsistema cuenta con módulos que tienen tres principales responsabilidades.
     
-    \begin{itemize}
-        \item Ejecutar un control de tiempo real en los actuadores disponibles para la locomoción del vehículo a través de un sistema embebido.
-        \item Brindar una plataforma para la adquisición de los datos de los sensores (la cámara y el sensor de proximidad).
-        \item Brindar una plataforma de desarrollo para el control autónomo del vehículo mediante ROS.
-    \end{itemize}  
-\end{frame}
+%     \begin{itemize}
+%         \item Ejecutar un control de tiempo real en los actuadores disponibles para la locomoción del vehículo a través de un sistema embebido.
+%         \item Brindar una plataforma para la adquisición de los datos de los sensores (la cámara y el sensor de proximidad).
+%         \item Brindar una plataforma de desarrollo para el control autónomo del vehículo mediante ROS.
+%     \end{itemize}  
+% \end{frame}
 
 \begin{frame}{Módulo de potencia en tiempo real}
     Se encarga del control de los actuadores mediante un sistema embebido 
@@ -314,12 +325,12 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
         \end{figure}
 \end{frame}
 
-\begin{frame}{Tareas}
-    \begin{itemize}
-        \item Generar un conjunto de datos o \textit{dataset} para el entrenamiento y validación de la red neuronal.
-        \item Entrenar una red neuronal a partir del conjunto de datos y ciertos parámetros previamente definidos.
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Tareas}
+%     \begin{itemize}
+%         \item Generar un conjunto de datos o \textit{dataset} para el entrenamiento y validación de la red neuronal.
+%         \item Entrenar una red neuronal a partir del conjunto de datos y ciertos parámetros previamente definidos.
+%     \end{itemize}
+% \end{frame}
 
 \begin{frame}{Módulo de Adquisición de Datos y Operación Manual}
     Se realiza la adquisición de datos mientras se opera el vehículo manualmente.
@@ -380,11 +391,11 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
 
 \end{frame}
 
-\begin{frame}{Módulo de Generación de Datos}
-    Este módulo genera conjuntos pequeños de imágenes que se cargan a la memoria 
-    de manera progresiva para el entrenamiento debido a que no se puede cargar todo el 
-    conjunto de entrenamiento de una sola vez.
-\end{frame}
+% \begin{frame}{Módulo de Generación de Datos}
+%     Este módulo genera conjuntos pequeños de imágenes que se cargan a la memoria 
+%     de manera progresiva para el entrenamiento debido a que no se puede cargar todo el 
+%     conjunto de entrenamiento de una sola vez.
+% \end{frame}
 
 \begin{frame}{Módulo de Entrenamiento}
     Este módulo realiza las siguientes tareas:
@@ -417,14 +428,14 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
         \end{figure}
 \end{frame}
 
-\begin{frame}{Tareas}
-    El subsistema debe cumplir las siguientes tareas:
-    \begin{itemize}
-        \item Cargar y ejecutar el modelo de predicción implementado en la red neuronal entrenada en el subsistema de adquisición de datos y entrenamiento para la generación de comandos de dirección del vehículo.
-        \item Ejecutar un algoritmo de control para la aceleración basado en la detección de obstáculos presentes frente al vehículo.
-        \item Ejecutar un algoritmo de arbitraje que combine ambos sistemas de control en conjunto con un control manual de respaldo que será referido como el \textit{piloto automático}.
-    \end{itemize} 
-\end{frame}
+% \begin{frame}{Tareas}
+%     El subsistema debe cumplir las siguientes tareas:
+%     \begin{itemize}
+%         \item Cargar y ejecutar el modelo de predicción implementado en la red neuronal entrenada en el subsistema de adquisición de datos y entrenamiento para la generación de comandos de dirección del vehículo.
+%         \item Ejecutar un algoritmo de control para la aceleración basado en la detección de obstáculos presentes frente al vehículo.
+%         \item Ejecutar un algoritmo de arbitraje que combine ambos sistemas de control en conjunto con un control manual de respaldo que será referido como el \textit{piloto automático}.
+%     \end{itemize} 
+% \end{frame}
 
 \begin{frame}{Módulo de Inferencia Neuronal}
     Este módulo tiene la tarea de ejecutar la tarea de predicción del comando de control de dirección con la red neuronal 
@@ -461,26 +472,26 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
 
 \section*{Arquitectura de la Red Neuronal}
 
-\begin{frame}{Capas Convolucionales}
-    \begin{figure}[!ht] 
-        \centering
-        \includegraphics[width=0.85\textwidth]{../img/convlayer}
-    \end{figure}
-\end{frame}
+% \begin{frame}{Capas Convolucionales}
+%     \begin{figure}[!ht] 
+%         \centering
+%         \includegraphics[width=0.85\textwidth]{../img/convlayer}
+%     \end{figure}
+% \end{frame}
 
-\begin{frame}{Pooling}
-    \begin{figure}[!ht] 
-        \centering
-        \includegraphics[width=0.85\textwidth]{../img/maxpooltf}
-    \end{figure}
-\end{frame}
+% \begin{frame}{Pooling}
+%     \begin{figure}[!ht] 
+%         \centering
+%         \includegraphics[width=0.85\textwidth]{../img/maxpooltf}
+%     \end{figure}
+% \end{frame}
 
-\begin{frame}{Capas Densamente Conectadas}
-    \begin{figure}[!ht] 
-        \centering
-        \includegraphics[width=0.85\textwidth]{../img/densetf}
-    \end{figure}
-\end{frame}
+% \begin{frame}{Capas Densamente Conectadas}
+%     \begin{figure}[!ht] 
+%         \centering
+%         \includegraphics[width=0.85\textwidth]{../img/densetf}
+%     \end{figure}
+% \end{frame}
 
 \begin{frame}{Funciones de Activación - RELU}
     \begin{equation}\label{eq:relu}
@@ -637,33 +648,58 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
 
 
 \begin{frame}{Separación de conjuntos de datos}
-    Se ha separado el conjunto de datos en tres conjuntos con funciones distintas:
-    \begin{itemize}
-        \item \alert{Entrenamiento}: Datos sobre los que se entrena la red neuronal en cada época.
-        \item \alert{Validación}: Pequeño conjunto sobre el cual se evalúa el error entre épocas.
-        \item \alert{Pruebas}: Conjunto no presente en el entrenamiento sobre el cual se realizan pruebas de rendimiento.
-    \end{itemize}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Se ha separado el conjunto de datos en tres conjuntos con funciones distintas:
+            \begin{itemize}
+                \item \alert{Entrenamiento}: Datos sobre los que se entrena la red neuronal en cada época.
+                \item \alert{Validación}: Pequeño conjunto sobre el cual se evalúa el error entre épocas.
+                \item \alert{Pruebas}: Conjunto no presente en el entrenamiento sobre el cual se realizan pruebas de rendimiento.
+            \end{itemize} 
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{table}[!h]
+                \centering
+                \resizebox{0.75\textwidth}{!}{%
+                \begin{tabular}{@{}|l|l|l|@{}}
+                    \toprule
+                    \textbf{Conjunto de datos} & \textbf{Muestras} & \textbf{Fracción} \\ \midrule
+                    Entrenamiento              & 21084             & 80\%              \\ \midrule
+                    Prueba                     & 3691              & 16\%              \\ \midrule
+                    Validación                 & 1581              & 4\%               \\ \midrule
+                    \textbf{Total}             & \textbf{26356}    & \textbf{100\%}    \\ \bottomrule
+                    \end{tabular}%
+                    }
+            \end{table}
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=\textwidth]{../img/dataset1}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    
 \end{frame}
 
-\begin{frame}{Separación de conjuntos de datos}
-    \begin{table}[!h]
-        \centering
-        \resizebox{0.5\textwidth}{!}{%
-        \begin{tabular}{@{}|l|l|l|@{}}
-            \toprule
-            \textbf{Conjunto de datos} & \textbf{Muestras} & \textbf{Fracción} \\ \midrule
-            Entrenamiento              & 21084             & 80\%              \\ \midrule
-            Prueba                     & 3691              & 16\%              \\ \midrule
-            Validación                 & 1581              & 4\%               \\ \midrule
-            \textbf{Total}             & \textbf{26356}    & \textbf{100\%}    \\ \bottomrule
-            \end{tabular}%
-            }
-    \end{table}
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.65\textwidth]{../img/dataset1}
-    \end{figure}
-\end{frame}
+% \begin{frame}{Separación de conjuntos de datos}
+%     \begin{table}[!h]
+%         \centering
+%         \resizebox{0.5\textwidth}{!}{%
+%         \begin{tabular}{@{}|l|l|l|@{}}
+%             \toprule
+%             \textbf{Conjunto de datos} & \textbf{Muestras} & \textbf{Fracción} \\ \midrule
+%             Entrenamiento              & 21084             & 80\%              \\ \midrule
+%             Prueba                     & 3691              & 16\%              \\ \midrule
+%             Validación                 & 1581              & 4\%               \\ \midrule
+%             \textbf{Total}             & \textbf{26356}    & \textbf{100\%}    \\ \bottomrule
+%             \end{tabular}%
+%             }
+%     \end{table}
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.65\textwidth]{../img/dataset1}
+%     \end{figure}
+% \end{frame}
 
 
 \section{Análisis de Resultados}
@@ -680,17 +716,17 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
     
 \end{frame}
 
-\begin{frame}{Error de Entrenamiento}
-    \begin{itemize}
-        \item \textbf{El error de entrenamiento inicial es menor:} La capacidad de ajuste de parámetros 
-        es más eficaz en la red neuronal convolucional.
-        \item \textbf{El error mínimo es menor:} La red convolucional se aproxima mejor al conjunto de 
-        entrenamiento.
-        \item \textbf{Convergencia más rápida:} La velocidad de convergencia hacia el valor mínimo es casi el doble. La convergencia está directamente 
-        relacionada con el tiempo de entrenamiento requerido por cada arquitectura.
-    \end{itemize}
+% \begin{frame}{Error de Entrenamiento}
+%     \begin{itemize}
+%         \item \textbf{El error de entrenamiento inicial es menor:} La capacidad de ajuste de parámetros 
+%         es más eficaz en la red neuronal convolucional.
+%         \item \textbf{El error mínimo es menor:} La red convolucional se aproxima mejor al conjunto de 
+%         entrenamiento.
+%         \item \textbf{Convergencia más rápida:} La velocidad de convergencia hacia el valor mínimo es casi el doble. La convergencia está directamente 
+%         relacionada con el tiempo de entrenamiento requerido por cada arquitectura.
+%     \end{itemize}
     
-\end{frame}
+% \end{frame}
 
 \begin{frame}{Error de Validación}
     \begin{figure}[!ht] 
@@ -703,52 +739,72 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
 \end{frame}
 
 
-\begin{frame}{Error de Validación}
-    \begin{itemize}
-        \item \textbf{El error de inicial es menor:} Con solamente una pasada por el conjunto de entrenamiento, se tiene una 
-        capacidad mayor de realizar predicciones cercanas a la realidad en casos nunca antes vistos.
-        \item \textbf{El error mínimo es menor:} La capacidad de generalización 
-        de la red convolucional es mayor al de la red tradicional. Si el error de la red convolucional fuera mayor, esto podría indicar 
-        sobreentrenamiento de la red.
-        \item \textbf{Convergencia:} Los valores del error son menores para la red convolucional mostrando que su rendimiento 
-        y capacidad de generalización son mayores al de una red tradicional.
-    \end{itemize}
+% \begin{frame}{Error de Validación}
+%     \begin{itemize}
+%         \item \textbf{El error de inicial es menor:} Con solamente una pasada por el conjunto de entrenamiento, se tiene una 
+%         capacidad mayor de realizar predicciones cercanas a la realidad en casos nunca antes vistos.
+%         \item \textbf{El error mínimo es menor:} La capacidad de generalización 
+%         de la red convolucional es mayor al de la red tradicional. Si el error de la red convolucional fuera mayor, esto podría indicar 
+%         sobreentrenamiento de la red.
+%         \item \textbf{Convergencia:} Los valores del error son menores para la red convolucional mostrando que su rendimiento 
+%         y capacidad de generalización son mayores al de una red tradicional.
+%     \end{itemize}
     
-\end{frame}
+% \end{frame}
 \section*{Pruebas}
 \begin{frame}{Puntajes y errores en el conjunto de prueba}
-    Los puntajes sobre el conjunto de prueba definen el rendimiento y la capacidad de generalización de la 
-    red sobre datos nunca antes vistos. Se usan las siguientes métricas:
-
-    \begin{itemize}
-        \item MSE: Error Cuadrático Medio.
-        \item MAE: Error Absoluto Medio.
-        \item $R^2$: Coeficiente de Determinación.
-    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \small{Los puntajes sobre el conjunto de prueba definen el rendimiento y la capacidad de generalización de la 
+            red sobre datos nunca antes vistos. Se usan las siguientes métricas:}
+    
+            \begin{itemize}
+                \item \alert{MSE}: Error Cuadrático Medio.
+                \item \alert{MAE}: Error Absoluto Medio.
+                \item \alert{$R^2$}: Coeficiente de Determinación.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \begin{table}[!h]
+                \centering
+                \resizebox{0.95\textwidth}{!}{%
+                \begin{tabular}{@{}|c|c|c|c|@{}}
+                \toprule
+                \textbf{Modelo} & \textbf{MSE} & \textbf{MAE} & $\mathbf{R^2}$ \\ \midrule
+                Tradicional & 0.0254 & 0.0976 & 0.9278 \\ \midrule
+                Convolucional & 0.0160 & 0.0872 & 0.9484 \\ \bottomrule
+                \end{tabular}%
+                }
+                \caption[Evaluación de puntajes sobre el conjunto de prueba.]{Evaluación de puntajes sobre el conjunto de prueba. Fuente: Elaboración propia.}
+                \label{tbl:testscores}
+            \end{table}
+        \end{column}
+    \end{columns}
+    
 
 \end{frame}
 
-\begin{frame}{Puntajes y errores en el conjunto de prueba}
-    \begin{table}[!h]
-        \centering
-        \resizebox{0.65\textwidth}{!}{%
-        \begin{tabular}{@{}|c|c|c|c|@{}}
-        \toprule
-        \textbf{Modelo} & \textbf{MSE} & \textbf{MAE} & $\mathbf{R^2}$ \\ \midrule
-        Tradicional & 0.0254 & 0.0976 & 0.9278 \\ \midrule
-        Convolucional & 0.0160 & 0.0872 & 0.9484 \\ \bottomrule
-        \end{tabular}%
-        }
-        \caption[Evaluación de puntajes sobre el conjunto de prueba.]{Evaluación de puntajes sobre el conjunto de prueba. Fuente: Elaboración propia.}
-        \label{tbl:testscores}
-    \end{table}
+% \begin{frame}{Puntajes y errores en el conjunto de prueba}
+%     \begin{table}[!h]
+%         \centering
+%         \resizebox{0.65\textwidth}{!}{%
+%         \begin{tabular}{@{}|c|c|c|c|@{}}
+%         \toprule
+%         \textbf{Modelo} & \textbf{MSE} & \textbf{MAE} & $\mathbf{R^2}$ \\ \midrule
+%         Tradicional & 0.0254 & 0.0976 & 0.9278 \\ \midrule
+%         Convolucional & 0.0160 & 0.0872 & 0.9484 \\ \bottomrule
+%         \end{tabular}%
+%         }
+%         \caption[Evaluación de puntajes sobre el conjunto de prueba.]{Evaluación de puntajes sobre el conjunto de prueba. Fuente: Elaboración propia.}
+%         \label{tbl:testscores}
+%     \end{table}
 
-\end{frame}
+% \end{frame}
 
 \begin{frame}{Puntajes y errores en el conjunto de prueba}
     \begin{table}[]
         \centering
-        \resizebox{0.55\textwidth}{!}{%
+        \resizebox{0.75\textwidth}{!}{%
         \begin{tabular}{@{}|c|c|c|c|@{}}
         \toprule
         \textbf{Valor real} & \textbf{Predicción} & \textbf{Diferencia} & \textbf{\begin{tabular}[c]{@{}c@{}}Predicción de\\ signo correcta\end{tabular}} \\ \midrule
@@ -781,40 +837,76 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
         \caption[Filtros de la penúltima capa convolucional]{Filtros de la penúltima capa convolucional. Fuente: Elaboración propia. }
         \label{fig:filtros7}
     \end{figure}
-\end{frame}
-
-\begin{frame}{Representaciones Internas}
     \begin{figure}[!h] 
         \centering
-        \includegraphics[width=0.65\textwidth]{../img/filtros1}
+        \includegraphics[width=0.45\textwidth]{../img/filtros1}
         \caption[Filtros de la primera capa convolucional]{Filtros de la primera capa convolucional. Fuente: Elaboración propia. }
         \label{fig:filtros1}
     \end{figure}
 \end{frame}
 
-\begin{frame}{Representaciones Internas}
-    Giro a la izquierda. Predicción: \alert{1}.
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.33\textwidth]{../img/predizq}
-    \end{figure}
-\end{frame}
+% \begin{frame}{Representaciones Internas}
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.65\textwidth]{../img/filtros1}
+%         \caption[Filtros de la primera capa convolucional]{Filtros de la primera capa convolucional. Fuente: Elaboración propia. }
+%         \label{fig:filtros1}
+%     \end{figure}
+% \end{frame}
 
 \begin{frame}{Representaciones Internas}
-    Giro a la derecha. Predicción: \alert{-0.84}.
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.33\textwidth]{../img/predder}
-    \end{figure}
+    \begin{columns}
+        
+        \begin{column}{0.31\textwidth}
+            Giro a la izquierda. Predicción: \alert{1}.
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=\textwidth]{../img/predizq}
+            \end{figure}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            Hacia adelante. Predicción: \alert{-0.1}.
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.95\textwidth]{../img/predade}
+            \end{figure}
+        \end{column}
+        
+        \begin{column}{0.31\textwidth}
+            Giro a la derecha. Predicción: \alert{-0.84}.
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.97\textwidth]{../img/predder}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{Representaciones Internas}
-    Conducción hacia adelante. Predicción: \alert{-0.1}.
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.33\textwidth]{../img/predade}
-    \end{figure}
-\end{frame}
+
+% \begin{frame}{Representaciones Internas}
+%     Giro a la izquierda. Predicción: \alert{1}.
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.33\textwidth]{../img/predizq}
+%     \end{figure}
+% \end{frame}
+
+% \begin{frame}{Representaciones Internas}
+%     Giro a la derecha. Predicción: \alert{-0.84}.
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.33\textwidth]{../img/predder}
+%     \end{figure}
+% \end{frame}
+
+% \begin{frame}{Representaciones Internas}
+%     Conducción hacia adelante. Predicción: \alert{-0.1}.
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.33\textwidth]{../img/predade}
+%     \end{figure}
+% \end{frame}
 
 \section{Conclusiones y Recomendaciones}
 
