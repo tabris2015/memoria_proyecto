@@ -261,24 +261,37 @@ convolucionales} para facilitar el diseño e implementación de sistemas de cond
 
 \begin{frame}{Módulo de potencia en tiempo real}
     Se encarga del control de los actuadores mediante un sistema embebido 
-    que tiene capacidades de tiempo real.
+    que tiene capacidades de tiempo real\footnotemark.
 
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.45\textwidth]{../img/actuadores}
-        \end{figure}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.95\textwidth]{../img/actuadores}
+                \end{figure}
+                    
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}[!h] 
+                \centering
+                \includegraphics[width=0.95\textwidth]{../img/nucleo}
+                \caption[Placa de desarrollo Nucleof303k8 de ST Microelectronics]{Placa de desarrollo Nucleof303k8 de ST Microelectronics. Fuente: \cite{nucleof303} }
+                \end{figure}
+        \end{column}
+    \end{columns}
+    \footnotetext{Requerimientos de temporización estrictos. Tiempo de muestreo para el motor: 500 us}
 \end{frame}
 
-\begin{frame}{Módulo de potencia en tiempo real}
-    Se encarga del control de los actuadores mediante un sistema embebido 
-    que tiene capacidades de tiempo real.
+% \begin{frame}{Módulo de potencia en tiempo real}
+%     Se encarga del control de los actuadores mediante un sistema embebido 
+%     que tiene capacidades de tiempo real.
 
-    \begin{figure}[!h] 
-        \centering
-        \includegraphics[width=0.45\textwidth]{../img/nucleo}
-        \caption[Placa de desarrollo Nucleof303k8 de ST Microelectronics]{Placa de desarrollo Nucleof303k8 de ST Microelectronics. Fuente: \cite{nucleof303} }
-        \end{figure}
-\end{frame}
+%     \begin{figure}[!h] 
+%         \centering
+%         \includegraphics[width=0.45\textwidth]{../img/nucleo}
+%         \caption[Placa de desarrollo Nucleof303k8 de ST Microelectronics]{Placa de desarrollo Nucleof303k8 de ST Microelectronics. Fuente: \cite{nucleof303} }
+%         \end{figure}
+% \end{frame}
 
 
 \begin{frame}{Módulo de la computadora de abordo (OBC)}
